@@ -24,7 +24,7 @@ minify: false
 custom_file_path:
   #head: source/_data/head.swig
   #header: source/_data/header.swig
-  #sidebar: source/_data/sidebar.swig
+  sidebar: source/_data/sidebar.swig
   #postMeta: source/_data/post-meta.swig
   #postBodyEnd: source/_data/post-body-end.swig
   #footer: source/_data/footer.swig
@@ -123,7 +123,7 @@ menu:
   #schedule: /schedule/ || fa fa-calendar
   sitemap: /sitemap.xml || fa fa-sitemap
   commonweal: /404/ || fa fa-heartbeat
-  links: /links || link
+  links: /links || fa fa-address-book
 
 # Enable / Disable menu icons / item badges.
 menu_settings:
@@ -995,3 +995,9 @@ vendors:
 css: css
 js: js
 images: images
+custom: custom
+
+# sidebar
+recent_posts_title: 近期文章
+recent_posts_layout: block
+recent_posts: true

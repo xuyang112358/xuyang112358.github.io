@@ -17,14 +17,16 @@ type: links
 
 {% note success %}
 
-## 小伙伴们的博客
+## 韭零后
 
-- 网站名称：吴吉央的博客
+- 网站名称：韭零后的博客
 - 网站地址：[https://wjykl22.github.io](https://wjykl22.github.io)
 - 网站描述：世界上有两样东西不可直视，一是太阳，二是人心
-- 网站Logo：[https://wjykl22.github.io/img/avatar.jpg](https://wjykl22.github.io/img/avatar.jpg)
+- 网站Logo：![头像](https://wjykl22.github.io/img/avatar.jpg)
 
 {% endnote %}
+
+
 
 {# 友链设置 #}
 {% if page.type === 'links' %}
