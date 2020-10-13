@@ -25,7 +25,7 @@ custom_file_path:
   #head: source/_data/head.swig
   #header: source/_data/header.swig
   sidebar: source/_data/sidebar.swig
-  #postMeta: source/_data/post-meta.swig
+  postMeta: source/_data/post-meta.swig
   #postBodyEnd: source/_data/post-body-end.swig
   #footer: source/_data/footer.swig
   #bodyEnd: source/_data/body-end.swig
@@ -176,7 +176,7 @@ site_state: true
 # Value before `||` delimiter is the target permalink, value after `||` delimiter is the name of Font Awesome icon.
 social:
   GitHub: https://github.com/xuyang112358 || fab fa-github
-  #E-Mail: mailto:yourname@gmail.com || fa fa-envelope
+  E-Mail: mailto:294131773@qq.com || fa fa-envelope
   #Weibo: https://weibo.com/yourname || fab fa-weibo
   #Google: https://plus.google.com/yourname || fab fa-google
   #Twitter: https://twitter.com/yourname || fab fa-twitter
@@ -192,14 +192,14 @@ social_icons:
   transition: false
 
 # Blog rolls
-links_settings:
-  icon: fa fa-link
-  title: Links
-  # Available values: block | inline
-  layout: block
+# links_settings:
+#   icon: fa fa-ambulance
+#   title: 百度
+#   # Available values: block | inline
+#   layout: block
 
-links:
-  Title: https://wjykl22.github.io
+# links:
+#   Title: https://www.baidu.com
 
 # Table of Contents in the Sidebar
 # Front-matter variable (unsupport wrap expand_all).
