@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
     $(document).on('click', '.fold_hider', function(){
         $('>.fold', this.parentNode).slideToggle();

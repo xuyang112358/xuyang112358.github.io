@@ -995,7 +995,6 @@ vendors:
 css: css
 js: js
 images: images
-custom: custom
 
 # sidebar
 recent_posts_title: 近期文章

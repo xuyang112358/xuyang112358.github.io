@@ -12,6 +12,10 @@ type: links
   </span>留言添加友链<span class="with-love" id="animate2">
     <i class="fa fa-heart"></i>
   </span></div>
+
+{% fold 点击显/隐内容 %}
+something you want to fold, include code block.
+{% endfold %}
   
 ------
 
@@ -26,9 +30,7 @@ type: links
 
 {% endnote %}
 
-<!-- {% fold 点击显/隐内容 %}
-something you want to fold, include code block.
-{% endfold %} -->
+
 
 
 {# 友链设置 #}

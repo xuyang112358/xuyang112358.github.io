@@ -61,32 +61,36 @@ h6 {
 .sidebar-inner{
   background: rgba(252,254,251,0.90);
 }
+//文章内容的透明度设置
 .content-wrap {
-  opacity: 0.95;
+  opacity: 0.9;
 }
+//侧边框的透明度设置
 .sidebar {
-  opacity: 1;
+  opacity: 0.9;
 }
+//菜单栏的透明度设置
 .header-inner {
   background: rgba(252,254,251,0.90);
 }
+//搜索框（local-search）的透明度设置
 .popup {
-  opacity: 0.95;
+  opacity: 0.9;
 }
-
 .links-of-blogroll-list a {
   color #923A56 !important
 }
 
 // 设置背景图片
 body {
-  background-image:url(../img/back5.jpg);
+  background-image:url(../img/back3.jpg);
   height:100%;
   width:100%;
   background-repeat:repeat-x;
   background-attachment:fixed;
   background-size:cover;
 }
+
 
 .links-of-blogroll-list a {
   font-size 14px
@@ -188,4 +192,16 @@ sup {
 
 .footer-inner a, span.exturl {
   color white;
+}
+
+//隐藏代码
+.hider_title{
+    cursor: pointer;
+    color: #ef4a05;
+}
+.close:before{
+    content: "▼";
+}
+.open:before{
+    content: "▲";
 }
