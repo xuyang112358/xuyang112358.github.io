@@ -115,14 +115,14 @@ darkmode: false
 # External url should start with http:// or https://
 # 菜单设置为 菜单名: /菜单目录 || 菜单图标名字
 menu:
-  home: / || fa fa-home
-  about: /about/ || fa fa-user
-  tags: /tags/ || fa fa-tags
-  categories: /categories/ || fa fa-th
-  archives: /archives/ || fa fa-archive
+  主页: / || fa fa-home
+  关于: /about/ || fa fa-user
+  标签: /tags/ || fa fa-tags
+  目录: /categories/ || fa fa-th
+  结构: /archives/ || fa fa-archive
   #schedule: /schedule/ || fa fa-calendar
-  sitemap: /sitemap.xml || fa fa-sitemap
-  commonweal: /404/ || fa fa-heartbeat
+  站点地图: /sitemap.xml || fa fa-sitemap
+  公益: /404/ || fa fa-heartbeat
   links: /links || fa fa-address-book
 
 # Enable / Disable menu icons / item badges.
@@ -500,7 +500,7 @@ math:
 
   # hexo-renderer-pandoc (or hexo-renderer-kramed) required for full MathJax support.
   mathjax:
-    enable: false
+    enable: true
     # See: https://mhchem.github.io/MathJax-mhchem/
     mhchem: false
 
@@ -995,6 +995,7 @@ vendors:
 css: css
 js: js
 images: images
+custom: custom
 
 # sidebar
 recent_posts_title: 近期文章

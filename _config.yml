@@ -79,7 +79,7 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true  # 使得文章图片可以按文章自己的路径放
 relative_link: false
 future: true
 highlight:
