@@ -119,7 +119,7 @@ menu:
   关于: /about/ || fa fa-user
   标签: /tags/ || fa fa-tags
   目录: /categories/ || fa fa-th
-  结构: /archives/ || fa fa-archive
+  archives: /archives/ || fa fa-archive
   #schedule: /schedule/ || fa fa-calendar
   站点地图: /sitemap.xml || fa fa-sitemap
   公益: /404/ || fa fa-heartbeat

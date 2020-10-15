@@ -16,7 +16,7 @@ type: links
 {% fold 点击显/隐内容 %}
 something you want to fold, include code block.
 {% endfold %}
-  
+
 ------
 
 {% note success %}
@@ -26,7 +26,7 @@ something you want to fold, include code block.
 - 网站名称：韭零后的博客
 - 网站地址：[https://wjykl22.github.io](https://wjykl22.github.io)
 - 网站描述：世界上有两样东西不可直视，一是太阳，二是人心
-- 网站Logo：![头像](https://wjykl22.github.io/img/avatar.jpg)
+- 网站Logo：<img src="https://wjykl22.github.io/img/avatar.jpg" width="20%">
 
 {% endnote %}
 
