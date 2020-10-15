@@ -16,7 +16,7 @@ zh-CN:
     gallery: 画廊
 
   reward:
-    donate: <i class="fa fa-qrcode fa-2x" style="line-height:35px;"></i>
+    donate: <i class="fa fa-qrcode fa-2x" style="line-height:40px;"></i>
     wechatpay: 微信支付
     alipay: 支付宝
     bitcoin: 比特币

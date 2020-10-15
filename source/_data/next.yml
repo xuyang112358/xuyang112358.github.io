@@ -283,13 +283,13 @@ follow_me:
 # Dependencies: https://github.com/tea3/hexo-related-popular-posts
 related_posts:
   enable: true
-  title: 相关文章推荐      # 属性的命名
+  title: 推荐文章      # 属性的命名
   display_in_home: false # false代表首页不显示
   params:
     maxCount: 5          # 最多5条
-    #PPMixingRate: 0.0   # 相关度
-    #isDate: true        # 是否显示日期
-    #isImage: false      # 是否显示配图
+    PPMixingRate: 0.25   # 相关度
+    isDate: false        # 是否显示日期
+    isImage: false      # 是否显示配图
     isExcerpt: false     # 是否显示摘要
 
 # Post edit
@@ -1001,3 +1001,7 @@ custom: custom
 recent_posts_title: 近期文章
 recent_posts_layout: block
 recent_posts: true
+
+# 文章结束语
+passage_end_tag:
+  enabled: true

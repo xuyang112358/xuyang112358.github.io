@@ -13,10 +13,6 @@ type: links
     <i class="fa fa-heart"></i>
   </span></div>
 
-{% fold 点击显/隐内容 %}
-something you want to fold, include code block.
-{% endfold %}
-
 ------
 
 {% note success %}
@@ -30,7 +26,9 @@ something you want to fold, include code block.
 
 {% endnote %}
 
-
+{% fold 点击显/隐内容 %}
+something you want to fold, include code block.
+{% endfold %}
 
 
 {# 友链设置 #}

@@ -1,4 +1,5 @@
 <div class="reward-container">
+  <div><font color="black" size="2"><h1>好活￥当赏</h1></div>
   <div>{{ page.reward_settings.comment }}</div>
   <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
     {{ __('reward.donate') }}

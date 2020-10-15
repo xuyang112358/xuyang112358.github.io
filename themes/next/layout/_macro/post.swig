@@ -166,7 +166,6 @@
     {### POST BODY ###}
     {#################}
     <div class="post-body{%- if post.direction and post.direction.toLowerCase() === 'rtl' %} rtl{%- endif %}" itemprop="articleBody">
-
       {# Gallery support #}
       {%- if post.photos and post.photos.length %}
         <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
@@ -206,7 +205,11 @@
         {{ post.content }}
       {%- endif %}
     </div>
-
+    <div>
+      {% if theme.passage_end_tag.enabled and not is_index %}
+        {% include 'passage-end-tag.swig' %}
+      {% endif %}
+    </div>
     {#####################}
     {### END POST BODY ###}
     {#####################}
