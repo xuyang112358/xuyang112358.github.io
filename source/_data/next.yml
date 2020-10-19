@@ -1018,3 +1018,7 @@ moon_menu:
     icon: fa fa-chevron-down
     func: back2bottom
     order: -2
+
+injector2:
+  stylus:
+    enable: true
