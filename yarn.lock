@@ -1990,6 +1990,13 @@ hexo-symbols-count-time@^0.7.1:
   dependencies:
     hexo-util "1.9.0"
 
+hexo-tag-echarts4@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/hexo-tag-echarts4/download/hexo-tag-echarts4-1.0.1.tgz#835e390c2c09863a087bd9998b0479b384c21c25"
+  integrity sha1-g145DCwJhjoIe9mZiwR5s4TCHCU=
+  dependencies:
+    underscore "^1.8.3"
+
 hexo-util@1.9.0:
   version "1.9.0"
   resolved "https://registry.npm.taobao.org/hexo-util/download/hexo-util-1.9.0.tgz#0018429319720599253b2a3ddde0c5e4e4cfc652"
@@ -3932,6 +3939,11 @@ typedarray@^0.0.6, typedarray@~0.0.5:
   version "0.0.6"
   resolved "https://registry.npm.taobao.org/typedarray/download/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+
+underscore@^1.8.3:
+  version "1.11.0"
+  resolved "https://registry.npm.taobao.org/underscore/download/underscore-1.11.0.tgz#dd7c23a195db34267186044649870ff1bab5929e"
+  integrity sha1-3XwjoZXbNCZxhgRGSYcP8bq1kp4=
 
 union-value@^1.0.0:
   version "1.0.1"
