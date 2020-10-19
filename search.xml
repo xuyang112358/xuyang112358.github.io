@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>地波雷达与自动识别系统（AIS）目标点迹最优关联算法</title>
+    <url>/archives/2904.html</url>
+    <content><![CDATA[<h1 id="问题简介"><a href="#问题简介" class="headerlink" title="问题简介"></a>问题简介</h1><h2 id="进出港非法渔船研判"><a href="#进出港非法渔船研判" class="headerlink" title="进出港非法渔船研判"></a>进出港非法渔船研判</h2><p>研判三要素：</p>
+<ol>
+<li>船舶进出港登记人员是否在册（查数据库）√</li>
+<li>视频设备获取的船舶id是否在册（查数据库）√</li>
+<li>雷达扫描到的船舶是否有与之匹配的AIS点位（点迹匹配）？</li>
+</ol>
+<p>研判港口渔船的合法性有以上三个要素，其中前两个可以通过简单地数据库查询做出判断，但是第三点由于AIS数据和雷达数据间的弱关联性，需要做进一步处理。</p>
+<a id="more"></a>
+<h1 id="点迹匹配"><a href="#点迹匹配" class="headerlink" title="点迹匹配"></a>点迹匹配</h1><p>一艘合规的船需要有配对的雷达点位和AIS点位，但由于这两个数据的关联性较弱、数据间的发送间隔也不相同，所以两个点位往往有一定的时空误差。</p>
+<p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/ais_radar.png" alt="ais_radar"></p>
+<ul>
+<li>雷达数据（被动）：船舶位置、航速、航向、船舶长度、时间等，雷达数据较真实可靠，速度探测精度高，但位置精度低，无法确定到船的具体信息。</li>
+<li>AIS数据（主动）：AIS设备ID（唯一，且与船舶id配对）、船舶位置、航速、航向、温度、时间等，AIS数据能确定到具体某一艘船，但会存在漏报、谎报的情况。</li>
+</ul>
+<h1 id="研究过程"><a href="#研究过程" class="headerlink" title="研究过程"></a>研究过程</h1><h2 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h2><p>首先，将WGS84(World Geodetic System 1984)坐标系下测量的AIS的点迹和高频地波雷达点迹映射到极坐标中，实现坐标系的统一。<br>其次，建立高频地波雷达和AIS点迹关联模型，采用状态划分和迭代搜索算法将关联数据集划分为可行的关联子集。<br>最后，将JVC全局最优关联算法应用于每一个可行关联子集的点迹关联上，解决密集环境中的雷达和AIS点迹关联问题。</p>
+<h3 id="统一坐标系"><a href="#统一坐标系" class="headerlink" title="统一坐标系"></a>统一坐标系</h3><p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/image-20201019100537524.png" alt="image-20201019100537524"></p>
+<h3 id="计算径向速度"><a href="#计算径向速度" class="headerlink" title="计算径向速度"></a>计算径向速度</h3><p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/径向速度就算.png" alt="径向速度就算"></p>
+<h3 id="分状态划分测试集"><a href="#分状态划分测试集" class="headerlink" title="分状态划分测试集"></a>分状态划分测试集</h3><p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/分状态.png" alt="分状态" style="zoom:80%;" /></p>
+<p>根据径向速度、距离等信息，利用门限阈值将雷达和AIS数据划分为静态和动态两类，提高运算速度和匹配精度。</p>
+<h3 id="迭代搜索"><a href="#迭代搜索" class="headerlink" title="迭代搜索"></a>迭代搜索</h3><p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/迭代搜索.png" alt="迭代搜索"></p>
+<h3 id="JVC最优点迹匹配"><a href="#JVC最优点迹匹配" class="headerlink" title="JVC最优点迹匹配"></a>JVC最优点迹匹配</h3><p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/点迹匹配.png" alt="点迹匹配"></p>
+<p>算法输入：代价矩阵（矩阵元是雷达点和AIS点之间的距离）</p>
+<p>算法输出：最小总代价，匹配的点迹对</p>
+<h1 id="算法复现"><a href="#算法复现" class="headerlink" title="算法复现"></a>算法复现</h1><h2 id="论文实验"><a href="#论文实验" class="headerlink" title="论文实验"></a>论文实验</h2><p>论文数据：<br>2011年10月31日09:18:50时的336个雷达目标点迹（真实数据）和443个AIS点迹（仿真数据）</p>
+<p>算法比较：</p>
+<p>选用了最近邻算法、Munkres算法、分状态JVC算法进行点迹关联比较，测试结果如下：</p>
+<p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/image-20201019102705995.png" alt="image-20201019102705995"></p>
+<p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/image-20201019102846557.png" alt="image-20201019102846557"></p>
+<p>实验结果表明，该算法在同样关联51对点迹的情况下，关联精度高于最近邻算法和Munkres法，关联用时少于最近邻算法和Munkres法，为地波雷达与AIS目标点迹关联提供了一种可行的方法，但是，由于雷达的目标定位精度较低，雷达与 AIS 的点迹关联比例较低，下一步可以考虑进一步融合高精度的 SAR 图像数据进行船只点迹目标融合探测，以便提高海洋探测的精度和范围，同时可以起到校准雷达精度的作用。</p>
+<h2 id="复现实验"><a href="#复现实验" class="headerlink" title="复现实验"></a>复现实验</h2><p>实验数据：舟山海域2020年9月11日20:19:03时-2020年9月11日20:21:03的163个雷达点迹和45个AIS点迹进行点迹关联。</p>
+<p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/image-20201019104718012.png" alt="image-20201019104718012" style="zoom:80%;" /></p>
+<p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/image-20201019104834241.png" alt="image-20201019104834241" style="zoom:124%;" /></p>
+<h1 id="参考论文"><a href="#参考论文" class="headerlink" title="参考论文"></a>参考论文</h1><p>张晖.<em>舰船目标多手段数据融合探测方法研究</em>.2016.内蒙古大学,PhD dissertation.</p>
+<p>张晖,刘永信,张杰,纪永刚,郑志强.<em>地波雷达与自动识别系统目标点迹最优关联算法</em>[J].电子与信息学报,2015,37(03):619-624.</p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" /></p>
+]]></content>
+      <categories>
+        <category>舟山智慧海洋项目</category>
+      </categories>
+      <tags>
+        <tag>数据融合</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes</title>
+    <url>/archives/28714.html</url>
+    <content><![CDATA[<p>Fei Yu,Yan Zeng,Z.Q. Guan,S.H. Lo. A robust Delaunay-AFT based parallel method for the generation of large-scale fully constrained meshes[J]. Computers and Structures,2020,228.</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文研究者充分利用串行Delaunay-AFT网格生成器，<u>开发了一种在分布式存储的机器上生成大规模四面体网格的并行方法</u>。 </p>
+<p>为了生成具有所需和保留属性的网格，<u>使用了一种基于Delaunay-AFT的域分解(DD)技术</u>。从覆盖问题域的Delaunay三角剖分(DT)开始，该技术创建了一层元素，将整个域划分为几个区域。将最初粗糙的网格域划分为了可以进行并行网格划分的子域的DTs。 当一个子域的大小小于用户指定的阈值，将用标准Delaunay-AFT方法进行网格划分。     </p>
+<p><u>设计了两级DD策略来提高了该算法的并行效率</u>。<u>还使用消息传递接口(MPI)实现了动态负载均衡方案</u>。 <u>引入了核心外网格划分，以适应过大的网格</u>，而这些网格不能由计算机的可用存储器(RAM)处理。 <u>对具有数千个表面贴片的各种复杂几何形状进行了数值试验，创建了拥有超过100亿个四面体元素的超大尺度网格</u>。 此外，不同DD操作次数生成的网格在质量上几乎相同：显示了自动分解算法的一致性和稳定性。</p>
+<a id="more"></a>
+<h1 id="具体论文"><a href="#具体论文" class="headerlink" title="具体论文"></a>具体论文</h1><h2 id="并行域分解和网格产生算法"><a href="#并行域分解和网格产生算法" class="headerlink" title="并行域分解和网格产生算法"></a>并行域分解和网格产生算法</h2><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016180107878.png" alt="image-20201016180107878"></p>
+<h2 id="并行域分解和网格产生算法-1"><a href="#并行域分解和网格产生算法-1" class="headerlink" title="并行域分解和网格产生算法"></a>并行域分解和网格产生算法</h2><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016193028229.png" alt="image-20201016193028229"></p>
+<h2 id="一级域分解"><a href="#一级域分解" class="headerlink" title="一级域分解"></a>一级域分解</h2><p><img src="../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016180334321.png" alt="image-20201016180334321" style="zoom: 80%;" /></p>
+<p>（a）进行CDT分解的区域。</p>
+<p>（b）扩展的Delaunay-AFT方法引入了一层形状良好的单元作为分离层。</p>
+<p>（c）独立的并行处理器进行进一步的域分解。</p>
+<p>（d）并行子域网格生成的中间阶段，三个处理器完成，一个正在进行。</p>
+<h2 id="二级域分解"><a href="#二级域分解" class="headerlink" title="二级域分解"></a>二级域分解</h2><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016192227404.png" alt="image-20201016192227404"></p>
+<p>(a) 引入L0,L1分割切割面。</p>
+<p>(b) 将领域用L0,L1周围的分割元划分成四个不完全的区域。</p>
+<p>(c)通过并行的处理器在平面Π周围生成分割面。</p>
+<p>(d)不完全的区域合并成了单个区域，然后通过Π周围的分割元自动分为了两个子区域。</p>
+<p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016192433173.png" alt="image-20201016192433173"></p>
+<p>上图是二级域分解的直观情况，（a）是在切割线周围产生分割元，（b）是在切割面周围产生分割元</p>
+<h1 id="动态负载均衡"><a href="#动态负载均衡" class="headerlink" title="动态负载均衡"></a>动态负载均衡</h1><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016192634936.png" alt="image-20201016192634936"></p>
+<p>由于Delaunay-AFT法网格生成的速度与各种因素的组合有关，因此难以准确地评价网格划分工作。</p>
+<p>因此，相比于静态负载分配，动态负载均衡策略更合适。</p>
+<p>网格域被划分为比处理器数(Np)多得多的子域。 然后将处理器动态地分配进行网格生成。如算法3所示，基本实现结构是主/从模型。在这个模型中，主处理器接收请求，并指示从处理器执行它们，从处理器独立于其他从处理器运行。</p>
+<h1 id="核心外网格划分"><a href="#核心外网格划分" class="headerlink" title="核心外网格划分"></a>核心外网格划分</h1><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016192725596.png" alt="image-20201016192725596"></p>
+<p> 由于主从模型有很强的解耦性和简单性，所以核外的网格划分能通过改变消息传递的方式简单地实现。</p>
+<p>网格数据被序列化之后使用MPI_Send和MPI_Recv方法在处理器之间传输数据。</p>
+<p>但是，当从机需要发送网格数据给主机，然后主机需要广播数据给从机时，通信开销会变得非常大，这也是并行方法的瓶颈。</p>
+<p>在本工作中，序列化的网格数据被转储到处理器之间共享的磁盘上，并将表示相应文件路径的字符串视为对需要传递的数据的代替，由于文件路径的字符串长度很小，主机通讯的时间可以忽略不计，所以通讯开销会变得很小。</p>
+<p>同时，完成的网格立即导出以释放内存，这样，内存需求明显降低，因为只有正在处理的网格保存在RAM中。 </p>
+<h1 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h1><h2 id="加速比"><a href="#加速比" class="headerlink" title="加速比"></a>加速比</h2><p>分别对齿轮箱、显卡、喷气引擎进行了网格划分测试。</p>
+<p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016192809878.png" alt="image-20201016192809878"></p>
+<h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016193252883.png" alt="image-20201016193252883"></p>
+<p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016193258301.png" alt="image-20201016193258301"></p>
+<h2 id="网格质量"><a href="#网格质量" class="headerlink" title="网格质量"></a>网格质量</h2><p>网格质量通过以下公式定义：</p>
+<script type="math/tex; mode=display">
+\sigma=3\frac{r_i}{r_c}</script><p>其中$r_i$是内接圆半径，$r_c$是外接圆半径，$\sigma$越接近1，说明网格的形状越接近正四面体，质量越高，由于实际正四面体的内外接圆半径之比为$\frac{1}{3}$，所以乘上3归一化。</p>
+<p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016193551630.png" alt="image-20201016193551630"></p>
+<p>上图是三个模型在不同网格质量下的网格数目，可见并行对网格质量影响不大，生成网格大部分都为高质量网格。</p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><img src="../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" /></p>
+]]></content>
+      <categories>
+        <category>并行与分布式计算</category>
+      </categories>
+      <tags>
+        <tag>并行与分布式计算</tag>
+        <tag>网格划分</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基于GPU的矩阵计算并行加速方法研究</title>
+    <url>/archives/9502.html</url>
+    <content><![CDATA[<p>李丰.<em>基于GPU的矩阵计算并行加速方法研究</em>.2018.哈尔滨工业大学,PhD dissertation.</p>
+]]></content>
+      <categories>
+        <category>并行与分布式计算</category>
+      </categories>
+      <tags>
+        <tag>并行与分布式计算</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PAC2020:傅里叶空间图像相似度计算</title>
+    <url>/archives/62775.html</url>
+    <content><![CDATA[<h1 id="赛题描述"><a href="#赛题描述" class="headerlink" title="赛题描述"></a>赛题描述</h1><p>在蛋白质冷冻电镜三维重构程序中，将二维真实图像与空间中的三维结构的投影图像的相似度计算是调用最为频繁的计算，相似度计算的原理是求取真实图像与投影图像的所有像素在傅里叶空间中的二范数之和，公式如下：</p>
+<script type="math/tex; mode=display">
+diff=\sum_{i=1}^{N}{a*||image_i-proj_i||}</script><p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201015095633405.png" alt="image-20201015095633405" style="zoom: 50%;" /></p>
+<p>比赛的目的是将赛方提供的相似度计算程序进行并行加速，输出结果精度误差不超过十万分之一，比赛的代码包里提供了校验文件。</p>
+<a id="more"></a>
+<h1 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h1><h2 id="硬件："><a href="#硬件：" class="headerlink" title="硬件："></a>硬件：</h2><p>处理器：Intel Xeon处理器 Platinum 9242 CPU @ 2.30GHz 24*8G </p>
+<p>网络：100Gb Intel omnipath</p>
+<h2 id="软件："><a href="#软件：" class="headerlink" title="软件："></a>软件：</h2><p>操作系统：CentOS 8.0  </p>
+<p>并行环境：Intel MPI</p>
+<p>相关依赖软件：VTune Profiler 2020、ParaCloud平台的ssh连接工具等</p>
+<p>应用负载：96个逻辑核心</p>
+<h1 id="优化后的代码结构"><a href="#优化后的代码结构" class="headerlink" title="优化后的代码结构"></a>优化后的代码结构</h1><p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201014211614779.png" alt="image-20201014211614779" style="zoom:80%;" /></p>
+<h1 id="优化过程"><a href="#优化过程" class="headerlink" title="优化过程"></a>优化过程</h1><h2 id="MPI进程级并行优化-amp-MPI-IO优化"><a href="#MPI进程级并行优化-amp-MPI-IO优化" class="headerlink" title="MPI进程级并行优化&amp;MPI-IO优化"></a>MPI进程级并行优化&amp;MPI-IO优化</h2><p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201014202814651.png" alt="image-20201014202814651"></p>
+<p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201014202730183.png" alt="image-20201014202730183"></p>
+<p>对于源代码计算部分的外层循环，通过进程号将大的循环体划分成数个小循环并行执行，多出的子任务分配给进程号最大的进程。I/O方面的优化点在于，通过预先确定结果文件指针的偏移量，每轮计算结果不再直接输出，而是根据偏移量存入当前进程创建的一片内存空间中的对应位置，各进程在计算任务结束后整体写入结果文件中。</p>
+<h3 id="优化结果-amp-性能指标-MPI"><a href="#优化结果-amp-性能指标-MPI" class="headerlink" title="优化结果&amp;性能指标(MPI)"></a>优化结果&amp;性能指标(MPI)</h3><p>  <img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201015082916436.png" alt="image-20201015082916436"></p>
+<h2 id="OpenMP线程级并行优化-amp-AVX优化"><a href="#OpenMP线程级并行优化-amp-AVX优化" class="headerlink" title="OpenMP线程级并行优化&amp;AVX优化"></a>OpenMP线程级并行优化&amp;AVX优化</h2><p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201014204736870.png" alt="image-20201014204736870" style="zoom:80%;" /></p>
+<p>利用OpenMP对计算部分的内层循环进行归约优化，简单实现线程级的并行。</p>
+<p>对于实际计算部分，我利用了AVX指令改写了原来计算部分的代码，通过调用AVX的512位向量寄存器，一次可以操作512/32=16个float型浮点数(损失的精度在规则范围内)，而一个float型复数会占用2个float型浮点数长度的地址，所以最终能达到8路并行，即一次操作本来需要八轮循环操作的数据，运算速度有较大提升。</p>
+<h3 id="优化结果-amp-性能指标-MPI-OpenMP"><a href="#优化结果-amp-性能指标-MPI-OpenMP" class="headerlink" title="优化结果&amp;性能指标(MPI+OpenMP)"></a>优化结果&amp;性能指标(MPI+OpenMP)</h3><p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201015091631843.png" alt="image-20201015091631843"></p>
+<h3 id="优化结果-amp-性能指标-MPI-OpenMP-AVX-编译优化"><a href="#优化结果-amp-性能指标-MPI-OpenMP-AVX-编译优化" class="headerlink" title="优化结果&amp;性能指标(MPI+OpenMP+AVX+编译优化)"></a>优化结果&amp;性能指标(MPI+OpenMP+AVX+编译优化)</h3><p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201015091754886.png" alt="image-20201015091754886"></p>
+<h1 id="Vtune测试结果"><a href="#Vtune测试结果" class="headerlink" title="Vtune测试结果"></a>Vtune测试结果</h1><p>原程序计算时间为两个半小时左右，经优化后，程序计算时间为12秒左右，加速了735倍。</p>
+<p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201015092113391.png" alt="image-20201015092113391"></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" /></p>
+]]></content>
+      <categories>
+        <category>并行与分布式计算</category>
+      </categories>
+      <tags>
+        <tag>并行与分布式计算</tag>
+        <tag>计算机类竞赛</tag>
+      </tags>
+  </entry>
+</search>
