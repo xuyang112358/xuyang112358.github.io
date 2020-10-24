@@ -6,7 +6,7 @@
   <link href="https://xuyang112358.github.io/atom.xml" rel="self"/>
   
   <link href="https://xuyang112358.github.io/"/>
-  <updated>2020-10-19T02:54:46.000Z</updated>
+  <updated>2020-10-24T06:12:28.000Z</updated>
   <id>https://xuyang112358.github.io/</id>
   
   <author>
@@ -17,11 +17,104 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>PyTorch常用函数汇总</title>
+    <link href="https://xuyang112358.github.io/archives/45468.html"/>
+    <id>https://xuyang112358.github.io/archives/45468.html</id>
+    <published>2020-10-23T18:55:44.000Z</published>
+    <updated>2020-10-24T06:12:28.000Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;nn-Linear&quot;&gt;&lt;a href=&quot;#nn-Linear&quot; class=&quot;headerlink&quot; title=&quot;nn.Linear&quot;&gt;&lt;/a&gt;nn.Linear&lt;/h1&gt;</summary>
+    
+    
+    
+    <category term="机器学习" scheme="https://xuyang112358.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="pytorch" scheme="https://xuyang112358.github.io/tags/pytorch/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>BP神经网络</title>
+    <link href="https://xuyang112358.github.io/archives/1231.html"/>
+    <id>https://xuyang112358.github.io/archives/1231.html</id>
+    <published>2020-10-21T20:00:53.000Z</published>
+    <updated>2020-10-24T06:13:22.000Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;BP神经网络简介&quot;&gt;&lt;a href=&quot;#BP神经网络简介&quot; class=&quot;headerlink&quot; title=&quot;BP神经网络简介&quot;&gt;&lt;/a&gt;BP神经网络简介&lt;/h1&gt;&lt;h2 id=&quot;网络结构：&quot;&gt;&lt;a href=&quot;#网络结构：&quot; class=&quot;headerlink&quot; title=&quot;网络结构：&quot;&gt;&lt;/a&gt;网络结构：&lt;/h2&gt;&lt;p&gt;输入层、隐藏层（实际应用中可能不止一层）和输出层。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../../images/BP神经网络/image-20201021195702755.png&quot; alt=&quot;image-20201021195702755&quot;&gt;&lt;/p&gt;
+&lt;center&gt;BP神经网络架构图&lt;/center&gt;</summary>
+    
+    
+    
+    <category term="机器学习" scheme="https://xuyang112358.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="神经网络" scheme="https://xuyang112358.github.io/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于AIS的船舶轨迹分析的研究与应用</title>
+    <link href="https://xuyang112358.github.io/archives/15340.html"/>
+    <id>https://xuyang112358.github.io/archives/15340.html</id>
+    <published>2020-10-20T17:03:59.000Z</published>
+    <updated>2020-10-24T06:14:26.000Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;创新点：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;深入探讨了基于 BP 神经网络的船舶轨迹预测模型，通过 AIS 数据提供的信息，针对船舶轨迹预测问题，结合遗传算法，改进了 BP 神经网络轨迹预测模型，并且对不同参数对该模型预测精确度和效率的影响做了研究。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;将船舶特有的轨迹特征与时间序列相结合，提出基于深度学习的RNN-LSTM 模型，分析参数并与 GA-BP 神经网络对比，分析出在海上智能交通轨迹预测的方面，基于时间序列的 LSTM 模型的预测能力更强。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;利用训练好的模型，提出船舶轨迹预测模型在海上智能交通的应用方面，对目标海域的船舶监控以及异常检测，航路规划等方面。 &lt;/p&gt;</summary>
+    
+    
+    
+    <category term="舟山海洋项目" scheme="https://xuyang112358.github.io/categories/%E8%88%9F%E5%B1%B1%E6%B5%B7%E6%B4%8B%E9%A1%B9%E7%9B%AE/"/>
+    
+    <category term="机器学习" scheme="https://xuyang112358.github.io/categories/%E8%88%9F%E5%B1%B1%E6%B5%B7%E6%B4%8B%E9%A1%B9%E7%9B%AE/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="BP神经网络" scheme="https://xuyang112358.github.io/tags/BP%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
+    
+    <category term="遗传算法" scheme="https://xuyang112358.github.io/tags/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="LSTM" scheme="https://xuyang112358.github.io/tags/LSTM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>序列模型中的注意力机制</title>
+    <link href="https://xuyang112358.github.io/archives/28087.html"/>
+    <id>https://xuyang112358.github.io/archives/28087.html</id>
+    <published>2020-10-20T09:34:56.000Z</published>
+    <updated>2020-10-23T10:59:22.000Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;现在很多研究的NLP（自然语言处理）问题都可以转换成一个Sequence to Sequence模型来解决，比如说机器翻译，智能问答，语音识别等。&lt;/p&gt;
+&lt;p&gt;Sequence to Sequence是一个Encoder–Decoder 结构的网络，由一个encoder和一个decoder组成，encoder完成编码工作，将不同的输入编码成一个定长的向量，decoder则完成解码工作，对编码器的结果进行解码输出，例如在中英文翻译中，首先编码器将中文编码成一个向量表示，接着解码器把该向量解码成一个英文表示 ，完成翻译过程。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="机器学习" scheme="https://xuyang112358.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="神经网络" scheme="https://xuyang112358.github.io/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
+    
+    <category term="自然语言处理" scheme="https://xuyang112358.github.io/tags/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
     <title>地波雷达与自动识别系统（AIS）目标点迹最优关联算法</title>
     <link href="https://xuyang112358.github.io/archives/2904.html"/>
     <id>https://xuyang112358.github.io/archives/2904.html</id>
     <published>2020-10-19T08:44:09.000Z</published>
-    <updated>2020-10-19T02:54:46.000Z</updated>
+    <updated>2020-10-20T09:06:36.000Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;问题简介&quot;&gt;&lt;a href=&quot;#问题简介&quot; class=&quot;headerlink&quot; title=&quot;问题简介&quot;&gt;&lt;/a&gt;问题简介&lt;/h1&gt;&lt;h2 id=&quot;进出港非法渔船研判&quot;&gt;&lt;a href=&quot;#进出港非法渔船研判&quot; class=&quot;headerlink&quot; title=&quot;进出港非法渔船研判&quot;&gt;&lt;/a&gt;进出港非法渔船研判&lt;/h2&gt;&lt;p&gt;研判三要素：&lt;/p&gt;
@@ -30,11 +123,11 @@
 &lt;li&gt;视频设备获取的船舶id是否在册（查数据库）√&lt;/li&gt;
 &lt;li&gt;雷达扫描到的船舶是否有与之匹配的AIS点位（点迹匹配）？&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;研判港口渔船的合法性有以上三个要素，其中前两个可以通过简单地数据库查询做出判断，但是第三点由于AIS数据和雷达数据间的弱关联性，需要做进一步处理。&lt;/p&gt;</summary>
+&lt;p&gt;研判港口渔船的合法性有以上三个要素，其中前两个可以通过简单的数据库查询做出判断，但是第三点由于AIS数据和雷达数据间的弱关联性，需要做进一步处理。&lt;/p&gt;</summary>
     
     
     
-    <category term="舟山智慧海洋项目" scheme="https://xuyang112358.github.io/categories/%E8%88%9F%E5%B1%B1%E6%99%BA%E6%85%A7%E6%B5%B7%E6%B4%8B%E9%A1%B9%E7%9B%AE/"/>
+    <category term="舟山海洋项目" scheme="https://xuyang112358.github.io/categories/%E8%88%9F%E5%B1%B1%E6%B5%B7%E6%B4%8B%E9%A1%B9%E7%9B%AE/"/>
     
     
     <category term="数据融合" scheme="https://xuyang112358.github.io/tags/%E6%95%B0%E6%8D%AE%E8%9E%8D%E5%90%88/"/>
