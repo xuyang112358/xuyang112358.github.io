@@ -22,17 +22,21 @@
     var CONFIG = {"hostname":"xuyang112358.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":false,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="把海弄干的鱼提前上了陆地，从一片黑暗森林奔向另一片黑暗森林">
-<meta property="og:type" content="website">
-<meta property="og:title" content="江东大少爷">
-<meta property="og:url" content="https://xuyang112358.github.io/archives/2020/10/index.html">
+  <meta name="description" content="简介LSTM 是 Long Short Term Memory Networks 的缩写，按字面翻译就是长的短时记忆网络。LSTM 的网络结构是 1997 年由 Hochreiter 和 Schmidhuber 提出的，随后这种网络结构变得非常流行。 LSTM虽然只解决了短期依赖的问题，并且它通过刻意的设计来避免长期依赖问题，这样的做法在实际应用中被证明还是十分有效的，有很多人跟进相关的工作解决了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解LSTM">
+<meta property="og:url" content="https://xuyang112358.github.io/archives/33247.html">
 <meta property="og:site_name" content="江东大少爷">
-<meta property="og:description" content="把海弄干的鱼提前上了陆地，从一片黑暗森林奔向另一片黑暗森林">
+<meta property="og:description" content="简介LSTM 是 Long Short Term Memory Networks 的缩写，按字面翻译就是长的短时记忆网络。LSTM 的网络结构是 1997 年由 Hochreiter 和 Schmidhuber 提出的，随后这种网络结构变得非常流行。 LSTM虽然只解决了短期依赖的问题，并且它通过刻意的设计来避免长期依赖问题，这样的做法在实际应用中被证明还是十分有效的，有很多人跟进相关的工作解决了">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-10-24T14:28:50.000Z">
+<meta property="article:modified_time" content="2020-10-24T06:49:56.000Z">
 <meta property="article:author" content="XuYang">
+<meta property="article:tag" content="自然语言处理">
+<meta property="article:tag" content="深度学习">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://xuyang112358.github.io/archives/2020/10/">
+<link rel="canonical" href="https://xuyang112358.github.io/archives/33247.html">
 
 
 <script id="page-configurations">
@@ -40,12 +44,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 <link rel="stylesheet" type="text/css" href="/css/injector.css" />
-  <title>归档 | 江东大少爷</title>
+  <title>深入理解LSTM | 江东大少爷</title>
   
 
 
@@ -200,216 +204,192 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 9 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuyang112358.github.io/archives/33247.html">
 
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="XuYang">
+      <meta itemprop="description" content="把海弄干的鱼提前上了陆地，从一片黑暗森林奔向另一片黑暗森林">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江东大少爷">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          深入理解LSTM
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-24 14:28:50" itemprop="dateCreated datePublished" datetime="2020-10-24T14:28:50Z">2020-10-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">循环神经网络</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/33247.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/33247.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>483</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
       
-    <div class="collection-year">
-      <span class="collection-header">2020</span>
-    </div>
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>LSTM 是 Long Short Term Memory Networks 的缩写，按字面翻译就是长的短时记忆网络。LSTM 的网络结构是 1997 年由 Hochreiter 和 Schmidhuber 提出的，随后这种网络结构变得非常流行。 LSTM虽然只解决了短期依赖的问题，并且它通过刻意的设计来避免长期依赖问题，这样的做法在实际应用中被证明还是十分有效的，有很多人跟进相关的工作解决了很多实际的问题，所以现在LSTM 仍然被广泛地使用。</p>
+<a id="more"></a>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-10-24T14:28:50Z"
-              content="2020-10-24">
-          10-24
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/archives/33247.html" itemprop="url">
-            <span itemprop="name">深入理解LSTM</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-10-23T18:55:44Z"
-              content="2020-10-23">
-          10-23
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/archives/45468.html" itemprop="url">
-            <span itemprop="name">PyTorch常用函数汇总</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-10-21T20:00:53Z"
-              content="2020-10-21">
-          10-21
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/archives/1231.html" itemprop="url">
-            <span itemprop="name">BP神经网络</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-10-20T17:03:59Z"
-              content="2020-10-20">
-          10-20
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/archives/15340.html" itemprop="url">
-            <span itemprop="name">基于AIS的船舶轨迹分析的研究与应用</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-10-20T09:34:56Z"
-              content="2020-10-20">
-          10-20
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/archives/28087.html" itemprop="url">
-            <span itemprop="name">序列模型中的注意力机制</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-10-19T08:44:09Z"
-              content="2020-10-19">
-          10-19
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/archives/2904.html" itemprop="url">
-            <span itemprop="name">地波雷达与自动识别系统（AIS）目标点迹最优关联算法</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-10-18T19:20:25Z"
-              content="2020-10-18">
-          10-18
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/archives/28714.html" itemprop="url">
-            <span itemprop="name">A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-10-16T16:42:45Z"
-              content="2020-10-16">
-          10-16
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/archives/9502.html" itemprop="url">
-            <span itemprop="name">基于GPU的矩阵计算并行加速方法研究</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-10-14T19:52:33Z"
-              content="2020-10-14">
-          10-14
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/archives/62775.html" itemprop="url">
-            <span itemprop="name">PAC2020:傅里叶空间图像相似度计算</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+<p>标准的循环神经网络内部只有一个简单的层结构，而 LSTM 内部有 4 个层结构：</p>
+<p>第一层是个忘记层：决定状态中丢弃什么信息</p>
+<p>第二层tanh层用来产生更新值的候选项，说明状态在某些维度上需要加强，在某些维度上需要减弱</p>
+<p>第三层sigmoid层（输入门层），它的输出值要乘到tanh层的输出上，起到一个缩放的作用，极端情况下sigmoid输出0说明相应维度上的状态不需要更新</p>
+<p>最后一层决定输出什么，输出值跟状态有关。候选项中的哪些部分最终会被输出由一个sigmoid层来决定。</p>
+<p>pytorch 中使用 nn.LSTM 类来搭建基于序列的循环神经网络，他的参数基本与RNN类似。</p>
 
     </div>
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555 ;font-size:20px;font-weight:900">-  -  -  -  -  -  -  -  -  -  -      本 文 结 束      -  -  -  -  -  -  -  -  -  -  -</div>
+    
+</div>
+      
+    </div>
+    
+    
+    
+      
+  <div class="popular-posts-header">推荐文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\28087.html" rel="bookmark">序列模型中的注意力机制</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div><font color="black" size="2"><h1>好活￥当赏</h1></div>
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    <i class="fa fa-qrcode fa-2x" style="line-height:40px;"></i>
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="XuYang 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="XuYang 支付宝">
+        <p>支付宝</p>
+      </div>
+
   </div>
-  
-  
-  
+</div>
 
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>XuYang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuyang112358.github.io/archives/33247.html" title="深入理解LSTM">https://xuyang112358.github.io/archives/33247.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/" rel="tag"># 自然语言处理</a>
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"># 深度学习</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/45468.html" rel="prev" title="PyTorch常用函数汇总">
+      <i class="fa fa-chevron-left"></i> PyTorch常用函数汇总
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
 
 
           </div>
           
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -456,6 +436,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -911,6 +892,59 @@ if(canvas.getContext){
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
