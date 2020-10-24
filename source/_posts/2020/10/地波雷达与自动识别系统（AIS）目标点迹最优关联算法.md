@@ -6,7 +6,7 @@ mathjax: true
 tags: 
   - 数据融合
 categories:
-  - 舟山智慧海洋项目
+  - 舟山海洋项目
 ---
 
 # 问题简介
