@@ -22,33 +22,21 @@
     var CONFIG = {"hostname":"xuyang112358.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":false,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="简介LSTM 是 Long Short Term Memory Networks 的缩写，按字面翻译就是长的短时记忆网络。长时依赖是这样的一个问题，当预测点与依赖的相关信息距离比较远的时候，就难以学到该相关信息。例如在句子“我出生在法国，……   ，我会说法语”中，若要预测末尾“法语”，我们需要用到上下文“法国”。理论上，递归神经网络是可以处理这样的问题的，但是实际上，常规的递归神经网络并不能很好">
+  <meta name="description" content="简介GRU 是 gated recurrent units 的缩写，由 Cho在 2014 年提出。GRU 和 LSTM 最大的不同在于 GRU 将遗忘门和输入门合成了一个”更新门”，同时网络不再额外给出记忆状态，而是将输出结果作为记忆状态不断向后循环传递，网络的输人和输出都变得特别简单。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="深入理解LSTM">
-<meta property="og:url" content="https://xuyang112358.github.io/archives/33247.html">
+<meta property="og:title" content="深入理解GRU">
+<meta property="og:url" content="https://xuyang112358.github.io/archives/35841.html">
 <meta property="og:site_name" content="江东大少爷">
-<meta property="og:description" content="简介LSTM 是 Long Short Term Memory Networks 的缩写，按字面翻译就是长的短时记忆网络。长时依赖是这样的一个问题，当预测点与依赖的相关信息距离比较远的时候，就难以学到该相关信息。例如在句子“我出生在法国，……   ，我会说法语”中，若要预测末尾“法语”，我们需要用到上下文“法国”。理论上，递归神经网络是可以处理这样的问题的，但是实际上，常规的递归神经网络并不能很好">
+<meta property="og:description" content="简介GRU 是 gated recurrent units 的缩写，由 Cho在 2014 年提出。GRU 和 LSTM 最大的不同在于 GRU 将遗忘门和输入门合成了一个”更新门”，同时网络不再额外给出记忆状态，而是将输出结果作为记忆状态不断向后循环传递，网络的输人和输出都变得特别简单。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025110111681.png">
-<meta property="og:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025110208933.png">
-<meta property="og:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025110746083.png">
-<meta property="og:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025110942956.png">
-<meta property="og:image" content="https://xuyang112358.github.io/images/深入理解LSTM/image-20201025111131285.png">
-<meta property="og:image" content="https://xuyang112358.github.io/images/深入理解LSTM/image-20201025112003163.png">
-<meta property="og:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025134220629.png">
-<meta property="og:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025134953855.png">
-<meta property="og:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025174820058.png">
-<meta property="og:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025175048949.png">
-<meta property="og:image" content="https://xuyang112358.github.io/images/序列模型中的注意力机制/HDU_LOGO.png">
-<meta property="article:published_time" content="2020-10-24T14:28:50.000Z">
-<meta property="article:modified_time" content="2020-10-25T10:57:10.000Z">
+<meta property="article:published_time" content="2020-10-24T16:54:37.000Z">
+<meta property="article:modified_time" content="2020-10-25T05:46:14.000Z">
 <meta property="article:author" content="XuYang">
 <meta property="article:tag" content="自然语言处理">
 <meta property="article:tag" content="深度学习">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025110111681.png">
 
-<link rel="canonical" href="https://xuyang112358.github.io/archives/33247.html">
+<link rel="canonical" href="https://xuyang112358.github.io/archives/35841.html">
 
 
 <script id="page-configurations">
@@ -61,7 +49,7 @@
   };
 </script>
 <link rel="stylesheet" type="text/css" href="/css/injector.css" />
-  <title>深入理解LSTM | 江东大少爷</title>
+  <title>深入理解GRU | 江东大少爷</title>
   
 
 
@@ -223,7 +211,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://xuyang112358.github.io/archives/33247.html">
+    <link itemprop="mainEntityOfPage" href="https://xuyang112358.github.io/archives/35841.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -236,7 +224,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          深入理解LSTM
+          深入理解GRU
         </h1>
 
         <div class="post-meta">
@@ -246,7 +234,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-10-24 14:28:50" itemprop="dateCreated datePublished" datetime="2020-10-24T14:28:50Z">2020-10-24</time>
+              <time title="创建时间：2020-10-24 16:54:37" itemprop="dateCreated datePublished" datetime="2020-10-24T16:54:37Z">2020-10-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -274,8 +262,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/archives/33247.html#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/archives/33247.html" itemprop="commentCount"></span>
+    <a title="valine" href="/archives/35841.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/35841.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -285,14 +273,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
+              <span>132</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>1 分钟</span>
             </span>
 
         </div>
@@ -303,51 +291,8 @@
     
     <div class="post-body" itemprop="articleBody">
       
-        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>LSTM 是 Long Short Term Memory Networks 的缩写，按字面翻译就是长的短时记忆网络。长时依赖是这样的一个问题，当预测点与依赖的相关信息距离比较远的时候，就难以学到该相关信息。例如在句子“我出生在法国，……   ，我会说法语”中，若要预测末尾“法语”，我们需要用到上下文“法国”。理论上，递归神经网络是可以处理这样的问题的，但是实际上，常规的递归神经网络并不能很好地解决长时依赖，好的是LSTMs可以很好地解决这个问题。</p>
-<a id="more"></a>
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>GRU 是 gated recurrent units 的缩写，由 Cho在 2014 年提出。GRU 和 LSTM 最大的不同在于 GRU 将遗忘门和输入门合成了一个”更新门”，同时网络不再额外给出记忆状态，而是将输出结果作为记忆状态不断向后循环传递，网络的输人和输出都变得特别简单。</p>
 
-<p>Long Short Term Mermory network（LSTM）是一种特殊的RNNs，可以很好地解决长时依赖问题。那么它与常规神经网络有什么不同？<br>首先我们来看RNNs具体一点的结构：</p>
-<p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025110111681.png" alt="image-20201025110111681"></p>
-<p>所有的递归神经网络都是由重复神经网络模块构成的一条链，可以看到它的处理层非常简单，通常是一个单tanh层，通过当前输入及上一时刻的输出来得到当前输出。与神经网络相比，经过简单地改造，它已经可以利用上一时刻学习到的信息进行当前时刻的学习了。</p>
-<p>LSTM的结构与上面相似，不同的是它的重复模块会比较复杂一点，它有四层结构：</p>
-<p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025110208933.png" alt="image-20201025110208933"></p>
-<p>其中，处理层出现的符号及表示意思如下：</p>
-<p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025110746083.png" alt="image-20201025110746083"></p>
-<h2 id="LSTMs的核心思想"><a href="#LSTMs的核心思想" class="headerlink" title="LSTMs的核心思想"></a><strong>LSTMs的核心思想</strong></h2><p>理解LSTMs的关键就是下面的矩形方框，被称为memory block（记忆块），主要包含了三个门（遗忘门、输入门、输出门）与一个记忆单元（cell）。方框内上方的那条水平线，被称为cell state（单元状态），它就像一个传送带，可以控制信息传递给下一时刻。</p>
-<p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025110942956.png" alt="image-20201025110942956"></p>
-<p>这个矩形方框还可以表示为：</p>
-<img src="../../../images/深入理解LSTM/image-20201025111131285.png" alt="image-20201025111131285" style="zoom: 67%;" />
-
-<p>这两个图可以对应起来看，下图中心的$c_t$即cell，从下方输入（$ h_{t−1},x_t$）到输出$h_t$的一条线即为cell state，$f_t$，$i_t$，$o_t$分别为遗忘门、输入门、输出门，用sigmoid层表示。上图中的两个tanh层则分别对应cell的输入与输出。</p>
-<p>LSTM可以通过门控单元可以对cell添加和删除信息。通过门可以有选择地决定信息是否通过，它有一个sigmoid神经网络层和一个成对乘法操作组成，如下：</p>
-<img src="../../../images/深入理解LSTM/image-20201025112003163.png" alt="image-20201025112003163" style="zoom:67%;" />
-
-<p>该层的输出是一个介于0到1的数，表示允许信息通过的多少，0 表示完全不允许通过，1表示允许完全通过。</p>
-<h1 id="逐步解析LSTM"><a href="#逐步解析LSTM" class="headerlink" title="逐步解析LSTM"></a><strong>逐步解析LSTM</strong></h1><p>标准的循环神经网络内部只有一个简单的层结构，而 LSTM 内部有 4 个层结构：</p>
-<p>第一步是忘记：决定状态中丢弃什么信息</p>
-<p>第二步用来产生更新值的候选项，说明状态在某些维度上需要加强，在某些维度上需要减弱</p>
-<p>第三步是输入，它的输出值要乘到tanh层的输出上，起到一个缩放的作用，极端情况下sigmoid输出0说明相应维度上的状态不需要更新</p>
-<p>第四步决定输出什么，输出值跟状态有关。候选项中的哪些部分最终会被输出由一个sigmoid来决定。</p>
-<p>pytorch 中使用 nn.LSTM 类来搭建基于序列的循环神经网络，他的参数基本与RNN类似。</p>
-<h2 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h2><p>LSTM第一步是用来决定什么信息可以通过cell state。这个决定由“forget gate”层通过sigmoid来控制，它会根据上一时刻的输出$h_{t-1}$和当前输入$x_t$来产生一个0到1的$f_t$值，来决定是否让上一时刻学到的信息$C_{t−1}$通过或部分通过。如下：</p>
-<p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025134220629.png" alt="image-20201025134220629"></p>
-<p>举个例子来说就是，我们在之前的句子中学到了很多东西，一些东西对当前来讲是没用的，可以对它进行选择性地过滤。</p>
-<h2 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h2><p>第二步是产生我们需要更新的新信息。这一步包含两部分，第一个是一个“input gate”层通过sigmoid来决定哪些值用来更新，第二个是一个tanh层用来生成新的候选值$\widetilde{C}_t$，它作为当前层产生的候选值可能会添加到cell state中。我们会把这两部分产生的值结合来进行更新。</p>
-<p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025134953855.png" alt="image-20201025134953855"></p>
-<h2 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h2><p>现在我们对老的cell state进行更新，首先，我们将老的cell state乘以$f_t$来忘掉我们不需要的信息，然后再与$i_t∗\widetilde{C}_t$相加，得到了候选值。</p>
-<p>一二步结合起来就是丢掉不需要的信息，添加新信息的过程：</p>
-<p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025174820058.png" alt="image-20201025174820058"></p>
-<p>举个例子就是，在前面的句子中我们保存的是张三的信息，现在有了新的李四信息，我们需要把张三的信息丢弃掉，然后把李四的信息保存下来。</p>
-<h2 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a>第四步</h2><p>最后一步是决定模型的输出，首先是通过sigmoid层来得到一个初始输出，然后使用tanh将$C_t$值缩放到-1到1间，再与sigmoid得到的输出逐对相乘，从而得到模型的输出。</p>
-<p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025175048949.png" alt="image-20201025175048949"></p>
-<p>这显然可以理解，首先sigmoid函数的输出是不考虑先前时刻学到的信息的输出，tanh函数是对先前学到信息的压缩处理，起到稳定数值的作用，两者的结合学习就是递归神经网络的学习思想。至于模型是如何学习的，那就是后向传播误差学习权重的一个过程了。</p>
-<br>
-
-<br>
-
-<br>
-
-<img src="../../../images/序列模型中的注意力机制/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" />
     </div>
     <div>
       
@@ -365,7 +310,7 @@
   <div class="popular-posts-header">推荐文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\archives\35841.html" rel="bookmark">深入理解GRU</a></div>
+      <div class="popular-posts-title"><a href="\archives\33247.html" rel="bookmark">深入理解LSTM</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\archives\28087.html" rel="bookmark">序列模型中的注意力机制</a></div>
@@ -402,7 +347,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://xuyang112358.github.io/archives/33247.html" title="深入理解LSTM">https://xuyang112358.github.io/archives/33247.html</a>
+    <a href="https://xuyang112358.github.io/archives/35841.html" title="深入理解GRU">https://xuyang112358.github.io/archives/35841.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -423,13 +368,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/archives/45468.html" rel="prev" title="PyTorch常用函数汇总">
-      <i class="fa fa-chevron-left"></i> PyTorch常用函数汇总
+    <a href="/archives/33247.html" rel="prev" title="深入理解LSTM">
+      <i class="fa fa-chevron-left"></i> 深入理解LSTM
     </a></div>
-      <div class="post-nav-item">
-    <a href="/archives/35841.html" rel="next" title="深入理解GRU">
-      深入理解GRU <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -489,7 +431,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LSTMs%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="nav-number">1.1.</span> <span class="nav-text">LSTMs的核心思想</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%90%E6%AD%A5%E8%A7%A3%E6%9E%90LSTM"><span class="nav-number">2.</span> <span class="nav-text">逐步解析LSTM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5"><span class="nav-number">2.1.</span> <span class="nav-text">第一步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5"><span class="nav-number">2.2.</span> <span class="nav-text">第二步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5"><span class="nav-number">2.3.</span> <span class="nav-text">第三步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5"><span class="nav-number">2.4.</span> <span class="nav-text">第四步</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

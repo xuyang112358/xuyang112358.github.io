@@ -6,7 +6,7 @@
   <link href="https://xuyang112358.github.io/atom.xml" rel="self"/>
   
   <link href="https://xuyang112358.github.io/"/>
-  <updated>2020-10-24T06:49:56.000Z</updated>
+  <updated>2020-10-25T05:46:14.000Z</updated>
   <id>https://xuyang112358.github.io/</id>
   
   <author>
@@ -17,14 +17,41 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>深入理解GRU</title>
+    <link href="https://xuyang112358.github.io/archives/35841.html"/>
+    <id>https://xuyang112358.github.io/archives/35841.html</id>
+    <published>2020-10-24T16:54:37.000Z</published>
+    <updated>2020-10-25T05:46:14.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;p&gt;GRU 是 gated recurrent units 的缩写，由 Cho在 2014 年提出。GRU 和 LSTM 最大的不同在于</summary>
+        
+      
+    
+    
+    
+    <category term="循环神经网络" scheme="https://xuyang112358.github.io/categories/%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="自然语言处理" scheme="https://xuyang112358.github.io/tags/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/"/>
+    
+    <category term="深度学习" scheme="https://xuyang112358.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>深入理解LSTM</title>
     <link href="https://xuyang112358.github.io/archives/33247.html"/>
     <id>https://xuyang112358.github.io/archives/33247.html</id>
     <published>2020-10-24T14:28:50.000Z</published>
-    <updated>2020-10-24T06:49:56.000Z</updated>
+    <updated>2020-10-25T10:57:10.000Z</updated>
     
     
-    <summary type="html">&lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;p&gt;LSTM 是 Long Short Term Memory Networks 的缩写，按字面翻译就是长的短时记忆网络。LSTM 的网络结构是 1997 年由 Hochreiter 和 Schmidhuber 提出的，随后这种网络结构变得非常流行。 LSTM虽然只解决了短期依赖的问题，并且它通过刻意的设计来避免长期依赖问题，这样的做法在实际应用中被证明还是十分有效的，有很多人跟进相关的工作解决了很多实际的问题，所以现在LSTM 仍然被广泛地使用。&lt;/p&gt;</summary>
+    <summary type="html">&lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;p&gt;LSTM 是 Long Short Term Memory Networks 的缩写，按字面翻译就是长的短时记忆网络。长时依赖是这样的一个问题，当预测点与依赖的相关信息距离比较远的时候，就难以学到该相关信息。例如在句子“我出生在法国，……   ，我会说法语”中，若要预测末尾“法语”，我们需要用到上下文“法国”。理论上，递归神经网络是可以处理这样的问题的，但是实际上，常规的递归神经网络并不能很好地解决长时依赖，好的是LSTMs可以很好地解决这个问题。&lt;/p&gt;</summary>
     
     
     
@@ -111,7 +138,7 @@
     <link href="https://xuyang112358.github.io/archives/28087.html"/>
     <id>https://xuyang112358.github.io/archives/28087.html</id>
     <published>2020-10-20T09:34:56.000Z</published>
-    <updated>2020-10-24T07:07:22.000Z</updated>
+    <updated>2020-10-25T01:34:42.000Z</updated>
     
     
     <summary type="html">&lt;p&gt;现在很多研究的NLP（自然语言处理）问题都可以转换成一个Sequence to Sequence模型来解决，比如说机器翻译，智能问答，语音识别等。&lt;/p&gt;

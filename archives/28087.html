@@ -49,7 +49,7 @@
 <meta property="og:image" content="https://xuyang112358.github.io/images/%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B%E4%B8%AD%E7%9A%84%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/242423.png">
 <meta property="og:image" content="https://xuyang112358.github.io/images/序列模型中的注意力机制/HDU_LOGO.png">
 <meta property="article:published_time" content="2020-10-20T09:34:56.000Z">
-<meta property="article:modified_time" content="2020-10-24T07:07:22.000Z">
+<meta property="article:modified_time" content="2020-10-25T01:34:42.000Z">
 <meta property="article:author" content="XuYang">
 <meta property="article:tag" content="自然语言处理">
 <meta property="article:tag" content="深度学习">
@@ -358,7 +358,7 @@
 <p><img src="../../../images/%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B%E4%B8%AD%E7%9A%84%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/231455512341243214.png" alt="231455512341243214"></p>
 <center>图6 注意力分配概率计算</center>
 
-<p>对于采用RNN的Decoder来说，在时刻i，如果要生成$y_i$单词，我们是可以知道Target在生成$y_i$之前的时刻i-1时，隐层节点i-1时刻的输出值$H_{i-1}$的，而我们的目的是要计算生成$y_i$时输入句子中的单词“Tom”、“Chase”、“Jerry”对$y_i$来说的注意力分配概率分布，那么可以用Target输出句子i-1时刻的隐层节点状态$H_{i-1}$去一一和输入句子Source中每个单词对应的RNN隐层节点状态$H_j$进行对比，即通过函数$F(h_j,H{i-1})$来获得目标单词$y_i$和每个输入单词对应的对齐可能性，这个F函数在不同论文里可能会采取不同的方法，然后函数F的输出经过Softmax进行归一化就得到了符合概率分布取值区间的注意力分配概率分布数值。</p>
+<p>对于采用RNN的Decoder来说，在时刻i，如果要生成$y_i$单词，我们是可以知道Target在生成$y_i$之前的时刻i-1时，隐层节点i-1时刻的输出值$H_{i-1}$的，而我们的目的是要计算生成$y_i$时输入句子中的单词“Tom”、“Chase”、“Jerry”对$y_i$来说的注意力分配概率分布，那么可以用Target输出句子i-1时刻的隐层节点状态$H_{i-1}$去一一和输入句子Source中每个单词对应的RNN隐层节点状态$H_j$进行对比，即通过函数$F(h_j,H_{i-1})$来获得目标单词$y_i$和每个输入单词对应的对齐可能性，这个F函数在不同论文里可能会采取不同的方法，然后函数F的输出经过Softmax进行归一化就得到了符合概率分布取值区间的注意力分配概率分布数值。</p>
 <p>绝大多数Attention模型都是采取上述的计算框架来计算注意力分配概率分布信息，区别只是在F的定义上可能有所不同。图7可视化地展示了在英语-德语翻译系统中加入Attention机制后，Source和Target两个句子每个单词对应的注意力分配概率分布：</p>
 <p><img src="../../../images/%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B%E4%B8%AD%E7%9A%84%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/58678734624563.png" alt="58678734624563"></p>
 <center>图7 英语-德语翻译的注意力概率分布</center>
@@ -441,6 +441,9 @@
       
   <div class="popular-posts-header">推荐文章</div>
   <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\35841.html" rel="bookmark">深入理解GRU</a></div>
+    </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\archives\33247.html" rel="bookmark">深入理解LSTM</a></div>
     </li>
@@ -579,7 +582,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -616,6 +619,10 @@
 +        
         
           <li>
+            <a href="/archives/35841.html" title="深入理解GRU" target="_blank">深入理解GRU</a>
+          </li>
+        
+          <li>
             <a href="/archives/33247.html" title="深入理解LSTM" target="_blank">深入理解LSTM</a>
           </li>
         
@@ -629,10 +636,6 @@
         
           <li>
             <a href="/archives/15340.html" title="基于AIS的船舶轨迹分析的研究与应用" target="_blank">基于AIS的船舶轨迹分析的研究与应用</a>
-          </li>
-        
-          <li>
-            <a href="/archives/28087.html" title="序列模型中的注意力机制" target="_blank">序列模型中的注意力机制</a>
           </li>
         
       </ul>
@@ -934,13 +937,13 @@ if(canvas.getContext){
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">19k</span>
+    <span title="站点总字数">21k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">17 分钟</span>
+    <span title="站点阅读时长">19 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
