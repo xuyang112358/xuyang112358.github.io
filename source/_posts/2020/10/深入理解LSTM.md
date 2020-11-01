@@ -97,6 +97,46 @@ LSTM第一步是用来决定什么信息可以通过cell state。这个决定由
 
 这显然可以理解，首先sigmoid函数的输出是不考虑先前时刻学到的信息的输出，tanh函数是对先前学到信息的压缩处理，起到稳定数值的作用，两者的结合学习就是递归神经网络的学习思想。至于模型是如何学习的，那就是后向传播误差学习权重的一个过程了。
 
+# LSTM IN PyTorch
+
+- LSTM的输入总是一个3D数组.  (batch_size, time_steps, seq_len)
+
+- LSTM的输出根据return_sequences参数可以是2D或3D数组
+
+- 若return_sequences是False，则输出是2D数组.  (batch_size, units)
+
+- 若return_sequences是True，则输出是3D数组.  (batch_size, time_steps, units)
+
+PyTorch提供了从LSTMs，CNNs和GRUs等层到SGD，Adam等优化器的大多数常用实体的实现。使用这些实体中任何一个的一般范例是首先创建带有某些必需参数的torch.nn.entity实例。例如，这是我们实例化lstm的方法：
+
+```python
+  # Step 1
+  lstm = torch.nn.LSTM(input_size=5, hidden_size=10, batch_first=True)
+```
+
+接下来，当我们实际上想在某些输入上运行LSTM时，将输入作为参数来调用该对象。这在下面的第三行中显示：
+
+```python
+lstm_in = torch.rand(40, 20, 5)
+hidden_in = (torch.zeros(1, 40, 10), torch.zeros(1, 40, 10)) #(h0,c0)
+# Step 2
+lstm_out, lstm_hidden = lstm(lstm_in, hidden_in)
+```
+
+**关于维度注意：**
+
+在常规范例的第2步中，torch.nn.LSTM期望输入为大小为（seq_len，batch，embedding_dim）的3D输入张量，并返回大小为（seq_len，batch，hidden_dim）的输出张量。
+
+例如，考虑输入输出对（“ ERPDRF”，“ SECRET”）这两个单词。使用embedding_dim为5时，将6个字母长的输入ERPDRF转换为大小为6 x 1 x 5的输入张量。如果hidden_dim为10，则LSTM将输入处理为大小为6 x 1 x 10的输出张量。
+
+**输出转换：**
+
+一般的解决方法是通过所谓的线性变换将D维张量转换为V维张量。除了定义之外，其思想是使用矩阵乘法来获得所需的尺寸。
+
+假设LSTM产生了一个输出张量O，大小为seq_len x batch x hidden_dim。回想一下，我们一次只提供一个示例，因此batch始终为1。这实际上为我们提供了一个输出张量O，大小为seq_len x hidden_dim。现在，如果我们将此输出张量与大小为hidden_dim x  embedding_dim的另一个张量W相乘，则所得张量 R = O×W 的大小为seq_len x embedding_dim。这正是我们想要的。
+
+为了实现线性层，我们创建一个torch.nn.Linear实例。这次，文档将所需参数列出为in_features：每个输入样本的大小，out_features：每个输出样本的大小。请注意，这仅会变换输入张量的最后一个维度。因此，例如，如果我们传入大小为（d1，d2，d3，...，dn，in_features）的输入张量，则输出张量将具有除最后一个维度以外的所有尺寸，并且将为大小（d1，d2，d3，...，dn，out_features）。
+
 <br>
 
 <br>

@@ -11,9 +11,9 @@ categories:
 
 # nn.Linear
 
-<!-- more -->
-
 <img src="../../../images/PyTorch常用函数汇总/image-20201023214312121.png" alt="image-20201023214312121" style="zoom:80%;" />
+
+<!-- more -->
 
 U指的是均匀分布，即weight权重（A的转置）是取自输入尺寸的倒数再开方后的正负值之间的均匀分布，同理可得偏置bias是输出尺寸的倒数再开方后的正负值之间的均匀分布。
 
