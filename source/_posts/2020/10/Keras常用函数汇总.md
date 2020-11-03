@@ -77,3 +77,35 @@ time_major=False,
 unroll=False,  # 布尔值 (默认 False)。 如果为 True，则网络将展开，否则将使用符号循环。 展开可以加速 RNN，但它往往会占用更多的内存。 展开只适用于短序列
 **kwargs)
 ```
+
+# RepeatVector函数
+
+```python
+keras.layers.RepeatVector(n)
+```
+
+将输入重复n次。
+
+**例：**
+
+```
+model = Sequential()
+model.add(Dense(32, input_dim=32))
+# 现在：model.output_shape == (None, 32)
+# 注意：`None` 是批表示的维度
+
+model.add(RepeatVector(3))
+# 现在：model.output_shape == (None, 3, 32)
+```
+
+**参数**
+
+- n：整数，重复次数
+
+**输入尺寸**
+
+2D张量，尺寸为（num_samples, features）
+
+**输出尺寸**
+
+3D张量，尺寸为（num_samples, n, features）
