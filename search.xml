@@ -1,57 +1,345 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes</title>
-    <url>/archives/28714.html</url>
-    <content><![CDATA[<p>Fei Yu,Yan Zeng,Z.Q. Guan,S.H. Lo. A robust Delaunay-AFT based parallel method for the generation of large-scale fully constrained meshes[J]. Computers and Structures,2020,228.</p>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文研究者充分利用串行Delaunay-AFT网格生成器，<u>开发了一种在分布式存储的机器上生成大规模四面体网格的并行方法</u>。 </p>
-<p>为了生成具有所需和保留属性的网格，<u>使用了一种基于Delaunay-AFT的域分解(DD)技术</u>。从覆盖问题域的Delaunay三角剖分(DT)开始，该技术创建了一层元素，将整个域划分为几个区域。将最初粗糙的网格域划分为了可以进行并行网格划分的子域的DTs。 当一个子域的大小小于用户指定的阈值，将用标准Delaunay-AFT方法进行网格划分。     </p>
-<p><u>设计了两级DD策略来提高了该算法的并行效率</u>。<u>还使用消息传递接口(MPI)实现了动态负载均衡方案</u>。 <u>引入了核心外网格划分，以适应过大的网格</u>，而这些网格不能由计算机的可用存储器(RAM)处理。 <u>对具有数千个表面贴片的各种复杂几何形状进行了数值试验，创建了拥有超过100亿个四面体元素的超大尺度网格</u>。 此外，不同DD操作次数生成的网格在质量上几乎相同：显示了自动分解算法的一致性和稳定性。</p>
+    <title>先验分布、后验分布、似然估计</title>
+    <url>/archives/58944.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><ul>
+<li>无论是《通信原理》、《信息论》、《信道编码》还是《概率与统计理论》，或者在现在流行的《模式识别》和《Machine Learning》中总会遇到这么几个概念：<strong>先验分布/后验分布/似然估计</strong>。</li>
+</ul>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><ul>
+<li><strong>一个隔壁小哥的故事</strong></li>
+<li><strong>故事中的因果和三个概念</strong></li>
+<li><strong>贝叶斯公式的角色</strong></li>
+<li><strong>最大似然估计和贝叶斯的关系</strong></li>
+</ul>
 <a id="more"></a>
-<h1 id="具体论文"><a href="#具体论文" class="headerlink" title="具体论文"></a>具体论文</h1><h2 id="并行域分解和网格产生算法"><a href="#并行域分解和网格产生算法" class="headerlink" title="并行域分解和网格产生算法"></a>并行域分解和网格产生算法</h2><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016180107878.png" alt="image-20201016180107878"></p>
-<h2 id="并行域分解和网格产生算法-1"><a href="#并行域分解和网格产生算法-1" class="headerlink" title="并行域分解和网格产生算法"></a>并行域分解和网格产生算法</h2><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016193028229.png" alt="image-20201016193028229"></p>
-<h2 id="一级域分解"><a href="#一级域分解" class="headerlink" title="一级域分解"></a>一级域分解</h2><p><img src="../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016180334321.png" alt="image-20201016180334321" style="zoom: 80%;" /></p>
-<p>（a）进行CDT分解的区域。</p>
-<p>（b）扩展的Delaunay-AFT方法引入了一层形状良好的单元作为分离层。</p>
-<p>（c）独立的并行处理器进行进一步的域分解。</p>
-<p>（d）并行子域网格生成的中间阶段，三个处理器完成，一个正在进行。</p>
-<h2 id="二级域分解"><a href="#二级域分解" class="headerlink" title="二级域分解"></a>二级域分解</h2><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016192227404.png" alt="image-20201016192227404"></p>
-<p>(a) 引入L0,L1分割切割面。</p>
-<p>(b) 将领域用L0,L1周围的分割元划分成四个不完全的区域。</p>
-<p>(c)通过并行的处理器在平面Π周围生成分割面。</p>
-<p>(d)不完全的区域合并成了单个区域，然后通过Π周围的分割元自动分为了两个子区域。</p>
-<p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016192433173.png" alt="image-20201016192433173"></p>
-<p>上图是二级域分解的直观情况，（a）是在切割线周围产生分割元，（b）是在切割面周围产生分割元</p>
-<h1 id="动态负载均衡"><a href="#动态负载均衡" class="headerlink" title="动态负载均衡"></a>动态负载均衡</h1><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016192634936.png" alt="image-20201016192634936"></p>
-<p>由于Delaunay-AFT法网格生成的速度与各种因素的组合有关，因此难以准确地评价网格划分工作。</p>
-<p>因此，相比于静态负载分配，动态负载均衡策略更合适。</p>
-<p>网格域被划分为比处理器数(Np)多得多的子域。 然后将处理器动态地分配进行网格生成。如算法3所示，基本实现结构是主/从模型。在这个模型中，主处理器接收请求，并指示从处理器执行它们，从处理器独立于其他从处理器运行。</p>
-<h1 id="核心外网格划分"><a href="#核心外网格划分" class="headerlink" title="核心外网格划分"></a>核心外网格划分</h1><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016192725596.png" alt="image-20201016192725596"></p>
-<p> 由于主从模型有很强的解耦性和简单性，所以核外的网格划分能通过改变消息传递的方式简单地实现。</p>
-<p>网格数据被序列化之后使用MPI_Send和MPI_Recv方法在处理器之间传输数据。</p>
-<p>但是，当从机需要发送网格数据给主机，然后主机需要广播数据给从机时，通信开销会变得非常大，这也是并行方法的瓶颈。</p>
-<p>在本工作中，序列化的网格数据被转储到处理器之间共享的磁盘上，并将表示相应文件路径的字符串视为对需要传递的数据的代替，由于文件路径的字符串长度很小，主机通讯的时间可以忽略不计，所以通讯开销会变得很小。</p>
-<p>同时，完成的网格立即导出以释放内存，这样，内存需求明显降低，因为只有正在处理的网格保存在RAM中。 </p>
-<h1 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h1><h2 id="加速比"><a href="#加速比" class="headerlink" title="加速比"></a>加速比</h2><p>分别对齿轮箱、显卡、喷气引擎进行了网格划分测试。</p>
-<p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016192809878.png" alt="image-20201016192809878"></p>
-<h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016193252883.png" alt="image-20201016193252883"></p>
-<p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016193258301.png" alt="image-20201016193258301"></p>
-<h2 id="网格质量"><a href="#网格质量" class="headerlink" title="网格质量"></a>网格质量</h2><p>网格质量通过以下公式定义：</p>
+<h2 id="隔壁小哥的故事"><a href="#隔壁小哥的故事" class="headerlink" title="隔壁小哥的故事"></a>隔壁小哥的故事</h2><p>隔壁小哥要去15公里外的一个公园，他可以选择<strong>步行走路</strong>，<strong>骑自行车</strong>或者<strong>开辆车</strong>，然后通过其中一种方式<strong>花了一段时间</strong>到达公园。</p>
+<p>首先在这个事里边，大家不要关注隔壁小哥去干嘛，也许去送外卖吧：) 。言归正传，这件事中<strong>采用哪种交通方式是因</strong>，<strong>花了多长时间是果</strong>。俗话说瓜熟蒂落，皆是因果；因果循环，报应不爽。要理解即将提到的概念，何为因何为果先要搞清楚。</p>
+<h2 id="三个概念之后验（知果求因）"><a href="#三个概念之后验（知果求因）" class="headerlink" title="三个概念之后验（知果求因）"></a>三个概念之后验（知果求因）</h2><p>隔壁小哥去公园的故事才刚刚开始，假设在这里您已经牢记住这个故事的因和果。故事仍然要接着讲，顺便带出我们的概念。</p>
+<p>假设我们<strong>已经知道小哥花了1个小时到了公园</strong>，那么你猜他是怎么去的（走路or坐车or自行车），事实上我们<strong>不能百分百确定</strong>他的交通方式，我们正常人的思路是他<strong>很大可能</strong>是骑车过去的，当然也不排除开车过去却由于堵车严重花了很长时间，当然还有可能他是个赛跑的运动员自己一路飞跑过去的。</p>
+<p>假设<strong>已经知道小哥花了3个小时才到公园</strong>，这个时候我们猜的时候会觉得他<strong>很大可能</strong>是静静地走路过去的。但是假设<strong>已经知道小哥只花了20分钟才到公园</strong>，那么正常人会觉得他<strong>最大可能</strong>是开车奔驰而去。</p>
+<p>这种预先<strong>已知结果</strong>（路上花的时间），然后根据结果<strong>估计</strong>（猜）<strong>原因</strong>（交通方式）的概率分布即 <strong>后验概率</strong>。</p>
+<p>例子问题公式化：</p>
 <script type="math/tex; mode=display">
-\sigma=3\frac{r_i}{r_c}</script><p>其中$r_i$是内接圆半径，$r_c$是外接圆半径，$\sigma$越接近1，说明网格的形状越接近正四面体，质量越高，由于实际正四面体的内外接圆半径之比为$\frac{1}{3}$，所以乘上3归一化。</p>
-<p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016193551630.png" alt="image-20201016193551630"></p>
-<p>上图是三个模型在不同网格质量下的网格数目，可见并行对网格质量影响不大，生成网格大部分都为高质量网格。</p>
+P(\text { 交通方式|花费的时间 })</script><p>修改成一般的公式：</p>
+<script type="math/tex; mode=display">
+P(\text { 因|果 })</script><p>公式正规化：</p>
+<script type="math/tex; mode=display">
+P\left(\theta \mid x)\right.</script><p>（公式中的 “|”读作 <em>given</em>，即给定的意思。如P ( A ∣ B )即A given B 的概率）</p>
+<p><strong>[解释]</strong>：看到这里估计大家很奇怪为什么要用$x$ 、 $\theta$这样的字母表示，而不是熟悉的$x$ 、$y$。这样表示自然是有原因的。在这里大家只需要先暂时记住$\theta$代表<strong>因</strong>、$x$代表<strong>果</strong>，后面的贝叶斯我们将会具体介绍这些字母的含义。</p>
+<h2 id="三个概念之先验概率（由历史求因）"><a href="#三个概念之先验概率（由历史求因）" class="headerlink" title="三个概念之先验概率（由历史求因）"></a>三个概念之先验概率（由历史求因）</h2><p>换个情景，我们<strong>不再考虑</strong>隔壁小哥去公园的结果了。假设隔壁小哥还没去，大早上刚起床，打算吃完早饭再去。</p>
+<p>假设我们<strong>比较了解小哥的个人习惯</strong>，别管怎么了解的：) 。小哥是个健身爱好者就喜欢跑步运动，这个时候我们可以猜测他更可能倾向于走路过去。</p>
+<p>当然我的隔壁小哥是个大死肥宅，懒得要命！这个时候我们猜测他更可能倾向于坐车，连骑自行车的可能性都不大。</p>
+<p>这个情景中隔壁小哥的<strong>交通工具选择与花费时间不再相关</strong>。因为我们是<strong>在结果发生前</strong>就开始猜的，根据历史规律确定<strong>原因</strong> （交通方式）的概率分布即 <strong>先验概率</strong>。</p>
+<p>例子问题公式化：</p>
+<script type="math/tex; mode=display">
+P(\text { 交通方式 })</script><p>一般化：</p>
+<script type="math/tex; mode=display">
+P(\text {因})</script><p>正规化：</p>
+<script type="math/tex; mode=display">
+P({\theta})</script><h2 id="三个概念之似然估计（由因求果）"><a href="#三个概念之似然估计（由因求果）" class="headerlink" title="三个概念之似然估计（由因求果）"></a>三个概念之似然估计（由因求果）</h2><p>换个情景，我们<strong>先</strong>重新考虑隔壁小哥去公园的交通方式。</p>
+<p>假设隔壁小哥<strong>步行</strong>走路去，15公里的路到公园，<strong>一般情况下</strong>小哥大概要用2个多小时，当然<strong>很小的可能性是</strong>小哥是飞毛腿，跑步过去用了1个小时左右，<strong>极为小的可能</strong>是小哥是隐藏的高手，10分钟就轻功跑酷到了。</p>
+<p>小哥决定开车，到公园半个小时是<strong>非常可能的</strong>，<strong>非常小的概率</strong>是小哥因为途径的路上有车祸堵了3个小时。</p>
+<p>这种<strong>先定下来原因</strong>，<strong>根据原因来估计结果</strong>的概率分布即 <strong>似然估计</strong>。根据原因来统计各种可能结果的概率即<strong>似然函数</strong>。</p>
+<p>似然函数问题公式化：</p>
+<script type="math/tex; mode=display">
+P(\text { 时间|交通方式 })</script><p>一般化：</p>
+<script type="math/tex; mode=display">
+P(\text { 果|因 })</script><p>正规化：</p>
+<script type="math/tex; mode=display">
+P\left(x \mid \theta)\right.</script><h2 id="贝叶斯公式"><a href="#贝叶斯公式" class="headerlink" title="贝叶斯公式"></a>贝叶斯公式</h2><p>我们熟知的贝叶斯公式是这样的：</p>
+<script type="math/tex; mode=display">
+P(A|B)={P(B|A)*P(A) \over P(B)}</script><p>但在这里我们采用如下形式：</p>
+<script type="math/tex; mode=display">
+P(\theta|x)={P(x|\theta)*P(\theta) \over P(x)}</script><script type="math/tex; mode=display">
+后验概率={似然估计*先验概率 \over evidence}</script><p><strong>[注]</strong>：$P(x)$即 <em>evidence</em> 。隔壁小哥去公园很多次，忽略交通方式是什么，<strong>只统计每次到达公园的时间$x$</strong>，于是得到了一组时间的概率分布。这种不考虑原因，只看结果的概率分布即 <em>evidence</em> ，它也称为样本发生的概率分布的<strong>证据</strong>。</p>
+<p> <em>evidence</em> 在故事中如下表示：</p>
+<script type="math/tex; mode=display">
+P(时间)</script><p><strong>或</strong></p>
+<script type="math/tex; mode=display">
+P(果)</script><p><br></p>
 <p><br></p>
 <p><br></p>
-<p><br></p>
-<p><img src="../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" /></p>
+<p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" /></p>
 ]]></content>
       <categories>
-        <category>并行与分布式计算</category>
+        <category>机器学习</category>
       </categories>
       <tags>
-        <tag>并行与分布式计算</tag>
-        <tag>网格划分</tag>
+        <tag>深度学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Keras常用函数汇总</title>
+    <url>/archives/24767.html</url>
+    <content><![CDATA[<h1 id="tf-keras-Input函数"><a href="#tf-keras-Input函数" class="headerlink" title="tf.keras.Input函数"></a>tf.keras.Input函数</h1><p><code>tf.keras.Input</code>函数用于构建网络的第一层——输入层，向模型中输入数据，该层会告诉网络我们的输入的尺寸是什么，并指定数据的形状、数据类型等信息，会返回一个Model对象，通过该对象可以调用model.compile和model.fit函数，非常方便。</p>
+<p>首先给出 <code>tf.keras.Input</code> 的函数定义：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tf.keras.Input(</span><br><span class="line">    shape=<span class="literal">None</span>,</span><br><span class="line">    batch_size=<span class="literal">None</span>,</span><br><span class="line">    name=<span class="literal">None</span>,</span><br><span class="line">    dtype=<span class="literal">None</span>,</span><br><span class="line">    sparse=<span class="literal">False</span>,</span><br><span class="line">    tensor=<span class="literal">None</span>,</span><br><span class="line">    **kwargs</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>其中各个参数的含义为（前四个是常用的）：</p>
+<ul>
+<li><code>shape</code>：输入的形状，一个形状元组(由整数组成)，其中并不指定batch size，只是定义输入的数据的形状。比如<code>shape=(32, )</code>和<code>shape=32</code>是等价的，表示输入都为32维的向量。</li>
+<li><code>batch_size</code>: 声明输入的batch_size大小，一般会在预测时候用，训练时不需要声明，会在fit时声明，即dataset类型数据声明了batch_size。</li>
+<li><code>name</code>：可选参数，字符串形式表示当前层的名字。如果没有这个参数的话，会自动生成。</li>
+<li><p><code>dtype</code>：数据类型，在大多数时候，我们需要的数据类型为tf.float32，因为在精度满足的情况下，float32运算更快。</p>
+</li>
+<li><p><code>sparse</code>：一个布尔值，指示创建的占位符是否是稀疏的。</p>
+</li>
+<li><code>tensor</code>：将现有张量wrap到Input层中，如果设置了的话，Input层将不会创建占位符张量(可以理解为张量是已有的，所以不需要创建新的占位符)</li>
+<li><code>**kwargs</code>：当前并不支持的参数</li>
+</ul>
+<p>以下为一个实例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># this is a logistic regression in Keras</span></span><br><span class="line">x = Input(shape=(<span class="number">32</span>,))</span><br><span class="line">y = Dense(<span class="number">16</span>, activation=<span class="string">&#x27;softmax&#x27;</span>)(x)</span><br><span class="line">model = Model(x, y)</span><br></pre></td></tr></table></figure>
+<h1 id="keras-layers-LSTM函数"><a href="#keras-layers-LSTM函数" class="headerlink" title="keras.layers.LSTM函数"></a>keras.layers.LSTM函数</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">(units,  <span class="comment"># 输出维度，指的是每一个lstm单元的hidden layer的神经元数量</span></span><br><span class="line">activation=<span class="string">&#x27;tanh&#x27;</span>,  <span class="comment"># 要使用的激活函数</span></span><br><span class="line">recurrent_activation=<span class="string">&#x27;sigmoid&#x27;</span>,  <span class="comment"># 用于循环时间步的激活函数</span></span><br><span class="line">use_bias=<span class="literal">True</span>,  <span class="comment"># 布尔值，该层是否使用偏置向量</span></span><br><span class="line">kernel_initializer=<span class="string">&#x27;glorot_uniform&#x27;</span>,  <span class="comment"># 权值矩阵的初始化器，用于输入的线性转换</span></span><br><span class="line">recurrent_initializer=<span class="string">&#x27;orthogonal&#x27;</span>,  <span class="comment"># 权值矩阵的初始化器，用于循环层状态的线性转换</span></span><br><span class="line">bias_initializer=<span class="string">&#x27;zeros&#x27;</span>,  <span class="comment"># 偏置向量的初始化器</span></span><br><span class="line">unit_forget_bias=<span class="literal">True</span>,  <span class="comment"># 布尔值。如果为 True，初始化时，将忘记门的偏置加1。将其设置为 True 同时还会强制 bias_initializer=&quot;zeros&quot;</span></span><br><span class="line">kernel_regularizer=<span class="literal">None</span>,  <span class="comment"># 运用到 kernel 权值矩阵的正则化函数</span></span><br><span class="line">recurrent_regularizer=<span class="literal">None</span>,  <span class="comment"># 运用到 recurrent_kernel 权值矩阵的正则化函数</span></span><br><span class="line">bias_regularizer=<span class="literal">None</span>,  <span class="comment"># 运用到偏置向量的正则化函数</span></span><br><span class="line">activity_regularizer=<span class="literal">None</span>,  <span class="comment"># 运用到层输出（它的激活值）的正则化函数 </span></span><br><span class="line">kernel_constraint=<span class="literal">None</span>,  <span class="comment"># 运用到 kernel 权值矩阵的约束函数</span></span><br><span class="line">recurrent_constraint=<span class="literal">None</span>,  <span class="comment"># 运用到 recurrent_kernel 权值矩阵的约束函数</span></span><br><span class="line">bias_constraint=<span class="literal">None</span>,  <span class="comment"># 运用到偏置向量的约束函数</span></span><br><span class="line">dropout=<span class="number">0.</span>,  <span class="comment"># 在 0 和 1 之间的浮点数。 单元的丢弃比例，用于输入的线性转换。</span></span><br><span class="line">recurrent_dropout=<span class="number">0.</span>,  <span class="comment"># 在 0 和 1 之间的浮点数。 单元的丢弃比例，用于循环层状态的线性转换</span></span><br><span class="line">implementation=<span class="number">2</span>,  <span class="comment"># 实现模式，1 或 2。 模式 1 将把它的操作结构化为更多的小的点积和加法操作， 而模式 2 将把它们分批到更少，更大的操作中。 这些模式在不同的硬件和不同的应用中具有不同的性能配置文件</span></span><br><span class="line">return_sequences=<span class="literal">False</span>,  <span class="comment"># 布尔值。是返回输出序列中的最后一个输出，还是全部序列</span></span><br><span class="line">return_state=<span class="literal">False</span>,  <span class="comment"># True:输出状态，以供下一个lstm单元使用。false:不输出state</span></span><br><span class="line">go_backwards=<span class="literal">False</span>,  <span class="comment"># 布尔值 (默认 False)。 如果为 True，则向后处理输入序列并返回相反的序列</span></span><br><span class="line">stateful=<span class="literal">False</span>,  <span class="comment"># 布尔值 (默认 False)。 如果为 True，则批次中索引 i 处的每个样品的最后状态 将用作下一批次中索引 i 样品的初始状态</span></span><br><span class="line">time_major=<span class="literal">False</span>,</span><br><span class="line">unroll=<span class="literal">False</span>,  <span class="comment"># 布尔值 (默认 False)。 如果为 True，则网络将展开，否则将使用符号循环。 展开可以加速 RNN，但它往往会占用更多的内存。 展开只适用于短序列</span></span><br><span class="line">**kwargs)</span><br></pre></td></tr></table></figure>
+<h1 id="RepeatVector函数"><a href="#RepeatVector函数" class="headerlink" title="RepeatVector函数"></a>RepeatVector函数</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">keras.layers.RepeatVector(n)</span><br></pre></td></tr></table></figure>
+<p>将输入重复n次。</p>
+<p><strong>例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">model &#x3D; Sequential()</span><br><span class="line">model.add(Dense(32, input_dim&#x3D;32))</span><br><span class="line"># 现在：model.output_shape &#x3D;&#x3D; (None, 32)</span><br><span class="line"># 注意：&#96;None&#96; 是批表示的维度</span><br><span class="line"></span><br><span class="line">model.add(RepeatVector(3))</span><br><span class="line"># 现在：model.output_shape &#x3D;&#x3D; (None, 3, 32)</span><br></pre></td></tr></table></figure>
+<p><strong>参数</strong></p>
+<ul>
+<li>n：整数，重复次数</li>
+</ul>
+<p><strong>输入尺寸</strong></p>
+<p>2D张量，尺寸为（num_samples, features）</p>
+<p><strong>输出尺寸</strong></p>
+<p>3D张量，尺寸为（num_samples, n, features）</p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>Keras</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>三个概念：Epoch, Batch, Iteration</title>
+    <url>/archives/65471.html</url>
+    <content><![CDATA[<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left"><center>名词</center></th>
+<th style="text-align:left"><center>定义</center></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Epoch</strong></td>
+<td style="text-align:left">使用训练集的全部数据对模型进行一次完整训练，被称之为 <strong>“一代训练”</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Batch</strong></td>
+<td style="text-align:left">使用训练集中的一小部分样本对模型权重进行一次反向传播的参数更新，这一小部分样本被称为 <strong>“一批数据”</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Iteration</strong></td>
+<td style="text-align:left">使用一个<strong>Batch</strong>数据对模型进行一次参数更新的过程，被称之为 <strong>“一次训练”</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<a id="more"></a>
+<ul>
+<li><p><strong>Epoch（时期）：</strong></p>
+<p>当一个完整的数据集通过了神经网络一次并且返回了一次，这个过程称为一次Epoch。（也就是说，<strong>所有训练样本</strong>在神经网络中都进行了一次<strong>正向传播</strong> 和一次<strong>反向传播</strong> ）。再通俗一点，一个Epoch就是<strong>将所有训练样本训练一次</strong>的过程。</p>
+</li>
+</ul>
+<p><strong>然而，当一个Epoch的样本（也就是所有的训练样本）数量可能太过庞大（对于计算机而言），就需要把它分成多个小块，也就是就是分成多个Batch来进行训练。</strong></p>
+<ul>
+<li><strong>Batch（批 / 一批样本）：</strong><br> 将整个训练样本分成若干个Batch。</li>
+<li><strong>Batch_Size（批大小）：</strong><br> 每批样本的大小。</li>
+<li><p><strong>Iteration（一次迭代）：</strong><br> 训练一个Batch就是一次Iteration（这个概念跟程序语言中的迭代器相似）。</p>
+</li>
+<li><p><strong>为什么要使用多于一个epoch?</strong></p>
+</li>
+</ul>
+<p>在神经网络中传递完整的数据集一次是不够的，而且我们需要将完整的数据集在同样的神经网络中传递多次。但请记住，我们使用的是有限的数据集，并且我们使用一个迭代过程即梯度下降来优化学习过程。如下图所示。因此仅仅更新一次或者说使用一个epoch是不够的。</p>
+<p><img src="../../../images/三个概念：Epoch-Batch-Iteration/image-20201027115950692.png" alt="image-20201027115950692"></p>
+<p><strong>随着epoch数量增加，神经网络中的权重的更新次数也在增加，曲线从欠拟合变得过拟合。</strong></p>
+<p><strong>几个epoch才是合适的呢？对于不同的数据集，答案是不一样的。</strong></p>
+<ul>
+<li><strong>换算关系</strong></li>
+</ul>
+<script type="math/tex; mode=display">
+\text { Number of Batches }=\frac{\text { Training Set Size }}{\text { Batch Size }}</script><p>实际上，<strong>梯度下降</strong>的几种方式的根本区别就在于上面公式中的 <strong>Batch_Size</strong> 不同。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>梯度下降方式</th>
+<th>Training Set Size</th>
+<th>Batch Size</th>
+<th>Number of Batches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BGD</strong></td>
+<td>N</td>
+<td>N</td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>SGD</strong></td>
+<td>N</td>
+<td>1</td>
+<td>N</td>
+</tr>
+<tr>
+<td><strong>Mini-Batch</strong></td>
+<td>N</td>
+<td>B</td>
+<td>N/B + 1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><strong>举例</strong></li>
+</ul>
+<p><strong>MINIST</strong>数据集有 <strong>60000</strong> 张图片作为训练数据，<strong>10000</strong> 张图片作为测试数据。假设现在选择 <strong>Batch_Size = 100</strong> 对模型进行训练。迭代  <strong>30000</strong> 次。</p>
+<ul>
+<li>每个 Epoch 要训练的图片数量：<strong>60000</strong> (训练集上的所有图像)</li>
+<li>训练集具有的 Batch 个数： <strong>60000/100=600</strong></li>
+<li>每个 Epoch 需要完成的 Batch 个数：<strong>600</strong></li>
+<li>每个 Epoch 具有的 Iteration 个数：<strong>600</strong>（完成一个Batch训练，相当于参数迭代一次）</li>
+<li>每个 Epoch 中发生模型权重更新的次数：<strong>600</strong></li>
+<li>训练 10 个Epoch后，模型权重更新的次数： <strong>600*10=6000</strong></li>
+<li>不同Epoch的训练，其实用的是同一个训练集的数据。<strong>第1个Epoch和第10个Epoch虽然用的都是训练集的 60000 张图片，但是对模型的权重更新值却是完全不同的。因为不同Epoch的模型处于代价函数空间上的不同位置，模型的训练代越靠后，越接近谷底，其代价越小。</strong></li>
+<li>总共完成 <strong>30000</strong> 次迭代，相当于完成了 <strong>30000/600=50</strong> 个Epoch</li>
+</ul>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><img src="../../../images/序列模型中的注意力机制/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" /></p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>深入理解GRU</title>
+    <url>/archives/35841.html</url>
+    <content><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>GRU 是 gated recurrent units 的缩写，由 Cho在 2014 年提出。GRU 和 LSTM 最大的不同在于 GRU 将遗忘门和输入门合成了一个”更新门”，同时网络不再额外给出记忆状态，而是将输出结果作为记忆状态不断向后循环传递，网络的输人和输出都变得特别简单。</p>
+]]></content>
+      <categories>
+        <category>循环神经网络</category>
+      </categories>
+      <tags>
+        <tag>自然语言处理</tag>
+        <tag>深度学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>深入理解LSTM</title>
+    <url>/archives/33247.html</url>
+    <content><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>LSTM 是 Long Short Term Memory Networks 的缩写，按字面翻译就是长的短时记忆网络。长时依赖是这样的一个问题，当预测点与依赖的相关信息距离比较远的时候，就难以学到该相关信息。例如在句子“我出生在法国，……   ，我会说法语”中，若要预测末尾“法语”，我们需要用到上下文“法国”。理论上，递归神经网络是可以处理这样的问题的，但是实际上，常规的递归神经网络并不能很好地解决长时依赖，好的是LSTMs可以很好地解决这个问题。</p>
+<a id="more"></a>
+<p>Long Short Term Mermory network（LSTM）是一种特殊的RNNs，可以很好地解决长时依赖问题。那么它与常规神经网络有什么不同？<br>首先我们来看RNNs具体一点的结构：</p>
+<p><img src="../../../images/深入理解LSTM/image-20201025110111681.png" alt="image-20201025110111681"></p>
+<p>所有的递归神经网络都是由重复神经网络模块构成的一条链，可以看到它的处理层非常简单，通常是一个单tanh层，通过当前输入及上一时刻的输出来得到当前输出。与神经网络相比，经过简单地改造，它已经可以利用上一时刻学习到的信息进行当前时刻的学习了。</p>
+<p>LSTM的结构与上面相似，不同的是它的重复模块会比较复杂一点，它有四层结构：</p>
+<p><img src="../../../images/深入理解LSTM/image-20201025110208933.png" alt="image-20201025110208933"></p>
+<p>其中，处理层出现的符号及表示意思如下：</p>
+<p><img src="../../../images/深入理解LSTM/image-20201025110746083.png" alt="image-20201025110746083"></p>
+<h2 id="LSTMs的核心思想"><a href="#LSTMs的核心思想" class="headerlink" title="LSTMs的核心思想"></a><strong>LSTMs的核心思想</strong></h2><p>理解LSTMs的关键就是下面的矩形方框，被称为memory block（记忆块），主要包含了三个门（遗忘门、输入门、输出门）与一个记忆单元（cell）。方框内上方的那条水平线，被称为cell state（单元状态），它就像一个传送带，可以控制信息传递给下一时刻。</p>
+<p><img src="../../../images/深入理解LSTM/image-20201025110942956.png" alt="image-20201025110942956"></p>
+<p>这个矩形方框还可以表示为：</p>
+<p><img src="../../../images/深入理解LSTM/image-20201025111131285.png" alt="image-20201025111131285" style="zoom: 67%;" /></p>
+<p>这两个图可以对应起来看，下图中心的$c<em>t$即cell，从下方输入（$ h</em>{t−1},x_t$）到输出$h_t$的一条线即为cell state，$f_t$，$i_t$，$o_t$分别为遗忘门、输入门、输出门，用sigmoid层表示。上图中的两个tanh层则分别对应cell的输入与输出。</p>
+<p>LSTM可以通过门控单元可以对cell添加和删除信息。通过门可以有选择地决定信息是否通过，它有一个sigmoid神经网络层和一个成对乘法操作组成，如下：</p>
+<p><img src="../../../images/深入理解LSTM/image-20201025112003163.png" alt="image-20201025112003163" style="zoom:67%;" /></p>
+<p>该层的输出是一个介于0到1的数，表示允许信息通过的多少，0 表示完全不允许通过，1表示允许完全通过。</p>
+<h1 id="逐步解析LSTM"><a href="#逐步解析LSTM" class="headerlink" title="逐步解析LSTM"></a><strong>逐步解析LSTM</strong></h1><p>标准的循环神经网络内部只有一个简单的层结构，而 LSTM 内部有 4 个层结构：</p>
+<p>第一步是忘记：决定状态中丢弃什么信息</p>
+<p>第二步用来产生更新值的候选项，说明状态在某些维度上需要加强，在某些维度上需要减弱</p>
+<p>第三步是输入，它的输出值要乘到tanh层的输出上，起到一个缩放的作用，极端情况下sigmoid输出0说明相应维度上的状态不需要更新</p>
+<p>第四步决定输出什么，输出值跟状态有关。候选项中的哪些部分最终会被输出由一个sigmoid来决定。</p>
+<p>pytorch 中使用 nn.LSTM 类来搭建基于序列的循环神经网络，他的参数基本与RNN类似。</p>
+<h2 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h2><p>LSTM第一步是用来决定什么信息可以通过cell state。这个决定由“forget gate”层通过sigmoid来控制，它会根据上一时刻的输出$h<em>{t-1}$和当前输入$x_t$来产生一个0到1的$f_t$值，来决定是否让上一时刻学到的信息$C\</em>{t−1}$通过或部分通过。如下：</p>
+<p><img src="../../../images/深入理解LSTM/image-20201025134220629.png" alt="image-20201025134220629"></p>
+<p>举个例子来说就是，我们在之前的句子中学到了很多东西，一些东西对当前来讲是没用的，可以对它进行选择性地过滤。</p>
+<h2 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h2><p>第二步是产生我们需要更新的新信息。这一步包含两部分，第一个是一个“input gate”层通过sigmoid来决定哪些值用来更新，第二个是一个tanh层用来生成新的候选值$\widetilde{C}_t$，它作为当前层产生的候选值可能会添加到cell state中。我们会把这两部分产生的值结合来进行更新。</p>
+<p><img src="../../../images/深入理解LSTM/image-20201025134953855.png" alt="image-20201025134953855"></p>
+<h2 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h2><p>现在我们对老的cell state进行更新，首先，我们将老的cell state乘以$f_t$来忘掉我们不需要的信息，然后再与$i_t∗\widetilde{C}_t$相加，得到了候选值。</p>
+<p>一二步结合起来就是丢掉不需要的信息，添加新信息的过程：</p>
+<p><img src="../../../images/深入理解LSTM/image-20201025174820058.png" alt="image-20201025174820058"></p>
+<p>举个例子就是，在前面的句子中我们保存的是张三的信息，现在有了新的李四信息，我们需要把张三的信息丢弃掉，然后把李四的信息保存下来。</p>
+<h2 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a>第四步</h2><p>最后一步是决定模型的输出，首先是通过sigmoid层来得到一个初始输出，然后使用tanh将$C_t$值缩放到-1到1间，再与sigmoid得到的输出逐对相乘，从而得到模型的输出。</p>
+<p><img src="../../../images/深入理解LSTM/image-20201025175048949.png" alt="image-20201025175048949"></p>
+<p>这显然可以理解，首先sigmoid函数的输出是不考虑先前时刻学到的信息的输出，tanh函数是对先前学到信息的压缩处理，起到稳定数值的作用，两者的结合学习就是递归神经网络的学习思想。至于模型是如何学习的，那就是后向传播误差学习权重的一个过程了。</p>
+<h1 id="LSTM-IN-PyTorch"><a href="#LSTM-IN-PyTorch" class="headerlink" title="LSTM IN PyTorch"></a>LSTM IN PyTorch</h1><ul>
+<li><p>LSTM的输入总是一个3D数组.  (batch_size, time_steps, seq_len)</p>
+</li>
+<li><p>LSTM的输出根据return_sequences参数可以是2D或3D数组</p>
+</li>
+<li><p>若return_sequences是False，则输出是2D数组.  (batch_size, units)</p>
+</li>
+<li><p>若return_sequences是True，则输出是3D数组.  (batch_size, time_steps, units)</p>
+</li>
+</ul>
+<p>PyTorch提供了从LSTMs，CNNs和GRUs等层到SGD，Adam等优化器的大多数常用实体的实现。使用这些实体中任何一个的一般范例是首先创建带有某些必需参数的torch.nn.entity实例。例如，这是我们实例化lstm的方法：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Step 1</span></span><br><span class="line">lstm = torch.nn.LSTM(input_size=<span class="number">5</span>, hidden_size=<span class="number">10</span>, batch_first=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>接下来，当我们实际上想在某些输入上运行LSTM时，将输入作为参数来调用该对象。这在下面的第三行中显示：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">lstm_in = torch.rand(<span class="number">40</span>, <span class="number">20</span>, <span class="number">5</span>)</span><br><span class="line">hidden_in = (torch.zeros(<span class="number">1</span>, <span class="number">40</span>, <span class="number">10</span>), torch.zeros(<span class="number">1</span>, <span class="number">40</span>, <span class="number">10</span>)) <span class="comment">#(h0,c0)</span></span><br><span class="line"><span class="comment"># Step 2</span></span><br><span class="line">lstm_out, lstm_hidden = lstm(lstm_in, hidden_in)</span><br></pre></td></tr></table></figure>
+<p><strong>关于维度注意：</strong></p>
+<p>在常规范例的第2步中，torch.nn.LSTM期望输入为大小为（seq_len，batch，embedding_dim）的3D输入张量，并返回大小为（seq_len，batch，hidden_dim）的输出张量。</p>
+<p>例如，考虑输入输出对（“ ERPDRF”，“ SECRET”）这两个单词。使用embedding_dim为5时，将6个字母长的输入ERPDRF转换为大小为6 x 1 x 5的输入张量。如果hidden_dim为10，则LSTM将输入处理为大小为6 x 1 x 10的输出张量。</p>
+<p><strong>输出转换：</strong></p>
+<p>一般的解决方法是通过所谓的线性变换将D维张量转换为V维张量。除了定义之外，其思想是使用矩阵乘法来获得所需的尺寸。</p>
+<p>假设LSTM产生了一个输出张量O，大小为seq_len x batch x hidden_dim。回想一下，我们一次只提供一个示例，因此batch始终为1。这实际上为我们提供了一个输出张量O，大小为seq_len x hidden_dim。现在，如果我们将此输出张量与大小为hidden_dim x  embedding_dim的另一个张量W相乘，则所得张量 R = O×W 的大小为seq_len x embedding_dim。这正是我们想要的。</p>
+<p>为了实现线性层，我们创建一个torch.nn.Linear实例。这次，文档将所需参数列出为in_features：每个输入样本的大小，out_features：每个输出样本的大小。请注意，这仅会变换输入张量的最后一个维度。因此，例如，如果我们传入大小为（d1，d2，d3，…，dn，in_features）的输入张量，则输出张量将具有除最后一个维度以外的所有尺寸，并且将为大小（d1，d2，d3，…，dn，out_features）。</p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><img src="../../../images/序列模型中的注意力机制/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" /></p>
+]]></content>
+      <categories>
+        <category>循环神经网络</category>
+      </categories>
+      <tags>
+        <tag>自然语言处理</tag>
+        <tag>深度学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PyTorch常用函数汇总</title>
+    <url>/archives/45468.html</url>
+    <content><![CDATA[<h1 id="nn-Linear"><a href="#nn-Linear" class="headerlink" title="nn.Linear"></a>nn.Linear</h1><img src="../../../images/PyTorch常用函数汇总/image-20201023214312121.png" alt="image-20201023214312121" style="zoom:80%;" />
+
+<a id="more"></a>
+
+<p>U指的是均匀分布，即weight权重（A的转置）是取自输入尺寸的倒数再开方后的正负值之间的均匀分布，同理可得偏置bias是输出尺寸的倒数再开方后的正负值之间的均匀分布。</p>
+<p>需要实现的内容：<br>$$<br>y=x A^{T}+b<br>$$</p>
+<p>返回的是：<br>$$<br>\text { input }^{*} \text { weight }+\text { bias }<br>$$</p>
+<p><strong>1.初始化</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Linear</span>(<span class="params">Module</span>):</span></span><br><span class="line">	...</span><br><span class="line">	__constants__ = [<span class="string">&#x27;bias&#x27;</span>]</span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, in_features, out_features, bias=<span class="literal">True</span></span>):</span></span><br><span class="line">	    <span class="built_in">super</span>(Linear, self).__init__()</span><br><span class="line">	    self.in_features = in_features</span><br><span class="line">	    self.out_features = out_features</span><br><span class="line">	    self.weight = Parameter(torch.Tensor(out_features, in_features))</span><br><span class="line">	    <span class="keyword">if</span> bias:</span><br><span class="line">	        self.bias = Parameter(torch.Tensor(out_features))</span><br><span class="line">	    <span class="keyword">else</span>:</span><br><span class="line">	        self.register_parameter(<span class="string">&#x27;bias&#x27;</span>, <span class="literal">None</span>)</span><br><span class="line">	    self.reset_parameters()</span><br></pre></td></tr></table></figure>
+
+<p><strong>2.计算</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@weak_script_method</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, <span class="built_in">input</span></span>):</span></span><br><span class="line">        <span class="keyword">return</span> F.linear(<span class="built_in">input</span>, self.weight, self.bias)</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.举例</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line">nn1 = torch.nn.Linear(<span class="number">100</span>, <span class="number">50</span>)</span><br><span class="line">input1 = torch.randn(<span class="number">140</span>, <span class="number">100</span>)</span><br><span class="line">output1 = nn1(input1)</span><br><span class="line">output1.size()</span><br><span class="line">torch.Size([<span class="number">140</span>, <span class="number">50</span>])</span><br></pre></td></tr></table></figure>
+
+<p>张量的大小由 <strong>140 x 100</strong> 变成了 <strong>140 x 50</strong></p>
+<p>执行的操作是：<br>$$<br>[140,100] \times[100,50]=[140,50]<br>$$<br>to be continue …</p>
+<br>
+
+<br>
+
+<br>
+
+<img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" />
+
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>pytorch</tag>
       </tags>
   </entry>
   <entry>
@@ -127,131 +415,6 @@ w_{i h}^{N+1}=w_{i h}^{N}+\eta \delta_{h}(k) x_{i}(k)</script><p>第八步，计
       </tags>
   </entry>
   <entry>
-    <title>PAC2020:傅里叶空间图像相似度计算</title>
-    <url>/archives/62775.html</url>
-    <content><![CDATA[<h1 id="赛题描述"><a href="#赛题描述" class="headerlink" title="赛题描述"></a>赛题描述</h1><p>在蛋白质冷冻电镜三维重构程序中，将二维真实图像与空间中的三维结构的投影图像的相似度计算是调用最为频繁的计算，相似度计算的原理是求取真实图像与投影图像的所有像素在傅里叶空间中的二范数之和，公式如下：</p>
-<script type="math/tex; mode=display">
-diff=\sum_{i=1}^{N}{a*||image_i-proj_i||}</script><p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201015095633405.png" alt="image-20201015095633405" style="zoom: 50%;" /></p>
-<p>比赛的目的是将赛方提供的相似度计算程序进行并行加速，输出结果精度误差不超过十万分之一，比赛的代码包里提供了校验文件。</p>
-<a id="more"></a>
-<h1 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h1><h2 id="硬件："><a href="#硬件：" class="headerlink" title="硬件："></a>硬件：</h2><p>处理器：Intel Xeon处理器 Platinum 9242 CPU @ 2.30GHz 24*8G </p>
-<p>网络：100Gb Intel omnipath</p>
-<h2 id="软件："><a href="#软件：" class="headerlink" title="软件："></a>软件：</h2><p>操作系统：CentOS 8.0  </p>
-<p>并行环境：Intel MPI</p>
-<p>相关依赖软件：VTune Profiler 2020、ParaCloud平台的ssh连接工具等</p>
-<p>应用负载：96个逻辑核心</p>
-<h1 id="优化后的代码结构"><a href="#优化后的代码结构" class="headerlink" title="优化后的代码结构"></a>优化后的代码结构</h1><p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201014211614779.png" alt="image-20201014211614779" style="zoom:80%;" /></p>
-<h1 id="优化过程"><a href="#优化过程" class="headerlink" title="优化过程"></a>优化过程</h1><h2 id="MPI进程级并行优化-amp-MPI-IO优化"><a href="#MPI进程级并行优化-amp-MPI-IO优化" class="headerlink" title="MPI进程级并行优化&amp;MPI-IO优化"></a>MPI进程级并行优化&amp;MPI-IO优化</h2><p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201014202814651.png" alt="image-20201014202814651"></p>
-<p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201014202730183.png" alt="image-20201014202730183"></p>
-<p>对于源代码计算部分的外层循环，通过进程号将大的循环体划分成数个小循环并行执行，多出的子任务分配给进程号最大的进程。I/O方面的优化点在于，通过预先确定结果文件指针的偏移量，每轮计算结果不再直接输出，而是根据偏移量存入当前进程创建的一片内存空间中的对应位置，各进程在计算任务结束后整体写入结果文件中。</p>
-<h3 id="优化结果-amp-性能指标-MPI"><a href="#优化结果-amp-性能指标-MPI" class="headerlink" title="优化结果&amp;性能指标(MPI)"></a>优化结果&amp;性能指标(MPI)</h3><p>  <img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201015082916436.png" alt="image-20201015082916436"></p>
-<h2 id="OpenMP线程级并行优化-amp-AVX优化"><a href="#OpenMP线程级并行优化-amp-AVX优化" class="headerlink" title="OpenMP线程级并行优化&amp;AVX优化"></a>OpenMP线程级并行优化&amp;AVX优化</h2><p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201014204736870.png" alt="image-20201014204736870" style="zoom:80%;" /></p>
-<p>利用OpenMP对计算部分的内层循环进行归约优化，简单实现线程级的并行。</p>
-<p>对于实际计算部分，我利用了AVX指令改写了原来计算部分的代码，通过调用AVX的512位向量寄存器，一次可以操作512/32=16个float型浮点数(损失的精度在规则范围内)，而一个float型复数会占用2个float型浮点数长度的地址，所以最终能达到8路并行，即一次操作本来需要八轮循环操作的数据，运算速度有较大提升。</p>
-<h3 id="优化结果-amp-性能指标-MPI-OpenMP"><a href="#优化结果-amp-性能指标-MPI-OpenMP" class="headerlink" title="优化结果&amp;性能指标(MPI+OpenMP)"></a>优化结果&amp;性能指标(MPI+OpenMP)</h3><p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201015091631843.png" alt="image-20201015091631843"></p>
-<h3 id="优化结果-amp-性能指标-MPI-OpenMP-AVX-编译优化"><a href="#优化结果-amp-性能指标-MPI-OpenMP-AVX-编译优化" class="headerlink" title="优化结果&amp;性能指标(MPI+OpenMP+AVX+编译优化)"></a>优化结果&amp;性能指标(MPI+OpenMP+AVX+编译优化)</h3><p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201015091754886.png" alt="image-20201015091754886"></p>
-<h1 id="Vtune测试结果"><a href="#Vtune测试结果" class="headerlink" title="Vtune测试结果"></a>Vtune测试结果</h1><p>原程序计算时间为两个半小时左右，经优化后，程序计算时间为12秒左右，加速了735倍。</p>
-<p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201015092113391.png" alt="image-20201015092113391"></p>
-<p><br></p>
-<p><br></p>
-<p><br></p>
-<p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" /></p>
-]]></content>
-      <categories>
-        <category>并行与分布式计算</category>
-      </categories>
-      <tags>
-        <tag>并行与分布式计算</tag>
-        <tag>计算机类竞赛</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>PyTorch常用函数汇总</title>
-    <url>/archives/45468.html</url>
-    <content><![CDATA[<h1 id="nn-Linear"><a href="#nn-Linear" class="headerlink" title="nn.Linear"></a>nn.Linear</h1><img src="../../../images/PyTorch常用函数汇总/image-20201023214312121.png" alt="image-20201023214312121" style="zoom:80%;" />
-
-<a id="more"></a>
-
-<p>U指的是均匀分布，即weight权重（A的转置）是取自输入尺寸的倒数再开方后的正负值之间的均匀分布，同理可得偏置bias是输出尺寸的倒数再开方后的正负值之间的均匀分布。</p>
-<p>需要实现的内容：<br>$$<br>y=x A^{T}+b<br>$$</p>
-<p>返回的是：<br>$$<br>\text { input }^{*} \text { weight }+\text { bias }<br>$$</p>
-<p><strong>1.初始化</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Linear</span>(<span class="params">Module</span>):</span></span><br><span class="line">	...</span><br><span class="line">	__constants__ = [<span class="string">&#x27;bias&#x27;</span>]</span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, in_features, out_features, bias=<span class="literal">True</span></span>):</span></span><br><span class="line">	    <span class="built_in">super</span>(Linear, self).__init__()</span><br><span class="line">	    self.in_features = in_features</span><br><span class="line">	    self.out_features = out_features</span><br><span class="line">	    self.weight = Parameter(torch.Tensor(out_features, in_features))</span><br><span class="line">	    <span class="keyword">if</span> bias:</span><br><span class="line">	        self.bias = Parameter(torch.Tensor(out_features))</span><br><span class="line">	    <span class="keyword">else</span>:</span><br><span class="line">	        self.register_parameter(<span class="string">&#x27;bias&#x27;</span>, <span class="literal">None</span>)</span><br><span class="line">	    self.reset_parameters()</span><br></pre></td></tr></table></figure>
-
-<p><strong>2.计算</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@weak_script_method</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, <span class="built_in">input</span></span>):</span></span><br><span class="line">        <span class="keyword">return</span> F.linear(<span class="built_in">input</span>, self.weight, self.bias)</span><br></pre></td></tr></table></figure>
-
-<p><strong>3.举例</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line">nn1 = torch.nn.Linear(<span class="number">100</span>, <span class="number">50</span>)</span><br><span class="line">input1 = torch.randn(<span class="number">140</span>, <span class="number">100</span>)</span><br><span class="line">output1 = nn1(input1)</span><br><span class="line">output1.size()</span><br><span class="line">torch.Size([<span class="number">140</span>, <span class="number">50</span>])</span><br></pre></td></tr></table></figure>
-
-<p>张量的大小由 <strong>140 x 100</strong> 变成了 <strong>140 x 50</strong></p>
-<p>执行的操作是：<br>$$<br>[140,100] \times[100,50]=[140,50]<br>$$<br>to be continue …</p>
-<br>
-
-<br>
-
-<br>
-
-<img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" />
-
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>pytorch</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>地波雷达与自动识别系统（AIS）目标点迹最优关联算法</title>
-    <url>/archives/2904.html</url>
-    <content><![CDATA[<h1 id="问题简介"><a href="#问题简介" class="headerlink" title="问题简介"></a>问题简介</h1><h2 id="进出港非法渔船研判"><a href="#进出港非法渔船研判" class="headerlink" title="进出港非法渔船研判"></a>进出港非法渔船研判</h2><p>研判三要素：</p>
-<ol>
-<li>船舶进出港登记人员是否在册（查数据库）√</li>
-<li>视频设备获取的船舶id是否在册（查数据库）√</li>
-<li>雷达扫描到的船舶是否有与之匹配的AIS点位（点迹匹配）？</li>
-</ol>
-<p>研判港口渔船的合法性有以上三个要素，其中前两个可以通过简单的数据库查询做出判断，但是第三点由于AIS数据和雷达数据间的弱关联性，需要做进一步处理。</p>
-<a id="more"></a>
-<h1 id="点迹匹配"><a href="#点迹匹配" class="headerlink" title="点迹匹配"></a>点迹匹配</h1><p>一艘合规的船需要有配对的雷达点位和AIS点位，但由于这两个数据的关联性较弱、数据间的发送间隔也不相同，所以两个点位往往有一定的时空误差。</p>
-<p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/ais_radar.png" alt="ais_radar"></p>
-<ul>
-<li>雷达数据（被动）：船舶位置、航速、航向、船舶长度、时间等，雷达数据较真实可靠，速度探测精度高，但位置精度低，无法确定到船的具体信息。</li>
-<li>AIS数据（主动）：AIS设备ID（唯一，且与船舶id配对）、船舶位置、航速、航向、温度、时间等，AIS数据能确定到具体某一艘船，但会存在漏报、谎报的情况。</li>
-</ul>
-<h1 id="研究过程"><a href="#研究过程" class="headerlink" title="研究过程"></a>研究过程</h1><h2 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h2><p>首先，将WGS84(World Geodetic System 1984)坐标系下测量的AIS的点迹和高频地波雷达点迹映射到极坐标中，实现坐标系的统一。<br>其次，建立高频地波雷达和AIS点迹关联模型，采用状态划分和迭代搜索算法将关联数据集划分为可行的关联子集。<br>最后，将JVC全局最优关联算法应用于每一个可行关联子集的点迹关联上，解决密集环境中的雷达和AIS点迹关联问题。</p>
-<h3 id="统一坐标系"><a href="#统一坐标系" class="headerlink" title="统一坐标系"></a>统一坐标系</h3><p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/image-20201019100537524.png" alt="image-20201019100537524"></p>
-<h3 id="计算径向速度"><a href="#计算径向速度" class="headerlink" title="计算径向速度"></a>计算径向速度</h3><p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/径向速度就算.png" alt="径向速度就算"></p>
-<h3 id="分状态划分测试集"><a href="#分状态划分测试集" class="headerlink" title="分状态划分测试集"></a>分状态划分测试集</h3><p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/分状态.png" alt="分状态" style="zoom:80%;" /></p>
-<p>根据径向速度、距离等信息，利用门限阈值将雷达和AIS数据划分为静态和动态两类，提高运算速度和匹配精度。</p>
-<h3 id="迭代搜索"><a href="#迭代搜索" class="headerlink" title="迭代搜索"></a>迭代搜索</h3><p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/迭代搜索.png" alt="迭代搜索"></p>
-<h3 id="JVC最优点迹匹配"><a href="#JVC最优点迹匹配" class="headerlink" title="JVC最优点迹匹配"></a>JVC最优点迹匹配</h3><p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/点迹匹配.png" alt="点迹匹配"></p>
-<p>算法输入：代价矩阵（矩阵元是雷达点和AIS点之间的距离）</p>
-<p>算法输出：最小总代价，匹配的点迹对</p>
-<h1 id="算法复现"><a href="#算法复现" class="headerlink" title="算法复现"></a>算法复现</h1><h2 id="论文实验"><a href="#论文实验" class="headerlink" title="论文实验"></a>论文实验</h2><p>论文数据：<br>2011年10月31日09:18:50时的336个雷达目标点迹（真实数据）和443个AIS点迹（仿真数据）</p>
-<p>算法比较：</p>
-<p>选用了最近邻算法、Munkres算法、分状态JVC算法进行点迹关联比较，测试结果如下：</p>
-<p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/image-20201019102705995.png" alt="image-20201019102705995"></p>
-<p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/image-20201019102846557.png" alt="image-20201019102846557"></p>
-<p>实验结果表明，该算法在同样关联51对点迹的情况下，关联精度高于最近邻算法和Munkres法，关联用时少于最近邻算法和Munkres法，为地波雷达与AIS目标点迹关联提供了一种可行的方法，但是，由于雷达的目标定位精度较低，雷达与 AIS 的点迹关联比例较低，下一步可以考虑进一步融合高精度的 SAR 图像数据进行船只点迹目标融合探测，以便提高海洋探测的精度和范围，同时可以起到校准雷达精度的作用。</p>
-<h2 id="复现实验"><a href="#复现实验" class="headerlink" title="复现实验"></a>复现实验</h2><p>实验数据：舟山海域2020年9月11日20:19:03时-2020年9月11日20:21:03的163个雷达点迹和45个AIS点迹进行点迹关联。</p>
-<p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/image-20201019104718012.png" alt="image-20201019104718012" style="zoom:80%;" /></p>
-<p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/image-20201019104834241.png" alt="image-20201019104834241" style="zoom:124%;" /></p>
-<h1 id="参考论文"><a href="#参考论文" class="headerlink" title="参考论文"></a>参考论文</h1><p>张晖.<em>舰船目标多手段数据融合探测方法研究</em>.2016.内蒙古大学,PhD dissertation.</p>
-<p>张晖,刘永信,张杰,纪永刚,郑志强.<em>地波雷达与自动识别系统目标点迹最优关联算法</em>[J].电子与信息学报,2015,37(03):619-624.</p>
-<p><br></p>
-<p><br></p>
-<p><br></p>
-<p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" /></p>
-]]></content>
-      <categories>
-        <category>舟山海洋项目</category>
-      </categories>
-      <tags>
-        <tag>数据融合</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>基于AIS的船舶轨迹分析的研究与应用</title>
     <url>/archives/15340.html</url>
     <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p><strong>创新点：</strong></p>
@@ -279,18 +442,6 @@ diff=\sum_{i=1}^{N}{a*||image_i-proj_i||}</script><p><img src="../../../images/P
         <tag>BP神经网络</tag>
         <tag>遗传算法</tag>
         <tag>LSTM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>基于GPU的矩阵计算并行加速方法研究</title>
-    <url>/archives/9502.html</url>
-    <content><![CDATA[<p>李丰.<em>基于GPU的矩阵计算并行加速方法研究</em>.2018.哈尔滨工业大学,PhD dissertation.</p>
-]]></content>
-      <categories>
-        <category>并行与分布式计算</category>
-      </categories>
-      <tags>
-        <tag>并行与分布式计算</tag>
       </tags>
   </entry>
   <entry>
@@ -419,307 +570,157 @@ diff=\sum_{i=1}^{N}{a*||image_i-proj_i||}</script><p><img src="../../../images/P
       </tags>
   </entry>
   <entry>
-    <title>深入理解LSTM</title>
-    <url>/archives/33247.html</url>
-    <content><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>LSTM 是 Long Short Term Memory Networks 的缩写，按字面翻译就是长的短时记忆网络。长时依赖是这样的一个问题，当预测点与依赖的相关信息距离比较远的时候，就难以学到该相关信息。例如在句子“我出生在法国，……   ，我会说法语”中，若要预测末尾“法语”，我们需要用到上下文“法国”。理论上，递归神经网络是可以处理这样的问题的，但是实际上，常规的递归神经网络并不能很好地解决长时依赖，好的是LSTMs可以很好地解决这个问题。</p>
+    <title>地波雷达与自动识别系统（AIS）目标点迹最优关联算法</title>
+    <url>/archives/2904.html</url>
+    <content><![CDATA[<h1 id="问题简介"><a href="#问题简介" class="headerlink" title="问题简介"></a>问题简介</h1><h2 id="进出港非法渔船研判"><a href="#进出港非法渔船研判" class="headerlink" title="进出港非法渔船研判"></a>进出港非法渔船研判</h2><p>研判三要素：</p>
+<ol>
+<li>船舶进出港登记人员是否在册（查数据库）√</li>
+<li>视频设备获取的船舶id是否在册（查数据库）√</li>
+<li>雷达扫描到的船舶是否有与之匹配的AIS点位（点迹匹配）？</li>
+</ol>
+<p>研判港口渔船的合法性有以上三个要素，其中前两个可以通过简单的数据库查询做出判断，但是第三点由于AIS数据和雷达数据间的弱关联性，需要做进一步处理。</p>
 <a id="more"></a>
-<p>Long Short Term Mermory network（LSTM）是一种特殊的RNNs，可以很好地解决长时依赖问题。那么它与常规神经网络有什么不同？<br>首先我们来看RNNs具体一点的结构：</p>
-<p><img src="../../../images/深入理解LSTM/image-20201025110111681.png" alt="image-20201025110111681"></p>
-<p>所有的递归神经网络都是由重复神经网络模块构成的一条链，可以看到它的处理层非常简单，通常是一个单tanh层，通过当前输入及上一时刻的输出来得到当前输出。与神经网络相比，经过简单地改造，它已经可以利用上一时刻学习到的信息进行当前时刻的学习了。</p>
-<p>LSTM的结构与上面相似，不同的是它的重复模块会比较复杂一点，它有四层结构：</p>
-<p><img src="../../../images/深入理解LSTM/image-20201025110208933.png" alt="image-20201025110208933"></p>
-<p>其中，处理层出现的符号及表示意思如下：</p>
-<p><img src="../../../images/深入理解LSTM/image-20201025110746083.png" alt="image-20201025110746083"></p>
-<h2 id="LSTMs的核心思想"><a href="#LSTMs的核心思想" class="headerlink" title="LSTMs的核心思想"></a><strong>LSTMs的核心思想</strong></h2><p>理解LSTMs的关键就是下面的矩形方框，被称为memory block（记忆块），主要包含了三个门（遗忘门、输入门、输出门）与一个记忆单元（cell）。方框内上方的那条水平线，被称为cell state（单元状态），它就像一个传送带，可以控制信息传递给下一时刻。</p>
-<p><img src="../../../images/深入理解LSTM/image-20201025110942956.png" alt="image-20201025110942956"></p>
-<p>这个矩形方框还可以表示为：</p>
-<p><img src="../../../images/深入理解LSTM/image-20201025111131285.png" alt="image-20201025111131285" style="zoom: 67%;" /></p>
-<p>这两个图可以对应起来看，下图中心的$c<em>t$即cell，从下方输入（$ h</em>{t−1},x_t$）到输出$h_t$的一条线即为cell state，$f_t$，$i_t$，$o_t$分别为遗忘门、输入门、输出门，用sigmoid层表示。上图中的两个tanh层则分别对应cell的输入与输出。</p>
-<p>LSTM可以通过门控单元可以对cell添加和删除信息。通过门可以有选择地决定信息是否通过，它有一个sigmoid神经网络层和一个成对乘法操作组成，如下：</p>
-<p><img src="../../../images/深入理解LSTM/image-20201025112003163.png" alt="image-20201025112003163" style="zoom:67%;" /></p>
-<p>该层的输出是一个介于0到1的数，表示允许信息通过的多少，0 表示完全不允许通过，1表示允许完全通过。</p>
-<h1 id="逐步解析LSTM"><a href="#逐步解析LSTM" class="headerlink" title="逐步解析LSTM"></a><strong>逐步解析LSTM</strong></h1><p>标准的循环神经网络内部只有一个简单的层结构，而 LSTM 内部有 4 个层结构：</p>
-<p>第一步是忘记：决定状态中丢弃什么信息</p>
-<p>第二步用来产生更新值的候选项，说明状态在某些维度上需要加强，在某些维度上需要减弱</p>
-<p>第三步是输入，它的输出值要乘到tanh层的输出上，起到一个缩放的作用，极端情况下sigmoid输出0说明相应维度上的状态不需要更新</p>
-<p>第四步决定输出什么，输出值跟状态有关。候选项中的哪些部分最终会被输出由一个sigmoid来决定。</p>
-<p>pytorch 中使用 nn.LSTM 类来搭建基于序列的循环神经网络，他的参数基本与RNN类似。</p>
-<h2 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h2><p>LSTM第一步是用来决定什么信息可以通过cell state。这个决定由“forget gate”层通过sigmoid来控制，它会根据上一时刻的输出$h<em>{t-1}$和当前输入$x_t$来产生一个0到1的$f_t$值，来决定是否让上一时刻学到的信息$C\</em>{t−1}$通过或部分通过。如下：</p>
-<p><img src="../../../images/深入理解LSTM/image-20201025134220629.png" alt="image-20201025134220629"></p>
-<p>举个例子来说就是，我们在之前的句子中学到了很多东西，一些东西对当前来讲是没用的，可以对它进行选择性地过滤。</p>
-<h2 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h2><p>第二步是产生我们需要更新的新信息。这一步包含两部分，第一个是一个“input gate”层通过sigmoid来决定哪些值用来更新，第二个是一个tanh层用来生成新的候选值$\widetilde{C}_t$，它作为当前层产生的候选值可能会添加到cell state中。我们会把这两部分产生的值结合来进行更新。</p>
-<p><img src="../../../images/深入理解LSTM/image-20201025134953855.png" alt="image-20201025134953855"></p>
-<h2 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h2><p>现在我们对老的cell state进行更新，首先，我们将老的cell state乘以$f_t$来忘掉我们不需要的信息，然后再与$i_t∗\widetilde{C}_t$相加，得到了候选值。</p>
-<p>一二步结合起来就是丢掉不需要的信息，添加新信息的过程：</p>
-<p><img src="../../../images/深入理解LSTM/image-20201025174820058.png" alt="image-20201025174820058"></p>
-<p>举个例子就是，在前面的句子中我们保存的是张三的信息，现在有了新的李四信息，我们需要把张三的信息丢弃掉，然后把李四的信息保存下来。</p>
-<h2 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a>第四步</h2><p>最后一步是决定模型的输出，首先是通过sigmoid层来得到一个初始输出，然后使用tanh将$C_t$值缩放到-1到1间，再与sigmoid得到的输出逐对相乘，从而得到模型的输出。</p>
-<p><img src="../../../images/深入理解LSTM/image-20201025175048949.png" alt="image-20201025175048949"></p>
-<p>这显然可以理解，首先sigmoid函数的输出是不考虑先前时刻学到的信息的输出，tanh函数是对先前学到信息的压缩处理，起到稳定数值的作用，两者的结合学习就是递归神经网络的学习思想。至于模型是如何学习的，那就是后向传播误差学习权重的一个过程了。</p>
-<h1 id="LSTM-IN-PyTorch"><a href="#LSTM-IN-PyTorch" class="headerlink" title="LSTM IN PyTorch"></a>LSTM IN PyTorch</h1><ul>
-<li><p>LSTM的输入总是一个3D数组.  (batch_size, time_steps, seq_len)</p>
-</li>
-<li><p>LSTM的输出根据return_sequences参数可以是2D或3D数组</p>
-</li>
-<li><p>若return_sequences是False，则输出是2D数组.  (batch_size, units)</p>
-</li>
-<li><p>若return_sequences是True，则输出是3D数组.  (batch_size, time_steps, units)</p>
-</li>
+<h1 id="点迹匹配"><a href="#点迹匹配" class="headerlink" title="点迹匹配"></a>点迹匹配</h1><p>一艘合规的船需要有配对的雷达点位和AIS点位，但由于这两个数据的关联性较弱、数据间的发送间隔也不相同，所以两个点位往往有一定的时空误差。</p>
+<p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/ais_radar.png" alt="ais_radar"></p>
+<ul>
+<li>雷达数据（被动）：船舶位置、航速、航向、船舶长度、时间等，雷达数据较真实可靠，速度探测精度高，但位置精度低，无法确定到船的具体信息。</li>
+<li>AIS数据（主动）：AIS设备ID（唯一，且与船舶id配对）、船舶位置、航速、航向、温度、时间等，AIS数据能确定到具体某一艘船，但会存在漏报、谎报的情况。</li>
 </ul>
-<p>PyTorch提供了从LSTMs，CNNs和GRUs等层到SGD，Adam等优化器的大多数常用实体的实现。使用这些实体中任何一个的一般范例是首先创建带有某些必需参数的torch.nn.entity实例。例如，这是我们实例化lstm的方法：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Step 1</span></span><br><span class="line">lstm = torch.nn.LSTM(input_size=<span class="number">5</span>, hidden_size=<span class="number">10</span>, batch_first=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
-<p>接下来，当我们实际上想在某些输入上运行LSTM时，将输入作为参数来调用该对象。这在下面的第三行中显示：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">lstm_in = torch.rand(<span class="number">40</span>, <span class="number">20</span>, <span class="number">5</span>)</span><br><span class="line">hidden_in = (torch.zeros(<span class="number">1</span>, <span class="number">40</span>, <span class="number">10</span>), torch.zeros(<span class="number">1</span>, <span class="number">40</span>, <span class="number">10</span>)) <span class="comment">#(h0,c0)</span></span><br><span class="line"><span class="comment"># Step 2</span></span><br><span class="line">lstm_out, lstm_hidden = lstm(lstm_in, hidden_in)</span><br></pre></td></tr></table></figure>
-<p><strong>关于维度注意：</strong></p>
-<p>在常规范例的第2步中，torch.nn.LSTM期望输入为大小为（seq_len，batch，embedding_dim）的3D输入张量，并返回大小为（seq_len，batch，hidden_dim）的输出张量。</p>
-<p>例如，考虑输入输出对（“ ERPDRF”，“ SECRET”）这两个单词。使用embedding_dim为5时，将6个字母长的输入ERPDRF转换为大小为6 x 1 x 5的输入张量。如果hidden_dim为10，则LSTM将输入处理为大小为6 x 1 x 10的输出张量。</p>
-<p><strong>输出转换：</strong></p>
-<p>一般的解决方法是通过所谓的线性变换将D维张量转换为V维张量。除了定义之外，其思想是使用矩阵乘法来获得所需的尺寸。</p>
-<p>假设LSTM产生了一个输出张量O，大小为seq_len x batch x hidden_dim。回想一下，我们一次只提供一个示例，因此batch始终为1。这实际上为我们提供了一个输出张量O，大小为seq_len x hidden_dim。现在，如果我们将此输出张量与大小为hidden_dim x  embedding_dim的另一个张量W相乘，则所得张量 R = O×W 的大小为seq_len x embedding_dim。这正是我们想要的。</p>
-<p>为了实现线性层，我们创建一个torch.nn.Linear实例。这次，文档将所需参数列出为in_features：每个输入样本的大小，out_features：每个输出样本的大小。请注意，这仅会变换输入张量的最后一个维度。因此，例如，如果我们传入大小为（d1，d2，d3，…，dn，in_features）的输入张量，则输出张量将具有除最后一个维度以外的所有尺寸，并且将为大小（d1，d2，d3，…，dn，out_features）。</p>
+<h1 id="研究过程"><a href="#研究过程" class="headerlink" title="研究过程"></a>研究过程</h1><h2 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h2><p>首先，将WGS84(World Geodetic System 1984)坐标系下测量的AIS的点迹和高频地波雷达点迹映射到极坐标中，实现坐标系的统一。<br>其次，建立高频地波雷达和AIS点迹关联模型，采用状态划分和迭代搜索算法将关联数据集划分为可行的关联子集。<br>最后，将JVC全局最优关联算法应用于每一个可行关联子集的点迹关联上，解决密集环境中的雷达和AIS点迹关联问题。</p>
+<h3 id="统一坐标系"><a href="#统一坐标系" class="headerlink" title="统一坐标系"></a>统一坐标系</h3><p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/image-20201019100537524.png" alt="image-20201019100537524"></p>
+<h3 id="计算径向速度"><a href="#计算径向速度" class="headerlink" title="计算径向速度"></a>计算径向速度</h3><p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/径向速度就算.png" alt="径向速度就算"></p>
+<h3 id="分状态划分测试集"><a href="#分状态划分测试集" class="headerlink" title="分状态划分测试集"></a>分状态划分测试集</h3><p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/分状态.png" alt="分状态" style="zoom:80%;" /></p>
+<p>根据径向速度、距离等信息，利用门限阈值将雷达和AIS数据划分为静态和动态两类，提高运算速度和匹配精度。</p>
+<h3 id="迭代搜索"><a href="#迭代搜索" class="headerlink" title="迭代搜索"></a>迭代搜索</h3><p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/迭代搜索.png" alt="迭代搜索"></p>
+<h3 id="JVC最优点迹匹配"><a href="#JVC最优点迹匹配" class="headerlink" title="JVC最优点迹匹配"></a>JVC最优点迹匹配</h3><p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/点迹匹配.png" alt="点迹匹配"></p>
+<p>算法输入：代价矩阵（矩阵元是雷达点和AIS点之间的距离）</p>
+<p>算法输出：最小总代价，匹配的点迹对</p>
+<h1 id="算法复现"><a href="#算法复现" class="headerlink" title="算法复现"></a>算法复现</h1><h2 id="论文实验"><a href="#论文实验" class="headerlink" title="论文实验"></a>论文实验</h2><p>论文数据：<br>2011年10月31日09:18:50时的336个雷达目标点迹（真实数据）和443个AIS点迹（仿真数据）</p>
+<p>算法比较：</p>
+<p>选用了最近邻算法、Munkres算法、分状态JVC算法进行点迹关联比较，测试结果如下：</p>
+<p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/image-20201019102705995.png" alt="image-20201019102705995"></p>
+<p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/image-20201019102846557.png" alt="image-20201019102846557"></p>
+<p>实验结果表明，该算法在同样关联51对点迹的情况下，关联精度高于最近邻算法和Munkres法，关联用时少于最近邻算法和Munkres法，为地波雷达与AIS目标点迹关联提供了一种可行的方法，但是，由于雷达的目标定位精度较低，雷达与 AIS 的点迹关联比例较低，下一步可以考虑进一步融合高精度的 SAR 图像数据进行船只点迹目标融合探测，以便提高海洋探测的精度和范围，同时可以起到校准雷达精度的作用。</p>
+<h2 id="复现实验"><a href="#复现实验" class="headerlink" title="复现实验"></a>复现实验</h2><p>实验数据：舟山海域2020年9月11日20:19:03时-2020年9月11日20:21:03的163个雷达点迹和45个AIS点迹进行点迹关联。</p>
+<p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/image-20201019104718012.png" alt="image-20201019104718012" style="zoom:80%;" /></p>
+<p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/image-20201019104834241.png" alt="image-20201019104834241" style="zoom:124%;" /></p>
+<h1 id="参考论文"><a href="#参考论文" class="headerlink" title="参考论文"></a>参考论文</h1><p>张晖.<em>舰船目标多手段数据融合探测方法研究</em>.2016.内蒙古大学,PhD dissertation.</p>
+<p>张晖,刘永信,张杰,纪永刚,郑志强.<em>地波雷达与自动识别系统目标点迹最优关联算法</em>[J].电子与信息学报,2015,37(03):619-624.</p>
 <p><br></p>
-<p><br></p>
-<p><br></p>
-<p><img src="../../../images/序列模型中的注意力机制/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" /></p>
-]]></content>
-      <categories>
-        <category>循环神经网络</category>
-      </categories>
-      <tags>
-        <tag>自然语言处理</tag>
-        <tag>深度学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>深入理解GRU</title>
-    <url>/archives/35841.html</url>
-    <content><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>GRU 是 gated recurrent units 的缩写，由 Cho在 2014 年提出。GRU 和 LSTM 最大的不同在于 GRU 将遗忘门和输入门合成了一个”更新门”，同时网络不再额外给出记忆状态，而是将输出结果作为记忆状态不断向后循环传递，网络的输人和输出都变得特别简单。</p>
-]]></content>
-      <categories>
-        <category>循环神经网络</category>
-      </categories>
-      <tags>
-        <tag>自然语言处理</tag>
-        <tag>深度学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>三个概念：Epoch, Batch, Iteration</title>
-    <url>/archives/65471.html</url>
-    <content><![CDATA[<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:left"><center>名词</center></th>
-<th style="text-align:left"><center>定义</center></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><strong>Epoch</strong></td>
-<td style="text-align:left">使用训练集的全部数据对模型进行一次完整训练，被称之为 <strong>“一代训练”</strong></td>
-</tr>
-<tr>
-<td style="text-align:left"><strong>Batch</strong></td>
-<td style="text-align:left">使用训练集中的一小部分样本对模型权重进行一次反向传播的参数更新，这一小部分样本被称为 <strong>“一批数据”</strong></td>
-</tr>
-<tr>
-<td style="text-align:left"><strong>Iteration</strong></td>
-<td style="text-align:left">使用一个<strong>Batch</strong>数据对模型进行一次参数更新的过程，被称之为 <strong>“一次训练”</strong></td>
-</tr>
-</tbody>
-</table>
-</div>
-<a id="more"></a>
-<ul>
-<li><p><strong>Epoch（时期）：</strong></p>
-<p>当一个完整的数据集通过了神经网络一次并且返回了一次，这个过程称为一次Epoch。（也就是说，<strong>所有训练样本</strong>在神经网络中都进行了一次<strong>正向传播</strong> 和一次<strong>反向传播</strong> ）。再通俗一点，一个Epoch就是<strong>将所有训练样本训练一次</strong>的过程。</p>
-</li>
-</ul>
-<p><strong>然而，当一个Epoch的样本（也就是所有的训练样本）数量可能太过庞大（对于计算机而言），就需要把它分成多个小块，也就是就是分成多个Batch来进行训练。</strong></p>
-<ul>
-<li><strong>Batch（批 / 一批样本）：</strong><br> 将整个训练样本分成若干个Batch。</li>
-<li><strong>Batch_Size（批大小）：</strong><br> 每批样本的大小。</li>
-<li><p><strong>Iteration（一次迭代）：</strong><br> 训练一个Batch就是一次Iteration（这个概念跟程序语言中的迭代器相似）。</p>
-</li>
-<li><p><strong>为什么要使用多于一个epoch?</strong></p>
-</li>
-</ul>
-<p>在神经网络中传递完整的数据集一次是不够的，而且我们需要将完整的数据集在同样的神经网络中传递多次。但请记住，我们使用的是有限的数据集，并且我们使用一个迭代过程即梯度下降来优化学习过程。如下图所示。因此仅仅更新一次或者说使用一个epoch是不够的。</p>
-<p><img src="../../../images/三个概念：Epoch-Batch-Iteration/image-20201027115950692.png" alt="image-20201027115950692"></p>
-<p><strong>随着epoch数量增加，神经网络中的权重的更新次数也在增加，曲线从欠拟合变得过拟合。</strong></p>
-<p><strong>几个epoch才是合适的呢？对于不同的数据集，答案是不一样的。</strong></p>
-<ul>
-<li><strong>换算关系</strong></li>
-</ul>
-<script type="math/tex; mode=display">
-\text { Number of Batches }=\frac{\text { Training Set Size }}{\text { Batch Size }}</script><p>实际上，<strong>梯度下降</strong>的几种方式的根本区别就在于上面公式中的 <strong>Batch_Size</strong> 不同。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>梯度下降方式</th>
-<th>Training Set Size</th>
-<th>Batch Size</th>
-<th>Number of Batches</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>BGD</strong></td>
-<td>N</td>
-<td>N</td>
-<td>1</td>
-</tr>
-<tr>
-<td><strong>SGD</strong></td>
-<td>N</td>
-<td>1</td>
-<td>N</td>
-</tr>
-<tr>
-<td><strong>Mini-Batch</strong></td>
-<td>N</td>
-<td>B</td>
-<td>N/B + 1</td>
-</tr>
-</tbody>
-</table>
-</div>
-<ul>
-<li><strong>举例</strong></li>
-</ul>
-<p><strong>MINIST</strong>数据集有 <strong>60000</strong> 张图片作为训练数据，<strong>10000</strong> 张图片作为测试数据。假设现在选择 <strong>Batch_Size = 100</strong> 对模型进行训练。迭代  <strong>30000</strong> 次。</p>
-<ul>
-<li>每个 Epoch 要训练的图片数量：<strong>60000</strong> (训练集上的所有图像)</li>
-<li>训练集具有的 Batch 个数： <strong>60000/100=600</strong></li>
-<li>每个 Epoch 需要完成的 Batch 个数：<strong>600</strong></li>
-<li>每个 Epoch 具有的 Iteration 个数：<strong>600</strong>（完成一个Batch训练，相当于参数迭代一次）</li>
-<li>每个 Epoch 中发生模型权重更新的次数：<strong>600</strong></li>
-<li>训练 10 个Epoch后，模型权重更新的次数： <strong>600*10=6000</strong></li>
-<li>不同Epoch的训练，其实用的是同一个训练集的数据。<strong>第1个Epoch和第10个Epoch虽然用的都是训练集的 60000 张图片，但是对模型的权重更新值却是完全不同的。因为不同Epoch的模型处于代价函数空间上的不同位置，模型的训练代越靠后，越接近谷底，其代价越小。</strong></li>
-<li>总共完成 <strong>30000</strong> 次迭代，相当于完成了 <strong>30000/600=50</strong> 个Epoch</li>
-</ul>
-<p><br></p>
-<p><br></p>
-<p><br></p>
-<p><img src="../../../images/序列模型中的注意力机制/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" /></p>
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>深度学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Keras常用函数汇总</title>
-    <url>/archives/24767.html</url>
-    <content><![CDATA[<h1 id="tf-keras-Input函数"><a href="#tf-keras-Input函数" class="headerlink" title="tf.keras.Input函数"></a>tf.keras.Input函数</h1><p><code>tf.keras.Input</code>函数用于构建网络的第一层——输入层，向模型中输入数据，该层会告诉网络我们的输入的尺寸是什么，并指定数据的形状、数据类型等信息，会返回一个Model对象，通过该对象可以调用model.compile和model.fit函数，非常方便。</p>
-<p>首先给出 <code>tf.keras.Input</code> 的函数定义：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tf.keras.Input(</span><br><span class="line">    shape=<span class="literal">None</span>,</span><br><span class="line">    batch_size=<span class="literal">None</span>,</span><br><span class="line">    name=<span class="literal">None</span>,</span><br><span class="line">    dtype=<span class="literal">None</span>,</span><br><span class="line">    sparse=<span class="literal">False</span>,</span><br><span class="line">    tensor=<span class="literal">None</span>,</span><br><span class="line">    **kwargs</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<p>其中各个参数的含义为（前四个是常用的）：</p>
-<ul>
-<li><code>shape</code>：输入的形状，一个形状元组(由整数组成)，其中并不指定batch size，只是定义输入的数据的形状。比如<code>shape=(32, )</code>和<code>shape=32</code>是等价的，表示输入都为32维的向量。</li>
-<li><code>batch_size</code>: 声明输入的batch_size大小，一般会在预测时候用，训练时不需要声明，会在fit时声明，即dataset类型数据声明了batch_size。</li>
-<li><code>name</code>：可选参数，字符串形式表示当前层的名字。如果没有这个参数的话，会自动生成。</li>
-<li><p><code>dtype</code>：数据类型，在大多数时候，我们需要的数据类型为tf.float32，因为在精度满足的情况下，float32运算更快。</p>
-</li>
-<li><p><code>sparse</code>：一个布尔值，指示创建的占位符是否是稀疏的。</p>
-</li>
-<li><code>tensor</code>：将现有张量wrap到Input层中，如果设置了的话，Input层将不会创建占位符张量(可以理解为张量是已有的，所以不需要创建新的占位符)</li>
-<li><code>**kwargs</code>：当前并不支持的参数</li>
-</ul>
-<p>以下为一个实例：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># this is a logistic regression in Keras</span></span><br><span class="line">x = Input(shape=(<span class="number">32</span>,))</span><br><span class="line">y = Dense(<span class="number">16</span>, activation=<span class="string">&#x27;softmax&#x27;</span>)(x)</span><br><span class="line">model = Model(x, y)</span><br></pre></td></tr></table></figure>
-<h1 id="keras-layers-LSTM函数"><a href="#keras-layers-LSTM函数" class="headerlink" title="keras.layers.LSTM函数"></a>keras.layers.LSTM函数</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">(units,  <span class="comment"># 输出维度，指的是每一个lstm单元的hidden layer的神经元数量</span></span><br><span class="line">activation=<span class="string">&#x27;tanh&#x27;</span>,  <span class="comment"># 要使用的激活函数</span></span><br><span class="line">recurrent_activation=<span class="string">&#x27;sigmoid&#x27;</span>,  <span class="comment"># 用于循环时间步的激活函数</span></span><br><span class="line">use_bias=<span class="literal">True</span>,  <span class="comment"># 布尔值，该层是否使用偏置向量</span></span><br><span class="line">kernel_initializer=<span class="string">&#x27;glorot_uniform&#x27;</span>,  <span class="comment"># 权值矩阵的初始化器，用于输入的线性转换</span></span><br><span class="line">recurrent_initializer=<span class="string">&#x27;orthogonal&#x27;</span>,  <span class="comment"># 权值矩阵的初始化器，用于循环层状态的线性转换</span></span><br><span class="line">bias_initializer=<span class="string">&#x27;zeros&#x27;</span>,  <span class="comment"># 偏置向量的初始化器</span></span><br><span class="line">unit_forget_bias=<span class="literal">True</span>,  <span class="comment"># 布尔值。如果为 True，初始化时，将忘记门的偏置加1。将其设置为 True 同时还会强制 bias_initializer=&quot;zeros&quot;</span></span><br><span class="line">kernel_regularizer=<span class="literal">None</span>,  <span class="comment"># 运用到 kernel 权值矩阵的正则化函数</span></span><br><span class="line">recurrent_regularizer=<span class="literal">None</span>,  <span class="comment"># 运用到 recurrent_kernel 权值矩阵的正则化函数</span></span><br><span class="line">bias_regularizer=<span class="literal">None</span>,  <span class="comment"># 运用到偏置向量的正则化函数</span></span><br><span class="line">activity_regularizer=<span class="literal">None</span>,  <span class="comment"># 运用到层输出（它的激活值）的正则化函数 </span></span><br><span class="line">kernel_constraint=<span class="literal">None</span>,  <span class="comment"># 运用到 kernel 权值矩阵的约束函数</span></span><br><span class="line">recurrent_constraint=<span class="literal">None</span>,  <span class="comment"># 运用到 recurrent_kernel 权值矩阵的约束函数</span></span><br><span class="line">bias_constraint=<span class="literal">None</span>,  <span class="comment"># 运用到偏置向量的约束函数</span></span><br><span class="line">dropout=<span class="number">0.</span>,  <span class="comment"># 在 0 和 1 之间的浮点数。 单元的丢弃比例，用于输入的线性转换。</span></span><br><span class="line">recurrent_dropout=<span class="number">0.</span>,  <span class="comment"># 在 0 和 1 之间的浮点数。 单元的丢弃比例，用于循环层状态的线性转换</span></span><br><span class="line">implementation=<span class="number">2</span>,  <span class="comment"># 实现模式，1 或 2。 模式 1 将把它的操作结构化为更多的小的点积和加法操作， 而模式 2 将把它们分批到更少，更大的操作中。 这些模式在不同的硬件和不同的应用中具有不同的性能配置文件</span></span><br><span class="line">return_sequences=<span class="literal">False</span>,  <span class="comment"># 布尔值。是返回输出序列中的最后一个输出，还是全部序列</span></span><br><span class="line">return_state=<span class="literal">False</span>,  <span class="comment"># True:输出状态，以供下一个lstm单元使用。false:不输出state</span></span><br><span class="line">go_backwards=<span class="literal">False</span>,  <span class="comment"># 布尔值 (默认 False)。 如果为 True，则向后处理输入序列并返回相反的序列</span></span><br><span class="line">stateful=<span class="literal">False</span>,  <span class="comment"># 布尔值 (默认 False)。 如果为 True，则批次中索引 i 处的每个样品的最后状态 将用作下一批次中索引 i 样品的初始状态</span></span><br><span class="line">time_major=<span class="literal">False</span>,</span><br><span class="line">unroll=<span class="literal">False</span>,  <span class="comment"># 布尔值 (默认 False)。 如果为 True，则网络将展开，否则将使用符号循环。 展开可以加速 RNN，但它往往会占用更多的内存。 展开只适用于短序列</span></span><br><span class="line">**kwargs)</span><br></pre></td></tr></table></figure>
-<h1 id="RepeatVector函数"><a href="#RepeatVector函数" class="headerlink" title="RepeatVector函数"></a>RepeatVector函数</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">keras.layers.RepeatVector(n)</span><br></pre></td></tr></table></figure>
-<p>将输入重复n次。</p>
-<p><strong>例：</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">model &#x3D; Sequential()</span><br><span class="line">model.add(Dense(32, input_dim&#x3D;32))</span><br><span class="line"># 现在：model.output_shape &#x3D;&#x3D; (None, 32)</span><br><span class="line"># 注意：&#96;None&#96; 是批表示的维度</span><br><span class="line"></span><br><span class="line">model.add(RepeatVector(3))</span><br><span class="line"># 现在：model.output_shape &#x3D;&#x3D; (None, 3, 32)</span><br></pre></td></tr></table></figure>
-<p><strong>参数</strong></p>
-<ul>
-<li>n：整数，重复次数</li>
-</ul>
-<p><strong>输入尺寸</strong></p>
-<p>2D张量，尺寸为（num_samples, features）</p>
-<p><strong>输出尺寸</strong></p>
-<p>3D张量，尺寸为（num_samples, n, features）</p>
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>Keras</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>先验分布、后验分布、似然估计</title>
-    <url>/archives/58944.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><ul>
-<li>无论是《通信原理》、《信息论》、《信道编码》还是《概率与统计理论》，或者在现在流行的《模式识别》和《Machine Learning》中总会遇到这么几个概念：<strong>先验分布/后验分布/似然估计</strong>。</li>
-</ul>
-<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><ul>
-<li><strong>一个隔壁小哥的故事</strong></li>
-<li><strong>故事中的因果和三个概念</strong></li>
-<li><strong>贝叶斯公式的角色</strong></li>
-<li><strong>最大似然估计和贝叶斯的关系</strong></li>
-</ul>
-<h2 id="隔壁小哥的故事"><a href="#隔壁小哥的故事" class="headerlink" title="隔壁小哥的故事"></a>隔壁小哥的故事</h2><p>隔壁小哥要去15公里外的一个公园，他可以选择<strong>步行走路</strong>，<strong>骑自行车</strong>或者<strong>开辆车</strong>，然后通过其中一种方式<strong>花了一段时间</strong>到达公园。</p>
-<p>首先在这个事里边，大家不要关注隔壁小哥去干嘛，也许去送外卖吧：) 。言归正传，这件事中<strong>采用哪种交通方式是因</strong>，<strong>花了多长时间是果</strong>。俗话说瓜熟蒂落，皆是因果；因果循环，报应不爽。要理解即将提到的概念，何为因何为果先要搞清楚。</p>
-<h2 id="三个概念之后验（知果求因）"><a href="#三个概念之后验（知果求因）" class="headerlink" title="三个概念之后验（知果求因）"></a>三个概念之后验（知果求因）</h2><p>隔壁小哥去公园的故事才刚刚开始，假设在这里您已经牢记住这个故事的因和果。故事仍然要接着讲，顺便带出我们的概念。</p>
-<p>假设我们<strong>已经知道小哥花了1个小时到了公园</strong>，那么你猜他是怎么去的（走路or坐车or自行车），事实上我们<strong>不能百分百确定</strong>他的交通方式，我们正常人的思路是他<strong>很大可能</strong>是骑车过去的，当然也不排除开车过去却由于堵车严重花了很长时间，当然还有可能他是个赛跑的运动员自己一路飞跑过去的。</p>
-<p>假设<strong>已经知道小哥花了3个小时才到公园</strong>，这个时候我们猜的时候会觉得他<strong>很大可能</strong>是静静地走路过去的。但是假设<strong>已经知道小哥只花了20分钟才到公园</strong>，那么正常人会觉得他<strong>最大可能</strong>是开车奔驰而去。</p>
-<p>这种预先<strong>已知结果</strong>（路上花的时间），然后根据结果<strong>估计</strong>（猜）<strong>原因</strong>（交通方式）的概率分布即 <strong>后验概率</strong>。</p>
-<p>例子问题公式化：</p>
-<script type="math/tex; mode=display">
-P(\text { 交通方式|花费的时间 })</script><p>修改成一般的公式：</p>
-<script type="math/tex; mode=display">
-P(\text { 因|果 })</script><p>公式正规化：</p>
-<script type="math/tex; mode=display">
-P\left(\theta \mid x)\right.</script><p>（公式中的 “|”读作 <em>given</em>，即给定的意思。如P ( A ∣ B )即A given B 的概率）</p>
-<p><strong>[解释]</strong>：看到这里估计大家很奇怪为什么要用$x$ 、 $\theta$这样的字母表示，而不是熟悉的$x$ 、$y$。这样表示自然是有原因的。在这里大家只需要先暂时记住$\theta$代表<strong>因</strong>、$x$代表<strong>果</strong>，后面的贝叶斯我们将会具体介绍这些字母的含义。</p>
-<h2 id="三个概念之先验概率（由历史求因）"><a href="#三个概念之先验概率（由历史求因）" class="headerlink" title="三个概念之先验概率（由历史求因）"></a>三个概念之先验概率（由历史求因）</h2><p>换个情景，我们<strong>不再考虑</strong>隔壁小哥去公园的结果了。假设隔壁小哥还没去，大早上刚起床，打算吃完早饭再去。</p>
-<p>假设我们<strong>比较了解小哥的个人习惯</strong>，别管怎么了解的：) 。小哥是个健身爱好者就喜欢跑步运动，这个时候我们可以猜测他更可能倾向于走路过去。</p>
-<p>当然我的隔壁小哥是个大死肥宅，懒得要命！这个时候我们猜测他更可能倾向于坐车，连骑自行车的可能性都不大。</p>
-<p>这个情景中隔壁小哥的<strong>交通工具选择与花费时间不再相关</strong>。因为我们是<strong>在结果发生前</strong>就开始猜的，根据历史规律确定<strong>原因</strong> （交通方式）的概率分布即 <strong>先验概率</strong>。</p>
-<p>例子问题公式化：</p>
-<script type="math/tex; mode=display">
-P(\text { 交通方式 })</script><p>一般化：</p>
-<script type="math/tex; mode=display">
-P(\text {因})</script><p>正规化：</p>
-<script type="math/tex; mode=display">
-P({\theta})</script><h2 id="三个概念之似然估计（由因求果）"><a href="#三个概念之似然估计（由因求果）" class="headerlink" title="三个概念之似然估计（由因求果）"></a>三个概念之似然估计（由因求果）</h2><p>换个情景，我们<strong>先</strong>重新考虑隔壁小哥去公园的交通方式。</p>
-<p>假设隔壁小哥<strong>步行</strong>走路去，15公里的路到公园，<strong>一般情况下</strong>小哥大概要用2个多小时，当然<strong>很小的可能性是</strong>小哥是飞毛腿，跑步过去用了1个小时左右，<strong>极为小的可能</strong>是小哥是隐藏的高手，10分钟就轻功跑酷到了。</p>
-<p>小哥决定开车，到公园半个小时是<strong>非常可能的</strong>，<strong>非常小的概率</strong>是小哥因为途径的路上有车祸堵了3个小时。</p>
-<p>这种<strong>先定下来原因</strong>，<strong>根据原因来估计结果</strong>的概率分布即 <strong>似然估计</strong>。根据原因来统计各种可能结果的概率即<strong>似然函数</strong>。</p>
-<p>似然函数问题公式化：</p>
-<script type="math/tex; mode=display">
-P(\text { 时间|交通方式 })</script><p>一般化：</p>
-<script type="math/tex; mode=display">
-P(\text { 果|因 })</script><p>正规化：</p>
-<script type="math/tex; mode=display">
-P\left(x \mid \theta)\right.</script><h2 id="贝叶斯公式"><a href="#贝叶斯公式" class="headerlink" title="贝叶斯公式"></a>贝叶斯公式</h2><p>我们熟知的贝叶斯公式是这样的：</p>
-<script type="math/tex; mode=display">
-P(A|B)={P(B|A)*P(A) \over P(B)}</script><p>但在这里我们采用如下形式：</p>
-<script type="math/tex; mode=display">
-P(\theta|x)={P(x|\theta)*P(\theta) \over P(x)}</script><script type="math/tex; mode=display">
-后验概率={似然估计*先验概率 \over evidence}</script><p><strong>[注]</strong>：$P(x)$即 <em>evidence</em> 。隔壁小哥去公园很多次，忽略交通方式是什么，<strong>只统计每次到达公园的时间$x$</strong>，于是得到了一组时间的概率分布。这种不考虑原因，只看结果的概率分布即 <em>evidence</em> ，它也称为样本发生的概率分布的<strong>证据</strong>。</p>
-<p> <em>evidence</em> 在故事中如下表示：</p>
-<script type="math/tex; mode=display">
-P(时间)</script><p><strong>或</strong></p>
-<script type="math/tex; mode=display">
-P(果)</script><p><br></p>
 <p><br></p>
 <p><br></p>
 <p><img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" /></p>
 ]]></content>
       <categories>
-        <category>机器学习</category>
+        <category>舟山海洋项目</category>
       </categories>
       <tags>
-        <tag>深度学习</tag>
+        <tag>数据融合</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes</title>
+    <url>/archives/28714.html</url>
+    <content><![CDATA[<p>Fei Yu,Yan Zeng,Z.Q. Guan,S.H. Lo. A robust Delaunay-AFT based parallel method for the generation of large-scale fully constrained meshes[J]. Computers and Structures,2020,228.</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文研究者充分利用串行Delaunay-AFT网格生成器，<u>开发了一种在分布式存储的机器上生成大规模四面体网格的并行方法</u>。 </p>
+<p>为了生成具有所需和保留属性的网格，<u>使用了一种基于Delaunay-AFT的域分解(DD)技术</u>。从覆盖问题域的Delaunay三角剖分(DT)开始，该技术创建了一层元素，将整个域划分为几个区域。将最初粗糙的网格域划分为了可以进行并行网格划分的子域的DTs。 当一个子域的大小小于用户指定的阈值，将用标准Delaunay-AFT方法进行网格划分。     </p>
+<p><u>设计了两级DD策略来提高了该算法的并行效率</u>。<u>还使用消息传递接口(MPI)实现了动态负载均衡方案</u>。 <u>引入了核心外网格划分，以适应过大的网格</u>，而这些网格不能由计算机的可用存储器(RAM)处理。 <u>对具有数千个表面贴片的各种复杂几何形状进行了数值试验，创建了拥有超过100亿个四面体元素的超大尺度网格</u>。 此外，不同DD操作次数生成的网格在质量上几乎相同：显示了自动分解算法的一致性和稳定性。</p>
+<a id="more"></a>
+<h1 id="具体论文"><a href="#具体论文" class="headerlink" title="具体论文"></a>具体论文</h1><h2 id="并行域分解和网格产生算法"><a href="#并行域分解和网格产生算法" class="headerlink" title="并行域分解和网格产生算法"></a>并行域分解和网格产生算法</h2><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016180107878.png" alt="image-20201016180107878"></p>
+<h2 id="并行域分解和网格产生算法-1"><a href="#并行域分解和网格产生算法-1" class="headerlink" title="并行域分解和网格产生算法"></a>并行域分解和网格产生算法</h2><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016193028229.png" alt="image-20201016193028229"></p>
+<h2 id="一级域分解"><a href="#一级域分解" class="headerlink" title="一级域分解"></a>一级域分解</h2><p><img src="../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016180334321.png" alt="image-20201016180334321" style="zoom: 80%;" /></p>
+<p>（a）进行CDT分解的区域。</p>
+<p>（b）扩展的Delaunay-AFT方法引入了一层形状良好的单元作为分离层。</p>
+<p>（c）独立的并行处理器进行进一步的域分解。</p>
+<p>（d）并行子域网格生成的中间阶段，三个处理器完成，一个正在进行。</p>
+<h2 id="二级域分解"><a href="#二级域分解" class="headerlink" title="二级域分解"></a>二级域分解</h2><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016192227404.png" alt="image-20201016192227404"></p>
+<p>(a) 引入L0,L1分割切割面。</p>
+<p>(b) 将领域用L0,L1周围的分割元划分成四个不完全的区域。</p>
+<p>(c)通过并行的处理器在平面Π周围生成分割面。</p>
+<p>(d)不完全的区域合并成了单个区域，然后通过Π周围的分割元自动分为了两个子区域。</p>
+<p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016192433173.png" alt="image-20201016192433173"></p>
+<p>上图是二级域分解的直观情况，（a）是在切割线周围产生分割元，（b）是在切割面周围产生分割元</p>
+<h1 id="动态负载均衡"><a href="#动态负载均衡" class="headerlink" title="动态负载均衡"></a>动态负载均衡</h1><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016192634936.png" alt="image-20201016192634936"></p>
+<p>由于Delaunay-AFT法网格生成的速度与各种因素的组合有关，因此难以准确地评价网格划分工作。</p>
+<p>因此，相比于静态负载分配，动态负载均衡策略更合适。</p>
+<p>网格域被划分为比处理器数(Np)多得多的子域。 然后将处理器动态地分配进行网格生成。如算法3所示，基本实现结构是主/从模型。在这个模型中，主处理器接收请求，并指示从处理器执行它们，从处理器独立于其他从处理器运行。</p>
+<h1 id="核心外网格划分"><a href="#核心外网格划分" class="headerlink" title="核心外网格划分"></a>核心外网格划分</h1><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016192725596.png" alt="image-20201016192725596"></p>
+<p> 由于主从模型有很强的解耦性和简单性，所以核外的网格划分能通过改变消息传递的方式简单地实现。</p>
+<p>网格数据被序列化之后使用MPI_Send和MPI_Recv方法在处理器之间传输数据。</p>
+<p>但是，当从机需要发送网格数据给主机，然后主机需要广播数据给从机时，通信开销会变得非常大，这也是并行方法的瓶颈。</p>
+<p>在本工作中，序列化的网格数据被转储到处理器之间共享的磁盘上，并将表示相应文件路径的字符串视为对需要传递的数据的代替，由于文件路径的字符串长度很小，主机通讯的时间可以忽略不计，所以通讯开销会变得很小。</p>
+<p>同时，完成的网格立即导出以释放内存，这样，内存需求明显降低，因为只有正在处理的网格保存在RAM中。 </p>
+<h1 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h1><h2 id="加速比"><a href="#加速比" class="headerlink" title="加速比"></a>加速比</h2><p>分别对齿轮箱、显卡、喷气引擎进行了网格划分测试。</p>
+<p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016192809878.png" alt="image-20201016192809878"></p>
+<h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016193252883.png" alt="image-20201016193252883"></p>
+<p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016193258301.png" alt="image-20201016193258301"></p>
+<h2 id="网格质量"><a href="#网格质量" class="headerlink" title="网格质量"></a>网格质量</h2><p>网格质量通过以下公式定义：</p>
+<script type="math/tex; mode=display">
+\sigma=3\frac{r_i}{r_c}</script><p>其中$r_i$是内接圆半径，$r_c$是外接圆半径，$\sigma$越接近1，说明网格的形状越接近正四面体，质量越高，由于实际正四面体的内外接圆半径之比为$\frac{1}{3}$，所以乘上3归一化。</p>
+<p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016193551630.png" alt="image-20201016193551630"></p>
+<p>上图是三个模型在不同网格质量下的网格数目，可见并行对网格质量影响不大，生成网格大部分都为高质量网格。</p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><img src="../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" /></p>
+]]></content>
+      <categories>
+        <category>并行与分布式计算</category>
+      </categories>
+      <tags>
+        <tag>并行与分布式计算</tag>
+        <tag>网格划分</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基于GPU的矩阵计算并行加速方法研究</title>
+    <url>/archives/9502.html</url>
+    <content><![CDATA[<p>李丰.<em>基于GPU的矩阵计算并行加速方法研究</em>.2018.哈尔滨工业大学,PhD dissertation.</p>
+]]></content>
+      <categories>
+        <category>并行与分布式计算</category>
+      </categories>
+      <tags>
+        <tag>并行与分布式计算</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PAC2020:傅里叶空间图像相似度计算</title>
+    <url>/archives/62775.html</url>
+    <content><![CDATA[<h1 id="赛题描述"><a href="#赛题描述" class="headerlink" title="赛题描述"></a>赛题描述</h1><p>在蛋白质冷冻电镜三维重构程序中，将二维真实图像与空间中的三维结构的投影图像的相似度计算是调用最为频繁的计算，相似度计算的原理是求取真实图像与投影图像的所有像素在傅里叶空间中的二范数之和，公式如下：</p>
+<script type="math/tex; mode=display">
+diff=\sum_{i=1}^{N}{a*||image_i-proj_i||}</script><p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201015095633405.png" alt="image-20201015095633405" style="zoom: 50%;" /></p>
+<p>比赛的目的是将赛方提供的相似度计算程序进行并行加速，输出结果精度误差不超过十万分之一，比赛的代码包里提供了校验文件。</p>
+<a id="more"></a>
+<h1 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h1><h2 id="硬件："><a href="#硬件：" class="headerlink" title="硬件："></a>硬件：</h2><p>处理器：Intel Xeon处理器 Platinum 9242 CPU @ 2.30GHz 24*8G </p>
+<p>网络：100Gb Intel omnipath</p>
+<h2 id="软件："><a href="#软件：" class="headerlink" title="软件："></a>软件：</h2><p>操作系统：CentOS 8.0  </p>
+<p>并行环境：Intel MPI</p>
+<p>相关依赖软件：VTune Profiler 2020、ParaCloud平台的ssh连接工具等</p>
+<p>应用负载：96个逻辑核心</p>
+<h1 id="优化后的代码结构"><a href="#优化后的代码结构" class="headerlink" title="优化后的代码结构"></a>优化后的代码结构</h1><p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201014211614779.png" alt="image-20201014211614779" style="zoom:80%;" /></p>
+<h1 id="优化过程"><a href="#优化过程" class="headerlink" title="优化过程"></a>优化过程</h1><h2 id="MPI进程级并行优化-amp-MPI-IO优化"><a href="#MPI进程级并行优化-amp-MPI-IO优化" class="headerlink" title="MPI进程级并行优化&amp;MPI-IO优化"></a>MPI进程级并行优化&amp;MPI-IO优化</h2><p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201014202814651.png" alt="image-20201014202814651"></p>
+<p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201014202730183.png" alt="image-20201014202730183"></p>
+<p>对于源代码计算部分的外层循环，通过进程号将大的循环体划分成数个小循环并行执行，多出的子任务分配给进程号最大的进程。I/O方面的优化点在于，通过预先确定结果文件指针的偏移量，每轮计算结果不再直接输出，而是根据偏移量存入当前进程创建的一片内存空间中的对应位置，各进程在计算任务结束后整体写入结果文件中。</p>
+<h3 id="优化结果-amp-性能指标-MPI"><a href="#优化结果-amp-性能指标-MPI" class="headerlink" title="优化结果&amp;性能指标(MPI)"></a>优化结果&amp;性能指标(MPI)</h3><p>  <img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201015082916436.png" alt="image-20201015082916436"></p>
+<h2 id="OpenMP线程级并行优化-amp-AVX优化"><a href="#OpenMP线程级并行优化-amp-AVX优化" class="headerlink" title="OpenMP线程级并行优化&amp;AVX优化"></a>OpenMP线程级并行优化&amp;AVX优化</h2><p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201014204736870.png" alt="image-20201014204736870" style="zoom:80%;" /></p>
+<p>利用OpenMP对计算部分的内层循环进行归约优化，简单实现线程级的并行。</p>
+<p>对于实际计算部分，我利用了AVX指令改写了原来计算部分的代码，通过调用AVX的512位向量寄存器，一次可以操作512/32=16个float型浮点数(损失的精度在规则范围内)，而一个float型复数会占用2个float型浮点数长度的地址，所以最终能达到8路并行，即一次操作本来需要八轮循环操作的数据，运算速度有较大提升。</p>
+<h3 id="优化结果-amp-性能指标-MPI-OpenMP"><a href="#优化结果-amp-性能指标-MPI-OpenMP" class="headerlink" title="优化结果&amp;性能指标(MPI+OpenMP)"></a>优化结果&amp;性能指标(MPI+OpenMP)</h3><p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201015091631843.png" alt="image-20201015091631843"></p>
+<h3 id="优化结果-amp-性能指标-MPI-OpenMP-AVX-编译优化"><a href="#优化结果-amp-性能指标-MPI-OpenMP-AVX-编译优化" class="headerlink" title="优化结果&amp;性能指标(MPI+OpenMP+AVX+编译优化)"></a>优化结果&amp;性能指标(MPI+OpenMP+AVX+编译优化)</h3><p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201015091754886.png" alt="image-20201015091754886"></p>
+<h1 id="Vtune测试结果"><a href="#Vtune测试结果" class="headerlink" title="Vtune测试结果"></a>Vtune测试结果</h1><p>原程序计算时间为两个半小时左右，经优化后，程序计算时间为12秒左右，加速了735倍。</p>
+<p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/image-20201015092113391.png" alt="image-20201015092113391"></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><img src="../../../images/PAC2020-傅里叶空间图像相似度计算/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" /></p>
+]]></content>
+      <categories>
+        <category>并行与分布式计算</category>
+      </categories>
+      <tags>
+        <tag>并行与分布式计算</tag>
+        <tag>计算机类竞赛</tag>
       </tags>
   </entry>
 </search>

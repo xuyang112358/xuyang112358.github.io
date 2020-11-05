@@ -6,7 +6,7 @@
   <link href="https://xuyang112358.github.io/atom.xml" rel="self"/>
   
   <link href="https://xuyang112358.github.io/"/>
-  <updated>2020-11-01T01:13:54.000Z</updated>
+  <updated>2020-11-05T01:22:40.000Z</updated>
   <id>https://xuyang112358.github.io/</id>
   
   <author>
@@ -21,17 +21,18 @@
     <link href="https://xuyang112358.github.io/archives/58944.html"/>
     <id>https://xuyang112358.github.io/archives/58944.html</id>
     <published>2020-10-31T10:42:52.000Z</published>
-    <updated>2020-11-01T01:13:54.000Z</updated>
+    <updated>2020-11-05T01:22:40.000Z</updated>
     
     
-      
-      
-        
-        
     <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;无论是《通信原理》、《信息论》、《信道编码》还是《概率与统计理论》，或者在现在流行的《模式识别》和《Machine</summary>
-        
-      
+&lt;li&gt;无论是《通信原理》、《信息论》、《信道编码》还是《概率与统计理论》，或者在现在流行的《模式识别》和《Machine Learning》中总会遇到这么几个概念：&lt;strong&gt;先验分布/后验分布/似然估计&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;正文&quot;&gt;&lt;a href=&quot;#正文&quot; class=&quot;headerlink&quot; title=&quot;正文&quot;&gt;&lt;/a&gt;正文&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;一个隔壁小哥的故事&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;故事中的因果和三个概念&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;贝叶斯公式的角色&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;最大似然估计和贝叶斯的关系&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
     
     
     
@@ -47,7 +48,7 @@
     <link href="https://xuyang112358.github.io/archives/24767.html"/>
     <id>https://xuyang112358.github.io/archives/24767.html</id>
     <published>2020-10-28T18:24:38.000Z</published>
-    <updated>2020-11-01T12:50:08.000Z</updated>
+    <updated>2020-11-03T12:48:08.000Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;tf-keras-Input函数&quot;&gt;&lt;a href=&quot;#tf-keras-Input函数&quot; class=&quot;headerlink&quot; title=&quot;tf.keras.Input函数&quot;&gt;&lt;/a&gt;tf.keras.Input函数&lt;/h1&gt;&lt;p&gt;&lt;code&gt;tf.keras.Input&lt;/code&gt;函数用于构建网络的第一层——输入层，向模型中输入数据，该层会告诉网络我们的输入的尺寸是什么，并指定数据的形状、数据类型等信息，会返回一个Model对象，通过该对象可以调用model.compile和model.fit函数，非常方便。&lt;/p&gt;
