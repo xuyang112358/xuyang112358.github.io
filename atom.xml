@@ -6,7 +6,7 @@
   <link href="https://xuyang112358.github.io/atom.xml" rel="self"/>
   
   <link href="https://xuyang112358.github.io/"/>
-  <updated>2020-10-25T05:46:14.000Z</updated>
+  <updated>2020-11-01T01:13:54.000Z</updated>
   <id>https://xuyang112358.github.io/</id>
   
   <author>
@@ -15,6 +15,95 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>先验分布、后验分布、似然估计</title>
+    <link href="https://xuyang112358.github.io/archives/58944.html"/>
+    <id>https://xuyang112358.github.io/archives/58944.html</id>
+    <published>2020-10-31T10:42:52.000Z</published>
+    <updated>2020-11-01T01:13:54.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;无论是《通信原理》、《信息论》、《信道编码》还是《概率与统计理论》，或者在现在流行的《模式识别》和《Machine</summary>
+        
+      
+    
+    
+    
+    <category term="机器学习" scheme="https://xuyang112358.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="深度学习" scheme="https://xuyang112358.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Keras常用函数汇总</title>
+    <link href="https://xuyang112358.github.io/archives/24767.html"/>
+    <id>https://xuyang112358.github.io/archives/24767.html</id>
+    <published>2020-10-28T18:24:38.000Z</published>
+    <updated>2020-11-01T12:50:08.000Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;tf-keras-Input函数&quot;&gt;&lt;a href=&quot;#tf-keras-Input函数&quot; class=&quot;headerlink&quot; title=&quot;tf.keras.Input函数&quot;&gt;&lt;/a&gt;tf.keras.Input函数&lt;/h1&gt;&lt;p&gt;&lt;code&gt;tf.keras.Input&lt;/code&gt;函数用于构建网络的第一层——输入层，向模型中输入数据，该层会告诉网络我们的输入的尺寸是什么，并指定数据的形状、数据类型等信息，会返回一个Model对象，通过该对象可以调用model.compile和model.fit函数，非常方便。&lt;/p&gt;
+&lt;p&gt;首先给出 &lt;code&gt;tf.keras.Input&lt;/code&gt; 的函数定义：&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;tf.keras.Input(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    shape=&lt;span class=&quot;literal&quot;&gt;None&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    batch_size=&lt;span class=&quot;literal&quot;&gt;None&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    name=&lt;span class=&quot;literal&quot;&gt;None&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    dtype=&lt;span class=&quot;literal&quot;&gt;None&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    sparse=&lt;span class=&quot;literal&quot;&gt;False&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    tensor=&lt;span class=&quot;literal&quot;&gt;None&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    **kwargs&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    <category term="机器学习" scheme="https://xuyang112358.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="Keras" scheme="https://xuyang112358.github.io/tags/Keras/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>三个概念：Epoch, Batch, Iteration</title>
+    <link href="https://xuyang112358.github.io/archives/65471.html"/>
+    <id>https://xuyang112358.github.io/archives/65471.html</id>
+    <published>2020-10-27T10:24:23.000Z</published>
+    <updated>2020-10-27T05:54:46.000Z</updated>
+    
+    
+    <summary type="html">&lt;div class=&quot;table-container&quot;&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;&lt;center&gt;名词&lt;/center&gt;&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;&lt;center&gt;定义&lt;/center&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;&lt;strong&gt;Epoch&lt;/strong&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;使用训练集的全部数据对模型进行一次完整训练，被称之为 &lt;strong&gt;“一代训练”&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;&lt;strong&gt;Batch&lt;/strong&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;使用训练集中的一小部分样本对模型权重进行一次反向传播的参数更新，这一小部分样本被称为 &lt;strong&gt;“一批数据”&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;&lt;strong&gt;Iteration&lt;/strong&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;使用一个&lt;strong&gt;Batch&lt;/strong&gt;数据对模型进行一次参数更新的过程，被称之为 &lt;strong&gt;“一次训练”&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;</summary>
+    
+    
+    
+    <category term="机器学习" scheme="https://xuyang112358.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="深度学习" scheme="https://xuyang112358.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>深入理解GRU</title>
@@ -48,7 +137,7 @@
     <link href="https://xuyang112358.github.io/archives/33247.html"/>
     <id>https://xuyang112358.github.io/archives/33247.html</id>
     <published>2020-10-24T14:28:50.000Z</published>
-    <updated>2020-10-25T10:57:10.000Z</updated>
+    <updated>2020-10-28T10:24:16.000Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;p&gt;LSTM 是 Long Short Term Memory Networks 的缩写，按字面翻译就是长的短时记忆网络。长时依赖是这样的一个问题，当预测点与依赖的相关信息距离比较远的时候，就难以学到该相关信息。例如在句子“我出生在法国，……   ，我会说法语”中，若要预测末尾“法语”，我们需要用到上下文“法国”。理论上，递归神经网络是可以处理这样的问题的，但是实际上，常规的递归神经网络并不能很好地解决长时依赖，好的是LSTMs可以很好地解决这个问题。&lt;/p&gt;</summary>
@@ -69,10 +158,10 @@
     <link href="https://xuyang112358.github.io/archives/45468.html"/>
     <id>https://xuyang112358.github.io/archives/45468.html</id>
     <published>2020-10-23T18:55:44.000Z</published>
-    <updated>2020-10-24T06:12:28.000Z</updated>
+    <updated>2020-10-27T05:53:58.000Z</updated>
     
     
-    <summary type="html">&lt;h1 id=&quot;nn-Linear&quot;&gt;&lt;a href=&quot;#nn-Linear&quot; class=&quot;headerlink&quot; title=&quot;nn.Linear&quot;&gt;&lt;/a&gt;nn.Linear&lt;/h1&gt;</summary>
+    <summary type="html">&lt;h1 id=&quot;nn-Linear&quot;&gt;&lt;a href=&quot;#nn-Linear&quot; class=&quot;headerlink&quot; title=&quot;nn.Linear&quot;&gt;&lt;/a&gt;nn.Linear&lt;/h1&gt;&lt;img src=&quot;../../../images/PyTorch常用函数汇总/image-20201023214312121.png&quot; alt=&quot;image-20201023214312121&quot; style=&quot;zoom:80%;&quot; /&gt;</summary>
     
     
     
