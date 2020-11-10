@@ -6,7 +6,7 @@
   <link href="https://xuyang112358.github.io/atom.xml" rel="self"/>
   
   <link href="https://xuyang112358.github.io/"/>
-  <updated>2020-11-05T01:22:40.000Z</updated>
+  <updated>2020-11-05T11:01:50.000Z</updated>
   <id>https://xuyang112358.github.io/</id>
   
   <author>
@@ -15,6 +15,19 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Keras回调Callbacks</title>
+    <link href="https://xuyang112358.github.io/archives/203.html"/>
+    <id>https://xuyang112358.github.io/archives/203.html</id>
+    <published>2020-11-05T18:59:45.000Z</published>
+    <updated>2020-11-05T11:01:50.000Z</updated>
+    
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>先验分布、后验分布、似然估计</title>
@@ -48,7 +61,7 @@
     <link href="https://xuyang112358.github.io/archives/24767.html"/>
     <id>https://xuyang112358.github.io/archives/24767.html</id>
     <published>2020-10-28T18:24:38.000Z</published>
-    <updated>2020-11-03T12:48:08.000Z</updated>
+    <updated>2020-11-05T12:10:36.000Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;tf-keras-Input函数&quot;&gt;&lt;a href=&quot;#tf-keras-Input函数&quot; class=&quot;headerlink&quot; title=&quot;tf.keras.Input函数&quot;&gt;&lt;/a&gt;tf.keras.Input函数&lt;/h1&gt;&lt;p&gt;&lt;code&gt;tf.keras.Input&lt;/code&gt;函数用于构建网络的第一层——输入层，向模型中输入数据，该层会告诉网络我们的输入的尺寸是什么，并指定数据的形状、数据类型等信息，会返回一个Model对象，通过该对象可以调用model.compile和model.fit函数，非常方便。&lt;/p&gt;
