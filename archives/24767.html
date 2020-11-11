@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuyang112358.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":false,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="tf.keras.Input函数tf.keras.Input函数用于构建网络的第一层——输入层，向模型中输入数据，该层会告诉网络我们的输入的尺寸是什么，并指定数据的形状、数据类型等信息，会返回一个Model对象，通过该对象可以调用model.compile和model.fit函数，非常方便。 首先给出 tf.keras.Input 的函数定义： 123456789tf.keras.Input(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Keras常用函数汇总">
+<meta property="og:url" content="https://xuyang112358.github.io/archives/24767.html">
+<meta property="og:site_name" content="江东大少爷">
+<meta property="og:description" content="tf.keras.Input函数tf.keras.Input函数用于构建网络的第一层——输入层，向模型中输入数据，该层会告诉网络我们的输入的尺寸是什么，并指定数据的形状、数据类型等信息，会返回一个Model对象，通过该对象可以调用model.compile和model.fit函数，非常方便。 首先给出 tf.keras.Input 的函数定义： 123456789tf.keras.Input(">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xuyang112358.github.io/images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/HDU_LOGO.png">
+<meta property="article:published_time" content="2020-10-28T18:24:38.000Z">
+<meta property="article:modified_time" content="2020-11-05T12:17:14.000Z">
+<meta property="article:author" content="XuYang">
+<meta property="article:tag" content="Keras">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xuyang112358.github.io/images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/HDU_LOGO.png">
+
+<link rel="canonical" href="https://xuyang112358.github.io/archives/24767.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link rel="stylesheet" type="text/css" href="/css/injector.css" />
+  <title>Keras常用函数汇总 | 江东大少爷</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="江东大少爷" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">江东大少爷</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">From XPU To HDU</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-站点地图">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-公益">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links" rel="section"><i class="fa fa-address-book fa-fw"></i>友情链接</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuyang112358.github.io/archives/24767.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="XuYang">
+      <meta itemprop="description" content="把海弄干的鱼提前上了陆地，从一片黑暗森林奔向另一片黑暗森林">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江东大少爷">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Keras常用函数汇总
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-28 18:24:38" itemprop="dateCreated datePublished" datetime="2020-10-28T18:24:38Z">2020-10-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/24767.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/24767.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+        <h1 id="tf-keras-Input函数"><a href="#tf-keras-Input函数" class="headerlink" title="tf.keras.Input函数"></a>tf.keras.Input函数</h1><p><code>tf.keras.Input</code>函数用于构建网络的第一层——输入层，向模型中输入数据，该层会告诉网络我们的输入的尺寸是什么，并指定数据的形状、数据类型等信息，会返回一个Model对象，通过该对象可以调用model.compile和model.fit函数，非常方便。</p>
+<p>首先给出 <code>tf.keras.Input</code> 的函数定义：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tf.keras.Input(</span><br><span class="line">    shape=<span class="literal">None</span>,</span><br><span class="line">    batch_size=<span class="literal">None</span>,</span><br><span class="line">    name=<span class="literal">None</span>,</span><br><span class="line">    dtype=<span class="literal">None</span>,</span><br><span class="line">    sparse=<span class="literal">False</span>,</span><br><span class="line">    tensor=<span class="literal">None</span>,</span><br><span class="line">    **kwargs</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<p>其中各个参数的含义为（前四个是常用的）：</p>
+<ul>
+<li><p><code>shape</code>：输入的形状，一个形状元组(由整数组成)，其中并不指定batch size，只是定义输入的数据的形状。比如<code>shape=(32, )</code>和<code>shape=32</code>是等价的，表示输入都为32维的向量。</p>
+</li>
+<li><p><code>batch_size</code>: 声明输入的batch_size大小，一般会在预测时候用，训练时不需要声明，会在fit时声明，即dataset类型数据声明了batch_size。</p>
+</li>
+<li><p><code>name</code>：可选参数，字符串形式表示当前层的名字。如果没有这个参数的话，会自动生成。</p>
+</li>
+<li><p><code>dtype</code>：数据类型，在大多数时候，我们需要的数据类型为tf.float32，因为在精度满足的情况下，float32运算更快。</p>
+</li>
+<li><p><code>sparse</code>：一个布尔值，指示创建的占位符是否是稀疏的。</p>
+</li>
+<li><p><code>tensor</code>：将现有张量wrap到Input层中，如果设置了的话，Input层将不会创建占位符张量(可以理解为张量是已有的，所以不需要创建新的占位符)</p>
+</li>
+<li><p><code>**kwargs</code>：当前并不支持的参数</p>
+</li>
+</ul>
+<p>以下为一个实例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># this is a logistic regression in Keras</span></span><br><span class="line">x = Input(shape=(<span class="number">32</span>,))</span><br><span class="line">y = Dense(<span class="number">16</span>, activation=<span class="string">&#x27;softmax&#x27;</span>)(x)</span><br><span class="line">model = Model(x, y)</span><br></pre></td></tr></table></figure>
+
+<h1 id="keras-layers-LSTM函数"><a href="#keras-layers-LSTM函数" class="headerlink" title="keras.layers.LSTM函数"></a>keras.layers.LSTM函数</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">(units,  <span class="comment"># 输出维度，指的是每一个lstm单元的hidden layer的神经元数量</span></span><br><span class="line">activation=<span class="string">&#x27;tanh&#x27;</span>,  <span class="comment"># 要使用的激活函数</span></span><br><span class="line">recurrent_activation=<span class="string">&#x27;sigmoid&#x27;</span>,  <span class="comment"># 用于循环时间步的激活函数</span></span><br><span class="line">use_bias=<span class="literal">True</span>,  <span class="comment"># 布尔值，该层是否使用偏置向量</span></span><br><span class="line">kernel_initializer=<span class="string">&#x27;glorot_uniform&#x27;</span>,  <span class="comment"># 权值矩阵的初始化器，用于输入的线性转换</span></span><br><span class="line">recurrent_initializer=<span class="string">&#x27;orthogonal&#x27;</span>,  <span class="comment"># 权值矩阵的初始化器，用于循环层状态的线性转换</span></span><br><span class="line">bias_initializer=<span class="string">&#x27;zeros&#x27;</span>,  <span class="comment"># 偏置向量的初始化器</span></span><br><span class="line">unit_forget_bias=<span class="literal">True</span>,  <span class="comment"># 布尔值。如果为 True，初始化时，将忘记门的偏置加1。将其设置为 True 同时还会强制 bias_initializer=&quot;zeros&quot;</span></span><br><span class="line">kernel_regularizer=<span class="literal">None</span>,  <span class="comment"># 运用到 kernel 权值矩阵的正则化函数</span></span><br><span class="line">recurrent_regularizer=<span class="literal">None</span>,  <span class="comment"># 运用到 recurrent_kernel 权值矩阵的正则化函数</span></span><br><span class="line">bias_regularizer=<span class="literal">None</span>,  <span class="comment"># 运用到偏置向量的正则化函数</span></span><br><span class="line">activity_regularizer=<span class="literal">None</span>,  <span class="comment"># 运用到层输出（它的激活值）的正则化函数 </span></span><br><span class="line">kernel_constraint=<span class="literal">None</span>,  <span class="comment"># 运用到 kernel 权值矩阵的约束函数</span></span><br><span class="line">recurrent_constraint=<span class="literal">None</span>,  <span class="comment"># 运用到 recurrent_kernel 权值矩阵的约束函数</span></span><br><span class="line">bias_constraint=<span class="literal">None</span>,  <span class="comment"># 运用到偏置向量的约束函数</span></span><br><span class="line">dropout=<span class="number">0.</span>,  <span class="comment"># 在 0 和 1 之间的浮点数。 单元的丢弃比例，用于输入的线性转换。</span></span><br><span class="line">recurrent_dropout=<span class="number">0.</span>,  <span class="comment"># 在 0 和 1 之间的浮点数。 单元的丢弃比例，用于循环层状态的线性转换</span></span><br><span class="line">implementation=<span class="number">2</span>,  <span class="comment"># 实现模式，1 或 2。 模式 1 将把它的操作结构化为更多的小的点积和加法操作， 而模式 2 将把它们分批到更少，更大的操作中。 这些模式在不同的硬件和不同的应用中具有不同的性能配置文件</span></span><br><span class="line">return_sequences=<span class="literal">False</span>,  <span class="comment"># 布尔值。是返回输出序列中的最后一个输出，还是全部序列</span></span><br><span class="line">return_state=<span class="literal">False</span>,  <span class="comment"># True:输出状态，以供下一个lstm单元使用。false:不输出state</span></span><br><span class="line">go_backwards=<span class="literal">False</span>,  <span class="comment"># 布尔值 (默认 False)。 如果为 True，则向后处理输入序列并返回相反的序列</span></span><br><span class="line">stateful=<span class="literal">False</span>,  <span class="comment"># 布尔值 (默认 False)。 如果为 True，则批次中索引 i 处的每个样品的最后状态 将用作下一批次中索引 i 样品的初始状态</span></span><br><span class="line">time_major=<span class="literal">False</span>,</span><br><span class="line">unroll=<span class="literal">False</span>,  <span class="comment"># 布尔值 (默认 False)。 如果为 True，则网络将展开，否则将使用符号循环。 展开可以加速 RNN，但它往往会占用更多的内存。 展开只适用于短序列</span></span><br><span class="line">**kwargs)</span><br></pre></td></tr></table></figure>
+
+<h1 id="RepeatVector函数"><a href="#RepeatVector函数" class="headerlink" title="RepeatVector函数"></a>RepeatVector函数</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keras.layers.RepeatVector(n)</span><br></pre></td></tr></table></figure>
+
+<p>将输入重复n次。</p>
+<p><strong>例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">model &#x3D; Sequential()</span><br><span class="line">model.add(Dense(32, input_dim&#x3D;32))</span><br><span class="line"># 现在：model.output_shape &#x3D;&#x3D; (None, 32)</span><br><span class="line"># 注意：&#96;None&#96; 是批表示的维度</span><br><span class="line"></span><br><span class="line">model.add(RepeatVector(3))</span><br><span class="line"># 现在：model.output_shape &#x3D;&#x3D; (None, 3, 32)</span><br></pre></td></tr></table></figure>
+
+<p><strong>参数：</strong></p>
+<ul>
+<li>n：整数，重复次数</li>
+</ul>
+<p><strong>输入尺寸：</strong></p>
+<p>2D张量，尺寸为（num_samples, features）</p>
+<p><strong>输出尺寸：</strong></p>
+<p>3D张量，尺寸为（num_samples, n, features）</p>
+<h1 id="回调Callbacks"><a href="#回调Callbacks" class="headerlink" title="回调Callbacks"></a>回调Callbacks</h1><ul>
+<li><strong>ReduceLROnPlateau</strong></li>
+<li><strong>EarlyStopping</strong></li>
+<li><strong>ModelCheckpoint</strong></li>
+<li><strong>完整代码示例</strong></li>
+</ul>
+<h2 id="ReduceLROnPlateau"><a href="#ReduceLROnPlateau" class="headerlink" title="ReduceLROnPlateau"></a><strong>ReduceLROnPlateau</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keras.callbacks.ReduceLROnPlateau(monitor=<span class="string">&#x27;val_loss&#x27;</span>, factor=<span class="number">0.1</span>, patience=<span class="number">10</span>, verbose=<span class="number">0</span>, mode=<span class="string">&#x27;auto&#x27;</span>, epsilon=<span class="number">0.0001</span>, cooldown=<span class="number">0</span>, min_lr=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>当标准评估已经停止时，降低学习速率。</p>
+<p>当学习停止时，模型总是会受益于降低 2-10 倍的学习速率。 这个回调函数监测一个数据并且当这个数据在一定「有耐心」的训练轮之后还没有进步， 那么学习速率就会被降低。</p>
+<p><strong>例子：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">reduce_lr = ReduceLROnPlateau(monitor=<span class="string">&#x27;val_loss&#x27;</span>, factor=<span class="number">0.2</span>,</span><br><span class="line">                              patience=<span class="number">5</span>, min_lr=<span class="number">0.001</span>)</span><br><span class="line">model.fit(X_train, Y_train, callbacks=[reduce_lr])</span><br></pre></td></tr></table></figure>
+
+<p><strong>参数：</strong></p>
+<ul>
+<li><strong>monitor</strong>: 被监测的数据。</li>
+<li><strong>factor</strong>: 学习速率被降低的因数。新的学习速率 = 学习速率 * 因数</li>
+<li><strong>patience</strong>: 没有进步的训练轮数，在这之后训练速率会被降低。</li>
+<li><strong>verbose</strong>: 整数。0：安静，1：更新信息。</li>
+<li><strong>mode</strong>: {auto, min, max} 其中之一。如果是 <code>min</code> 模式，学习速率会被降低如果被监测的数据已经停止下降； 在 <code>max</code> 模式，学习塑料会被降低如果被监测的数据已经停止上升； 在 <code>auto</code> 模式，方向会被从被监测的数据中自动推断出来。</li>
+<li><strong>epsilon</strong>: 对于测量新的最优化的阀值，只关注巨大的改变。</li>
+<li><strong>cooldown</strong>: 在学习速率被降低之后，重新恢复正常操作之前等待的训练轮数量。</li>
+<li><strong>min_lr</strong>: 学习速率的下边界。</li>
+</ul>
+<h2 id="EarlyStopping"><a href="#EarlyStopping" class="headerlink" title="EarlyStopping"></a><strong>EarlyStopping</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keras.callbacks.EarlyStopping(monitor=<span class="string">&#x27;val_loss&#x27;</span>, min_delta=<span class="number">0</span>, patience=<span class="number">0</span>, verbose=<span class="number">0</span>, mode=<span class="string">&#x27;auto&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>当被监测的数量不再提升，则停止训练。</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li><strong>monitor</strong>: 被监测的数据。</li>
+<li><strong>min_delta</strong>: 在被监测的数据中被认为是提升的最小变化， 例如，小于 min_delta 的绝对变化会被认为没有提升。</li>
+<li><strong>patience</strong>: 没有进步的训练轮数，在这之后训练就会被停止。</li>
+<li><strong>verbose</strong>: 详细信息模式。</li>
+<li><strong>mode</strong>: {auto, min, max} 其中之一。 在 <code>min</code> 模式中， 当被监测的数据停止下降，训练就会停止；在 <code>max</code> 模式中，当被监测的数据停止上升，训练就会停止；在 <code>auto</code> 模式中，方向会自动从被监测的数据的名字中判断出来。</li>
+</ul>
+<h2 id="ModelCheckpoint"><a href="#ModelCheckpoint" class="headerlink" title="ModelCheckpoint"></a><strong>ModelCheckpoint</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keras.callbacks.ModelCheckpoint(filepath, monitor=<span class="string">&#x27;val_loss&#x27;</span>, verbose=<span class="number">0</span>, save_best_only=<span class="literal">False</span>, save_weights_only=<span class="literal">False</span>, mode=<span class="string">&#x27;auto&#x27;</span>, period=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在每个训练期之后保存模型。</p>
+<p><code>filepath</code> 可以包括命名格式选项，可以由 <code>epoch</code> 的值和 <code>logs</code> 的键（由 <code>on_epoch_end</code> 参数传递）来填充。</p>
+<p>例如：如果 <code>filepath</code> 是 <code>weights.&#123;epoch:02d&#125;-&#123;val_loss:.2f&#125;.hdf5</code>， 那么模型被保存的的文件名就会有训练轮数和验证损失。</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li><strong>filepath</strong>: 字符串，保存模型的路径。</li>
+<li><strong>monitor</strong>: 被监测的数据。</li>
+<li><strong>verbose</strong>: 详细信息模式，0 或者 1 。</li>
+<li><strong>save_best_only</strong>: 如果 <code>save_best_only=True</code>， 被监测数据的最佳模型就不会被覆盖。</li>
+<li><strong>mode</strong>: {auto, min, max} 的其中之一。 如果 <code>save_best_only=True</code>，那么是否覆盖保存文件的决定就取决于被监测数据的最大或者最小值。 对于 <code>val_acc</code>，模式就会是 <code>max</code>，而对于 <code>val_loss</code>，模式就需要是 <code>min</code>，等等。 在 <code>auto</code> 模式中，方向会自动从被监测的数据的名字中判断出来。</li>
+<li><strong>save_weights_only</strong>: 如果 True，那么只有模型的权重会被保存 (<code>model.save_weights(filepath)</code>)， 否则的话，整个模型会被保存 (<code>model.save(filepath)</code>)。</li>
+<li><strong>period</strong>: 每个检查点之间的间隔（训练轮数）。</li>
+</ul>
+<p><strong>【注】</strong></p>
+<p>loss是训练集的损失值，val_loss是测试集的损失值</p>
+<p>以下是loss与val_loss的变化反映出训练走向的规律总结：</p>
+<p>train loss 不断下降，test loss不断下降，说明网络仍在学习;（最好的）</p>
+<p>train loss 不断下降，test loss趋于不变，说明网络过拟合;（max pool或者正则化）</p>
+<p>train loss 趋于不变，test loss不断下降，说明数据集100%有问题;（检查dataset）</p>
+<p>train loss 趋于不变，test loss趋于不变，说明学习遇到瓶颈，需要减小学习率或批量数目;（减少学习率）</p>
+<p>train loss 不断上升，test loss不断上升，说明网络结构设计不当，训练超参数设置不当，数据集经过清洗等问题。（最不好的情况）</p>
+<h2 id="完整代码示例"><a href="#完整代码示例" class="headerlink" title="完整代码示例"></a><strong>完整代码示例</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> keras</span><br><span class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Conv2D, MaxPooling2D</span><br><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dense, Flatten</span><br><span class="line"><span class="keyword">from</span> keras.optimizers <span class="keyword">import</span> Adam</span><br><span class="line"><span class="keyword">from</span> keras.datasets <span class="keyword">import</span> mnist</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载mnist数据</span></span><br><span class="line">(X_train, y_train), (X_test, y_test) = mnist.load_data()</span><br><span class="line"></span><br><span class="line"><span class="comment"># reshape图片并归一化</span></span><br><span class="line">X_train = X_train.reshape(<span class="number">-1</span>, <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>) / <span class="number">255</span></span><br><span class="line">X_test = X_test.reshape(<span class="number">-1</span>, <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>) / <span class="number">255</span></span><br><span class="line"><span class="comment"># 转换成one-hot格式</span></span><br><span class="line">y_train = keras.utils.to_categorical(y_train, num_classes=<span class="number">10</span>)</span><br><span class="line">y_test = keras.utils.to_categorical(y_test, num_classes=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建线性模型</span></span><br><span class="line">model = Sequential()</span><br><span class="line">model.add(Conv2D(<span class="number">32</span>, (<span class="number">5</span>, <span class="number">5</span>), activation=<span class="string">&#x27;relu&#x27;</span>, padding=<span class="string">&#x27;same&#x27;</span>, input_shape=(<span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>)))</span><br><span class="line">model.add(MaxPooling2D(pool_size=(<span class="number">2</span>, <span class="number">2</span>), strides=<span class="number">2</span>, padding=<span class="string">&#x27;same&#x27;</span>))</span><br><span class="line">model.add(Conv2D(<span class="number">64</span>, (<span class="number">5</span>, <span class="number">5</span>), activation=<span class="string">&#x27;relu&#x27;</span>, padding=<span class="string">&#x27;same&#x27;</span>))</span><br><span class="line">model.add(MaxPooling2D(pool_size=(<span class="number">2</span>, <span class="number">2</span>), strides=<span class="number">2</span>, padding=<span class="string">&#x27;same&#x27;</span>))</span><br><span class="line"><span class="comment"># 把上一层的输出展开为向量用于后续的全连接操作</span></span><br><span class="line">model.add(Flatten())</span><br><span class="line">model.add(Dense(<span class="number">1024</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model.add(Dense(<span class="number">10</span>, activation=<span class="string">&#x27;softmax&#x27;</span>))</span><br><span class="line">adam = Adam(lr=<span class="number">1e-4</span>)</span><br><span class="line">model.<span class="built_in">compile</span>(optimizer=adam, loss=<span class="string">&#x27;categorical_crossentropy&#x27;</span>, metrics=[<span class="string">&#x27;accuracy&#x27;</span>])</span><br><span class="line">early_stopping = keras.callbacks.EarlyStopping(monitor=<span class="string">&#x27;val_loss&#x27;</span>, min_delta=<span class="number">0.1</span>, patience=<span class="number">2</span>, verbose=<span class="number">1</span>)</span><br><span class="line">model_checkpoint = keras.callbacks.ModelCheckpoint(filepath=<span class="string">&#x27;ep&#123;epoch:03d&#125;-loss&#123;loss:.3f&#125;-val_loss&#123;val_loss:.3f&#125;.h5&#x27;</span>,</span><br><span class="line">                                                   monitor=<span class="string">&#x27;val_loss&#x27;</span>,</span><br><span class="line">                                                   verbose=<span class="number">1</span>,</span><br><span class="line">                                                   save_best_only=<span class="literal">True</span>,</span><br><span class="line">                                                   save_weights_only=<span class="literal">True</span>,</span><br><span class="line">                                                   period=<span class="number">1</span>)</span><br><span class="line">reduce_lr_on_plateau = keras.callbacks.ReduceLROnPlateau(monitor=<span class="string">&#x27;val_loss&#x27;</span>, factor=<span class="number">0.1</span>, patience=<span class="number">2</span>, verbose=<span class="number">1</span>)</span><br><span class="line">model.fit(X_train,</span><br><span class="line">          y_train,</span><br><span class="line">          epochs=<span class="number">5</span>,</span><br><span class="line">          batch_size=<span class="number">64</span>,</span><br><span class="line">          validation_data=(X_test, y_test),</span><br><span class="line">          callbacks=[early_stopping, model_checkpoint, reduce_lr_on_plateau])</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<br>
+
+<br>
+
+<img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" />
+    </div>
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555 ;font-size:20px;font-weight:900">-  -  -  -  -  -  -  -  -  -  -      本 文 结 束      -  -  -  -  -  -  -  -  -  -  -</div>
+    
+</div>
+      
+    </div>
+    
+    
+    
+      
+  <div class="popular-posts-header">推荐文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\60994.html" rel="bookmark">numpy常用函数汇总</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\58944.html" rel="bookmark">先验分布、后验分布、似然估计</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div><font color="black" size="2"><h1>好活￥当赏</h1></div>
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    <i class="fa fa-qrcode fa-2x" style="line-height:40px;"></i>
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="XuYang 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="XuYang 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>XuYang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuyang112358.github.io/archives/24767.html" title="Keras常用函数汇总">https://xuyang112358.github.io/archives/24767.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Keras/" rel="tag"># Keras</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/65471.html" rel="prev" title="三个概念：Epoch, Batch, Iteration">
+      <i class="fa fa-chevron-left"></i> 三个概念：Epoch, Batch, Iteration
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/archives/58944.html" rel="next" title="先验分布、后验分布、似然估计">
+      先验分布、后验分布、似然估计 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tf-keras-Input%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">tf.keras.Input函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#keras-layers-LSTM%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">keras.layers.LSTM函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RepeatVector%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">RepeatVector函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9E%E8%B0%83Callbacks"><span class="nav-number">4.</span> <span class="nav-text">回调Callbacks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ReduceLROnPlateau"><span class="nav-number">4.1.</span> <span class="nav-text">ReduceLROnPlateau</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EarlyStopping"><span class="nav-number">4.2.</span> <span class="nav-text">EarlyStopping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ModelCheckpoint"><span class="nav-number">4.3.</span> <span class="nav-text">ModelCheckpoint</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B"><span class="nav-number">4.4.</span> <span class="nav-text">完整代码示例</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="XuYang"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">XuYang</p>
+  <div class="site-description" itemprop="description">把海弄干的鱼提前上了陆地，从一片黑暗森林奔向另一片黑暗森林</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuyang112358" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuyang112358" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:294131773@qq.com" title="E-Mail → mailto:294131773@qq.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
++        
+        
+          <li>
+            <a href="/archives/60994.html" title="numpy常用函数汇总" target="_blank">numpy常用函数汇总</a>
+          </li>
+        
+          <li>
+            <a href="/archives/58944.html" title="先验分布、后验分布、似然估计" target="_blank">先验分布、后验分布、似然估计</a>
+          </li>
+        
+          <li>
+            <a href="/archives/24767.html" title="Keras常用函数汇总" target="_blank">Keras常用函数汇总</a>
+          </li>
+        
+          <li>
+            <a href="/archives/65471.html" title="三个概念：Epoch, Batch, Iteration" target="_blank">三个概念：Epoch, Batch, Iteration</a>
+          </li>
+        
+          <li>
+            <a href="/archives/35841.html" title="深入理解GRU" target="_blank">深入理解GRU</a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-eye"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XuYang</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">34k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">31 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'MiDj7wo25PV7VdHpNIoWClXS-gzGzoHsz',
+      appKey     : 'wiTrmRgYmsQNKcWriXHGyCKx',
+      placeholder: "这不评论一手？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+<script type="text/javascript" src="/js/fold_action.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div class="moon-menu-item" onclick="back2bottom()">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div class="moon-menu-item" onclick="back2top()">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>
