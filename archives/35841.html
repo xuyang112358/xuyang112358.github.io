@@ -22,12 +22,12 @@
     var CONFIG = {"hostname":"xuyang112358.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":false,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="简介GRU 是 gated recurrent units 的缩写，由 Cho在 2014 年提出。GRU 和 LSTM 最大的不同在于 GRU 将遗忘门和输入门合成了一个”更新门”，同时网络不再额外给出记忆状态$C_t$，而是将输出结果$h_t$作为记忆状态不断向后循环传递，网络的输入和输出都变得特别简单。  上述的过程的线性变换没有使用偏置。隐藏状态参数不再是标准RNN的4倍，而是3倍，也就是">
+  <meta name="description" content="简介GRU 是 gated recurrent units 的缩写，由 Cho在 2014 年提出。GRU 和 LSTM 最大的不同在于 GRU 将遗忘门和输入门合成了一个”更新门”，同时网络不再额外给出记忆状态$C_t$，而是将输出结果$h_t$作为记忆状态不断向后循环传递，网络的输入和输出都变得特别简单。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入理解GRU">
 <meta property="og:url" content="https://xuyang112358.github.io/archives/35841.html">
 <meta property="og:site_name" content="江东大少爷">
-<meta property="og:description" content="简介GRU 是 gated recurrent units 的缩写，由 Cho在 2014 年提出。GRU 和 LSTM 最大的不同在于 GRU 将遗忘门和输入门合成了一个”更新门”，同时网络不再额外给出记忆状态$C_t$，而是将输出结果$h_t$作为记忆状态不断向后循环传递，网络的输入和输出都变得特别简单。  上述的过程的线性变换没有使用偏置。隐藏状态参数不再是标准RNN的4倍，而是3倍，也就是">
+<meta property="og:description" content="简介GRU 是 gated recurrent units 的缩写，由 Cho在 2014 年提出。GRU 和 LSTM 最大的不同在于 GRU 将遗忘门和输入门合成了一个”更新门”，同时网络不再额外给出记忆状态$C_t$，而是将输出结果$h_t$作为记忆状态不断向后循环传递，网络的输入和输出都变得特别简单。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3GRU/image-20201110184126715.png">
 <meta property="og:image" content="https://xuyang112358.github.io/images/深入理解GRU/image-20201110195956216.png">
@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3GRU/image-20201111104502082.png">
 <meta property="og:image" content="https://xuyang112358.github.io/images/序列模型中的注意力机制/HDU_LOGO.png">
 <meta property="article:published_time" content="2020-10-24T16:54:37.000Z">
-<meta property="article:modified_time" content="2020-11-11T02:47:30.000Z">
+<meta property="article:modified_time" content="2020-11-11T06:26:52.000Z">
 <meta property="article:author" content="XuYang">
 <meta property="article:tag" content="深度学习">
 <meta property="article:tag" content="自然语言处理">
@@ -304,6 +304,8 @@
       
         <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>GRU 是 gated recurrent units 的缩写，由 Cho在 2014 年提出。GRU 和 LSTM 最大的不同在于 GRU 将遗忘门和输入门合成了一个”更新门”，同时网络不再额外给出记忆状态$C_t$，而是将输出结果$h_t$作为记忆状态不断向后循环传递，网络的输入和输出都变得特别简单。</p>
 <p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3GRU/image-20201110184126715.png" alt="image-20201110184126715"></p>
+<a id="more"></a>
+
 <p>上述的过程的线性变换没有使用偏置。隐藏状态参数不再是标准RNN的4倍，而是3倍，也就是GRU的参数要比LSTM的参数量要少，但是性能差不多。</p>
 <p>GRU 有两个门，即一个重置门（reset gate）和一个更新门（update gate）。从直观上来说，重置门决定了如何将新的输入信息与前面的记忆相结合，更新门定义了前面记忆保存到当前时间步的量。如果我们将重置门设置为1，更新门设置为 0，那么我们将再次获得标准 RNN 模型。使用门控机制学习长期依赖关系的基本思想和 LSTM 一致，但还是有一些关键区别：</p>
 <ul>
@@ -323,21 +325,18 @@
 <p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3GRU/image-20201110200308258.png" alt="image-20201110200308258"></p>
 <p>首先我们需要指定以下符号：</p>
 <p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3GRU/image-20201110200333348.png" alt="image-20201110200333348"></p>
-<p><strong>1.更新门</strong></p>
-<p>在时间步 t，我们首先需要使用以下公式计算更新门 $z_t$：<br>$$<br>z_t = \sigma(W^{(z)}x_t+U^{(z)}h_{t-1})<br>$$<br>其中 $x_t$ 为第 t 个时间步的输入向量，即输入序列 X 的第 t 个分量，它会经过一个线性变换（与权重矩阵 $W^{(z)}$ 相乘）。$h_{t-1}$ 保存的是前一个时间步 t-1 的信息，它同样也会经过一个线性变换。更新门将这两部分信息相加并投入到 Sigmoid 激活函数中，因此将激活结果压缩到 0 到 1 之间。以下是更新门在整个单元的位置与表示方法。</p>
+<h1 id="1-更新门"><a href="#1-更新门" class="headerlink" title="1.更新门"></a><strong>1.更新门</strong></h1><p>在时间步 t，我们首先需要使用以下公式计算更新门 $z_t$：<br>$$<br>z_t = \sigma(W^{(z)}x_t+U^{(z)}h_{t-1})<br>$$<br>其中 $x_t$ 为第 t 个时间步的输入向量，即输入序列 X 的第 t 个分量，它会经过一个线性变换（与权重矩阵 $W^{(z)}$ 相乘）。$h_{t-1}$ 保存的是前一个时间步 t-1 的信息，它同样也会经过一个线性变换。更新门将这两部分信息相加并投入到 Sigmoid 激活函数中，因此将激活结果压缩到 0 到 1 之间。以下是更新门在整个单元的位置与表示方法。</p>
 <p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3GRU/image-20201110201556474.png" alt="image-20201110201556474"></p>
 <p>更新门帮助模型决定到底要将多少过去的信息传递到未来，或到底前一时间步和当前时间步的信息有多少是需要继续传递的。这一点非常强大，因为模型能决定从过去复制所有的信息以减少梯度消失的风险。我们随后会讨论更新门的使用方法，现在只需要记住 $z_t$ 的计算公式就行。</p>
-<p><strong>2. 重置门</strong></p>
-<p>本质上来说，重置门主要决定了到底有多少过去的信息需要遗忘，我们可以使用以下表达式计算：<br>$$<br>r_t = \sigma(W^{(r)}x_t+U^{(r)}h_{t-1})<br>$$<br>该表达式与更新门的表达式是一样的，只不过线性变换的参数和用处不一样而已。下图展示了该运算过程的表示方法：</p>
+<h1 id="2-重置门"><a href="#2-重置门" class="headerlink" title="2. 重置门"></a><strong>2. 重置门</strong></h1><p>本质上来说，重置门主要决定了到底有多少过去的信息需要遗忘，我们可以使用以下表达式计算：<br>$$<br>r_t = \sigma(W^{(r)}x_t+U^{(r)}h_{t-1})<br>$$<br>该表达式与更新门的表达式是一样的，只不过线性变换的参数和用处不一样而已。下图展示了该运算过程的表示方法：</p>
 <p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3GRU/image-20201110202244447.png" alt="image-20201110202244447"></p>
 <p>如前面更新门所述，$h_{t-1}$ 和 $x_t$ 先经过一个线性变换，再相加投入 Sigmoid 激活函数以输出激活值。</p>
-<p><strong>3. 当前记忆内容</strong></p>
-<p>现在我们具体讨论一下这些门控到底如何影响最终的输出。在重置门的使用中，新的记忆内容将使用重置门储存过去相关的信息，它的计算表达式为：<br>$$<br>h_{t}^{\prime}=\tanh \left(W x_{t}+r_{t} \odot U h_{t-1}\right)<br>$$<br>输入 $x_t$ 与上一时间步信息 $h_{t-1}$ 先经过一个线性变换，即分别左乘矩阵 W 和 U。</p>
+<h1 id="3-当前记忆内容"><a href="#3-当前记忆内容" class="headerlink" title="3. 当前记忆内容"></a><strong>3. 当前记忆内容</strong></h1><p>现在我们具体讨论一下这些门控到底如何影响最终的输出。在重置门的使用中，新的记忆内容将使用重置门储存过去相关的信息，它的计算表达式为：<br>$$<br>h_{t}^{\prime}=\tanh \left(W x_{t}+r_{t} \odot U h_{t-1}\right)<br>$$<br>输入 $x_t$ 与上一时间步信息 $h_{t-1}$ 先经过一个线性变换，即分别左乘矩阵 W 和 U。</p>
 <p>计算重置门 $r_t$ 与 $Uh_{t-1}$ 的 Hadamard 乘积，即 $r_t$ 与 $Uh_{t-1}$ 的对应元素乘积。因为前面计算的重置门是一个由 0 到 1 组成的向量，它会衡量门控开启的大小。例如某个元素对应的门控值为 0，那么它就代表这个元素的信息完全被遗忘掉。该 Hadamard 乘积将确定所要保留与遗忘的以前信息。</p>
 <p>将这两部分的计算结果相加再投入双曲正切激活函数中。该计算过程可表示为：</p>
 <p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3GRU/image-20201111095733372.png" alt="image-20201111095733372"></p>
-<p><strong>4. 当前时间步的最终记忆</strong></p>
-<p>在最后一步，网络需要计算 $h_t$，该向量将保留当前单元的信息并传递到下一个单元中。在这个过程中，我们需要使用更新门，它决定了当前记忆内容 $h’<em>t$ 和前一时间步 $h</em>{t-1}$ 中需要收集的信息是什么。这一过程可以表示为：<br>$$<br>h_{t}=z_{t} \odot h_{t-1}+\left(1-z_{t}\right) \odot h_{t}^{\prime}<br>$$<br>$z_t$ 为更新门的激活结果，它同样以门控的形式控制了信息的流入。$z_t$ 与 $h_{t-1}$ 的 Hadamard 乘积表示前一时间步保留到最终记忆的信息，该信息加上当前记忆保留至最终记忆的信息就等于最终门控循环单元输出的内容。</p>
+<h1 id="4-当前时间步的最终记忆"><a href="#4-当前时间步的最终记忆" class="headerlink" title="4. 当前时间步的最终记忆"></a><strong>4. 当前时间步的最终记忆</strong></h1><p>在最后一步，网络需要计算 $h_t$，该向量将保留当前单元的信息并传递到下一个单元中。在这个过程中，我们需要使用更新门，它决定了当前记忆内容 $h’<em>t$ 和前一时间步 $h</em>{t-1}$ 中需要收集的信息是什么。这一过程可以表示为：</p>
+<p>$$<br>h_{t}=z_{t} \odot h_{t-1}+\left(1-z_{t}\right) \odot h_{t}^{\prime}<br>$$<br>$z_t$ 为更新门的激活结果，它同样以门控的形式控制了信息的流入。$z_t$ 与 $h_{t-1}$ 的 Hadamard 乘积表示前一时间步保留到最终记忆的信息，该信息加上当前记忆保留至最终记忆的信息就等于最终门控循环单元输出的内容。</p>
 <p>以上表达式可以展示为：</p>
 <p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3GRU/image-20201111104502082.png" alt="image-20201111104502082"></p>
 <p>现在我们应该比较了解到底 GRU 是如何通过更新门与重置门存储并过滤信息。门控循环单元不会随时间而清除以前的信息，它会保留相关的信息并传递到下一个单元，因此它利用全部信息而避免了梯度消失问题。</p>
@@ -492,7 +491,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E6%9B%B4%E6%96%B0%E9%97%A8"><span class="nav-number">2.</span> <span class="nav-text">1.更新门</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E9%87%8D%E7%BD%AE%E9%97%A8"><span class="nav-number">3.</span> <span class="nav-text">2. 重置门</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%BD%93%E5%89%8D%E8%AE%B0%E5%BF%86%E5%86%85%E5%AE%B9"><span class="nav-number">4.</span> <span class="nav-text">3. 当前记忆内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E5%BD%93%E5%89%8D%E6%97%B6%E9%97%B4%E6%AD%A5%E7%9A%84%E6%9C%80%E7%BB%88%E8%AE%B0%E5%BF%86"><span class="nav-number">5.</span> <span class="nav-text">4. 当前时间步的最终记忆</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

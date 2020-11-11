@@ -30,7 +30,7 @@
 <meta property="og:description" content="函数np.append(arr, values, axis&#x3D;None)作用： 为原始array添加一些values 参数：  arr:需要被添加values的数组 values:添加到数组arr中的值（array_like，类数组） axis:可选参数，如果axis没有给出，那么arr，values都将先展平成一维数组。注：如果axis被指定了，那么arr和values需要有相同的shape，否则">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-11-06T14:30:15.000Z">
-<meta property="article:modified_time" content="2020-11-06T06:34:08.000Z">
+<meta property="article:modified_time" content="2020-11-11T03:12:22.000Z">
 <meta property="article:author" content="XuYang">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
@@ -298,6 +298,8 @@
 <li>values:添加到数组arr中的值（array_like，类数组）</li>
 <li>axis:可选参数，如果axis没有给出，那么arr，values都将先展平成一维数组。<strong>注：如果axis被指定了，那么arr和values需要有相同的shape，否则报错：ValueError: arrays must have same number of dimensions</strong></li>
 </ul>
+<a id="more"></a>
+
 <p>补充对axis的理解</p>
 <ul>
 <li>axis的最大值为数组arr的维数-1，如arr维数等于1，axis最大值为0；arr维数等于2，axis最大值为1，以此类推。</li>
@@ -306,7 +308,7 @@
 </ul>
 <p><strong>返回：</strong></p>
 <p>添加了values的新数组</p>
-<a id="more"></a>
+
     </div>
     <div>
       

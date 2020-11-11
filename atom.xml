@@ -6,7 +6,7 @@
   <link href="https://xuyang112358.github.io/atom.xml" rel="self"/>
   
   <link href="https://xuyang112358.github.io/"/>
-  <updated>2020-11-06T06:34:08.000Z</updated>
+  <updated>2020-11-11T03:12:22.000Z</updated>
   <id>https://xuyang112358.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://xuyang112358.github.io/archives/60994.html"/>
     <id>https://xuyang112358.github.io/archives/60994.html</id>
     <published>2020-11-06T14:30:15.000Z</published>
-    <updated>2020-11-06T06:34:08.000Z</updated>
+    <updated>2020-11-11T03:12:22.000Z</updated>
     
     
     <summary type="html">&lt;h2 id=&quot;函数np-append-arr-values-axis-None&quot;&gt;&lt;a href=&quot;#函数np-append-arr-values-axis-None&quot; class=&quot;headerlink&quot; title=&quot;函数np.append(arr, values, axis=None)&quot;&gt;&lt;/a&gt;函数np.append(arr, values, axis=None)&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;作用：&lt;/strong&gt;&lt;/p&gt;
@@ -31,15 +31,7 @@
 &lt;li&gt;arr:需要被添加values的数组&lt;/li&gt;
 &lt;li&gt;values:添加到数组arr中的值（array_like，类数组）&lt;/li&gt;
 &lt;li&gt;axis:可选参数，如果axis没有给出，那么arr，values都将先展平成一维数组。&lt;strong&gt;注：如果axis被指定了，那么arr和values需要有相同的shape，否则报错：ValueError: arrays must have same number of dimensions&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;补充对axis的理解&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;axis的最大值为数组arr的维数-1，如arr维数等于1，axis最大值为0；arr维数等于2，axis最大值为1，以此类推。&lt;/li&gt;
-&lt;li&gt;当arr的维数为2(理解为单通道图)，axis=0表示沿着行方向添加values；axis=1表示沿着列方向添加values&lt;/li&gt;
-&lt;li&gt;当arr的维数为3(理解为多通道图)，axis=0，axis=1时同上；axis=2表示沿着深度方向添加values&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;返回：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;添加了values的新数组&lt;/p&gt;</summary>
+&lt;/ul&gt;</summary>
     
     
     
@@ -141,16 +133,11 @@
     <link href="https://xuyang112358.github.io/archives/35841.html"/>
     <id>https://xuyang112358.github.io/archives/35841.html</id>
     <published>2020-10-24T16:54:37.000Z</published>
-    <updated>2020-11-11T02:47:30.000Z</updated>
+    <updated>2020-11-11T06:26:52.000Z</updated>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;p&gt;GRU 是 gated recurrent units 的缩写，由 Cho在 2014 年提出。GRU 和 LSTM 最大的不同在于</summary>
-        
-      
+    <summary type="html">&lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;p&gt;GRU 是 gated recurrent units 的缩写，由 Cho在 2014 年提出。GRU 和 LSTM 最大的不同在于 GRU 将遗忘门和输入门合成了一个”更新门”，同时网络不再额外给出记忆状态$C_t$，而是将输出结果$h_t$作为记忆状态不断向后循环传递，网络的输入和输出都变得特别简单。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3GRU/image-20201110184126715.png&quot; alt=&quot;image-20201110184126715&quot;&gt;&lt;/p&gt;</summary>
     
     
     
