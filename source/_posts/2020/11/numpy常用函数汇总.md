@@ -21,6 +21,8 @@ categories:
 - values:添加到数组arr中的值（array_like，类数组）
 - axis:可选参数，如果axis没有给出，那么arr，values都将先展平成一维数组。**注：如果axis被指定了，那么arr和values需要有相同的shape，否则报错：ValueError: arrays must have same number of dimensions**
 
+<!--more-->
+
 补充对axis的理解
 
 - axis的最大值为数组arr的维数-1，如arr维数等于1，axis最大值为0；arr维数等于2，axis最大值为1，以此类推。
@@ -31,4 +33,3 @@ categories:
 
 添加了values的新数组
 
-<!--more-->
