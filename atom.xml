@@ -6,7 +6,7 @@
   <link href="https://xuyang112358.github.io/atom.xml" rel="self"/>
   
   <link href="https://xuyang112358.github.io/"/>
-  <updated>2020-12-03T07:15:00.000Z</updated>
+  <updated>2020-12-03T07:26:32.000Z</updated>
   <id>https://xuyang112358.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://xuyang112358.github.io/archives/17417.html"/>
     <id>https://xuyang112358.github.io/archives/17417.html</id>
     <published>2020-12-01T19:21:26.000Z</published>
-    <updated>2020-12-03T07:15:00.000Z</updated>
+    <updated>2020-12-03T07:26:32.000Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;本文的目标是在训练阶段学习使用历史数据的海上交通模式的预测分布，以便能够在提取的知识和可用的观测序列的基础上在线预测未来的目标轨迹样本。探索基于长期短期记忆(LSTM)编解码器体系结构的神经序列到序列模型，以有效地捕获序列AIS数据的长期时间依赖性，并提高整体预测能力。最后在一个真实的AIS数据集上的实验评估表明了序列到序列递归神经网络(RNNs)在船舶轨迹预测中的有效性，并显示了它们与基于模型的方法相比的潜在好处。&lt;/p&gt;
