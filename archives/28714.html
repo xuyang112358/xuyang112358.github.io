@@ -42,7 +42,7 @@
 <meta property="og:image" content="https://xuyang112358.github.io/images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016193551630.png">
 <meta property="og:image" content="https://xuyang112358.github.io/images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/HDU_LOGO.png">
 <meta property="article:published_time" content="2020-10-18T19:20:25.000Z">
-<meta property="article:modified_time" content="2020-10-19T01:46:52.000Z">
+<meta property="article:modified_time" content="2020-12-01T03:12:18.000Z">
 <meta property="article:author" content="XuYang">
 <meta property="article:tag" content="并行与分布式计算">
 <meta property="article:tag" content="网格划分">
@@ -257,6 +257,10 @@
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/" itemprop="url" rel="index"><span itemprop="name">并行与分布式计算</span></a>
                 </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index"><span itemprop="name">论文</span></a>
+                </span>
             </span>
 
           
@@ -309,11 +313,9 @@
 <p>为了生成具有所需和保留属性的网格，<u>使用了一种基于Delaunay-AFT的域分解(DD)技术</u>。从覆盖问题域的Delaunay三角剖分(DT)开始，该技术创建了一层元素，将整个域划分为几个区域。将最初粗糙的网格域划分为了可以进行并行网格划分的子域的DTs。 当一个子域的大小小于用户指定的阈值，将用标准Delaunay-AFT方法进行网格划分。     </p>
 <p><u>设计了两级DD策略来提高了该算法的并行效率</u>。<u>还使用消息传递接口(MPI)实现了动态负载均衡方案</u>。 <u>引入了核心外网格划分，以适应过大的网格</u>，而这些网格不能由计算机的可用存储器(RAM)处理。 <u>对具有数千个表面贴片的各种复杂几何形状进行了数值试验，创建了拥有超过100亿个四面体元素的超大尺度网格</u>。 此外，不同DD操作次数生成的网格在质量上几乎相同：显示了自动分解算法的一致性和稳定性。</p>
 <a id="more"></a>
-
 <h1 id="具体论文"><a href="#具体论文" class="headerlink" title="具体论文"></a>具体论文</h1><h2 id="并行域分解和网格产生算法"><a href="#并行域分解和网格产生算法" class="headerlink" title="并行域分解和网格产生算法"></a>并行域分解和网格产生算法</h2><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016180107878.png" alt="image-20201016180107878"></p>
 <h2 id="并行域分解和网格产生算法-1"><a href="#并行域分解和网格产生算法-1" class="headerlink" title="并行域分解和网格产生算法"></a>并行域分解和网格产生算法</h2><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016193028229.png" alt="image-20201016193028229"></p>
-<h2 id="一级域分解"><a href="#一级域分解" class="headerlink" title="一级域分解"></a>一级域分解</h2><img src="../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016180334321.png" alt="image-20201016180334321" style="zoom: 80%;" />
-
+<h2 id="一级域分解"><a href="#一级域分解" class="headerlink" title="一级域分解"></a>一级域分解</h2><p><img src="../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016180334321.png" alt="image-20201016180334321" style="zoom: 80%;" /></p>
 <p>（a）进行CDT分解的区域。</p>
 <p>（b）扩展的Delaunay-AFT方法引入了一层形状良好的单元作为分离层。</p>
 <p>（c）独立的并行处理器进行进一步的域分解。</p>
@@ -339,16 +341,16 @@
 <p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016192809878.png" alt="image-20201016192809878"></p>
 <h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016193252883.png" alt="image-20201016193252883"></p>
 <p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016193258301.png" alt="image-20201016193258301"></p>
-<h2 id="网格质量"><a href="#网格质量" class="headerlink" title="网格质量"></a>网格质量</h2><p>网格质量通过以下公式定义：<br>$$<br>\sigma=3\frac{r_i}{r_c}<br>$$<br>其中$r_i$是内接圆半径，$r_c$是外接圆半径，$\sigma$越接近1，说明网格的形状越接近正四面体，质量越高，由于实际正四面体的内外接圆半径之比为$\frac{1}{3}$，所以乘上3归一化。</p>
+<h2 id="网格质量"><a href="#网格质量" class="headerlink" title="网格质量"></a>网格质量</h2><p>网格质量通过以下公式定义：</p>
+<script type="math/tex; mode=display">
+\sigma=3\frac{r_i}{r_c}</script><p>其中$r_i$是内接圆半径，$r_c$是外接圆半径，$\sigma$越接近1，说明网格的形状越接近正四面体，质量越高，由于实际正四面体的内外接圆半径之比为$\frac{1}{3}$，所以乘上3归一化。</p>
 <p><img src="../../../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/image-20201016193551630.png" alt="image-20201016193551630"></p>
 <p>上图是三个模型在不同网格质量下的网格数目，可见并行对网格质量影响不大，生成网格大部分都为高质量网格。</p>
-<br>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><img src="../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" /></p>
 
-<br>
-
-<br>
-
-<img src="../images/A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" />
     </div>
     <div>
       
@@ -370,6 +372,12 @@
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\archives\62775.html" rel="bookmark">PAC2020:傅里叶空间图像相似度计算</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\17417.html" rel="bookmark">Prediction of Vessel Trajectories From AIS Data via sequence-to-sequence Recurrent Neural Networks</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\14884.html" rel="bookmark">A Ship Trajectory Prediction Framework Based on a Recurrent Neural Network</a></div>
     </li>
   </ul>
 
@@ -506,18 +514,18 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -543,6 +551,14 @@
 +        
         
           <li>
+            <a href="/archives/17417.html" title="Prediction of Vessel Trajectories From AIS Data via sequence-to-sequence Recurrent Neural Networks" target="_blank">Prediction of Vessel Trajectories From AIS Data via sequence-to-sequence Recurrent Neural Networks</a>
+          </li>
+        
+          <li>
+            <a href="/archives/14884.html" title="A Ship Trajectory Prediction Framework Based on a Recurrent Neural Network" target="_blank">A Ship Trajectory Prediction Framework Based on a Recurrent Neural Network</a>
+          </li>
+        
+          <li>
             <a href="/archives/60994.html" title="numpy常用函数汇总" target="_blank">numpy常用函数汇总</a>
           </li>
         
@@ -552,14 +568,6 @@
         
           <li>
             <a href="/archives/24767.html" title="Keras常用函数汇总" target="_blank">Keras常用函数汇总</a>
-          </li>
-        
-          <li>
-            <a href="/archives/65471.html" title="三个概念：Epoch, Batch, Iteration" target="_blank">三个概念：Epoch, Batch, Iteration</a>
-          </li>
-        
-          <li>
-            <a href="/archives/35841.html" title="深入理解GRU" target="_blank">深入理解GRU</a>
           </li>
         
       </ul>
@@ -861,13 +869,13 @@ if(canvas.getContext){
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">34k</span>
+    <span title="站点总字数">39k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">31 分钟</span>
+    <span title="站点阅读时长">35 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

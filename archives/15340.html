@@ -29,15 +29,15 @@
 <meta property="og:site_name" content="江东大少爷">
 <meta property="og:description" content="概述创新点：  深入探讨了基于 BP 神经网络的船舶轨迹预测模型，通过 AIS 数据提供的信息，针对船舶轨迹预测问题，结合遗传算法，改进了 BP 神经网络轨迹预测模型，并且对不同参数对该模型预测精确度和效率的影响做了研究。  将船舶特有的轨迹特征与时间序列相结合，提出基于深度学习的RNN-LSTM 模型，分析参数并与 GA-BP 神经网络对比，分析出在海上智能交通轨迹预测的方面，基于时间序列的 L">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://xuyang112358.github.io/images/%E5%9F%BA%E4%BA%8EAIS%E7%9A%84%E8%88%B9%E8%88%B6%E8%BD%A8%E8%BF%B9%E5%88%86%E6%9E%90%E7%9A%84%E7%A0%94%E7%A9%B6%E4%B8%8E%E5%BA%94%E7%94%A8/image-20201021203938328.png">
+<meta property="og:image" content="https://xuyang112358.github.io/images/基于AIS的船舶轨迹分析的研究与应用/image-20201021203938328.png">
 <meta property="article:published_time" content="2020-10-20T17:03:59.000Z">
-<meta property="article:modified_time" content="2020-10-24T06:32:54.000Z">
+<meta property="article:modified_time" content="2020-12-01T03:16:24.000Z">
 <meta property="article:author" content="XuYang">
 <meta property="article:tag" content="BP神经网络">
 <meta property="article:tag" content="遗传算法">
-<meta property="article:tag" content="LSTM">
+<meta property="article:tag" content="轨迹预测">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://xuyang112358.github.io/images/%E5%9F%BA%E4%BA%8EAIS%E7%9A%84%E8%88%B9%E8%88%B6%E8%BD%A8%E8%BF%B9%E5%88%86%E6%9E%90%E7%9A%84%E7%A0%94%E7%A9%B6%E4%B8%8E%E5%BA%94%E7%94%A8/image-20201021203938328.png">
+<meta name="twitter:image" content="https://xuyang112358.github.io/images/基于AIS的船舶轨迹分析的研究与应用/image-20201021203938328.png">
 
 <link rel="canonical" href="https://xuyang112358.github.io/archives/15340.html">
 
@@ -247,6 +247,10 @@
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/%E8%88%9F%E5%B1%B1%E6%B5%B7%E6%B4%8B%E9%A1%B9%E7%9B%AE/" itemprop="url" rel="index"><span itemprop="name">舟山海洋项目</span></a>
                 </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%88%9F%E5%B1%B1%E6%B5%B7%E6%B4%8B%E9%A1%B9%E7%9B%AE/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index"><span itemprop="name">论文</span></a>
+                </span>
             </span>
 
           
@@ -276,7 +280,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>837</span>
+              <span>818</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -302,16 +306,14 @@
 </li>
 <li><p>利用训练好的模型，提出船舶轨迹预测模型在海上智能交通的应用方面，对目标海域的船舶监控以及异常检测，航路规划等方面。 </p>
 <a id="more"></a>
-
-
 </li>
 </ul>
 <h1 id="结合遗传算法的-GA-BP-神经网络"><a href="#结合遗传算法的-GA-BP-神经网络" class="headerlink" title="结合遗传算法的 GA-BP 神经网络"></a>结合遗传算法的 GA-BP 神经网络</h1><p>遗传算法具有自适应性，全局优化性和隐含并行性，体现出很强的全局搜索能力。然而遗传算法也有自己的缺陷，遗传算法只能搜索到最优解附近，无法搜索到准确的最优解。也就是说，基本上定位到的是“次优解”，以次优解为起点，继而利用 BP 神经网络梯度下降训练算法继续优化权值参数便可以得到遗传算法找不到的最优解位置。两个算法互补，在一定程度上，克服了 BP 神经网络模型经常落入局部最小点的问题。</p>
-<p><img src="../../../images/%E5%9F%BA%E4%BA%8EAIS%E7%9A%84%E8%88%B9%E8%88%B6%E8%BD%A8%E8%BF%B9%E5%88%86%E6%9E%90%E7%9A%84%E7%A0%94%E7%A9%B6%E4%B8%8E%E5%BA%94%E7%94%A8/image-20201021203938328.png" alt="image-20201021203938328"></p>
+<p><img src="../../../images/基于AIS的船舶轨迹分析的研究与应用/image-20201021203938328.png" alt="image-20201021203938328"></p>
 <center>遗传算法优化 BP神经网络算法流程图</center>
 
 <p>结合两种算法的 GA-BP 神经网络的计算步骤如下：<br>1）选取一种编码方案对 BP 网络的连接权值（神经元阈值）进行编码，产生的分布对应着编码前的权值和阈值。<br>2）输入训练样本，计算它的误差函数值，选择把预测输出和期望输出之间的绝对误差之和作为适应度值；若误差越小，适应度越大，则当前的连接权值作为染色体则更优，反之适应度就小，当前的连接权值作为染色体则更差一些。<br>3）选择操作，将适应度大的个体遗传给下一代 。<br>4）对当前群体进化（变异，交叉），产生下一代的群体。<br>5）重复上述步骤 2 到 4，BP 网络里的参数（权值和阈值）得到不断进化，直到进化代数达到要求或者达到满意的效果为止  。<br>6）步骤 5 完成后，遗传算法得到一组关于 BP 网络参数（权值和阈值）的次优解，再利用 BP 算法进行网络训练得到最优的权值（阈值）。</p>
-<h1 id="基于-RNN-LSTM-的船舶轨迹预测模型"><a href="#基于-RNN-LSTM-的船舶轨迹预测模型" class="headerlink" title="基于 RNN-LSTM 的船舶轨迹预测模型"></a>基于 RNN-LSTM 的船舶轨迹预测模型</h1>
+
     </div>
     <div>
       
@@ -329,7 +331,16 @@
   <div class="popular-posts-header">推荐文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\archives\2904.html" rel="bookmark">地波雷达与自动识别系统（AIS）目标点迹最优关联算法</a></div>
+      <div class="popular-posts-title"><a href="\archives\17417.html" rel="bookmark">Prediction of Vessel Trajectories From AIS Data via sequence-to-sequence Recurrent Neural Networks</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\14884.html" rel="bookmark">A Ship Trajectory Prediction Framework Based on a Recurrent Neural Network</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\28714.html" rel="bookmark">A-robust-Delaunay-AFT-based-parallel-method-for-the-generation-of-large-scale-fully-constrained-meshes</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\9502.html" rel="bookmark">基于GPU的矩阵计算并行加速方法研究</a></div>
     </li>
   </ul>
 
@@ -376,7 +387,7 @@
           <div class="post-tags">
               <a href="/tags/BP%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="tag"># BP神经网络</a>
               <a href="/tags/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95/" rel="tag"># 遗传算法</a>
-              <a href="/tags/LSTM/" rel="tag"># LSTM</a>
+              <a href="/tags/%E8%BD%A8%E8%BF%B9%E9%A2%84%E6%B5%8B/" rel="tag"># 轨迹预测</a>
           </div>
 
         
@@ -451,7 +462,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E5%90%88%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E7%9A%84-GA-BP-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">2.</span> <span class="nav-text">结合遗传算法的 GA-BP 神经网络</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E-RNN-LSTM-%E7%9A%84%E8%88%B9%E8%88%B6%E8%BD%A8%E8%BF%B9%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">基于 RNN-LSTM 的船舶轨迹预测模型</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E5%90%88%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E7%9A%84-GA-BP-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">2.</span> <span class="nav-text">结合遗传算法的 GA-BP 神经网络</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -467,18 +478,18 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -504,6 +515,14 @@
 +        
         
           <li>
+            <a href="/archives/17417.html" title="Prediction of Vessel Trajectories From AIS Data via sequence-to-sequence Recurrent Neural Networks" target="_blank">Prediction of Vessel Trajectories From AIS Data via sequence-to-sequence Recurrent Neural Networks</a>
+          </li>
+        
+          <li>
+            <a href="/archives/14884.html" title="A Ship Trajectory Prediction Framework Based on a Recurrent Neural Network" target="_blank">A Ship Trajectory Prediction Framework Based on a Recurrent Neural Network</a>
+          </li>
+        
+          <li>
             <a href="/archives/60994.html" title="numpy常用函数汇总" target="_blank">numpy常用函数汇总</a>
           </li>
         
@@ -513,14 +532,6 @@
         
           <li>
             <a href="/archives/24767.html" title="Keras常用函数汇总" target="_blank">Keras常用函数汇总</a>
-          </li>
-        
-          <li>
-            <a href="/archives/65471.html" title="三个概念：Epoch, Batch, Iteration" target="_blank">三个概念：Epoch, Batch, Iteration</a>
-          </li>
-        
-          <li>
-            <a href="/archives/35841.html" title="深入理解GRU" target="_blank">深入理解GRU</a>
           </li>
         
       </ul>
@@ -822,13 +833,13 @@ if(canvas.getContext){
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">34k</span>
+    <span title="站点总字数">39k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">31 分钟</span>
+    <span title="站点阅读时长">35 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

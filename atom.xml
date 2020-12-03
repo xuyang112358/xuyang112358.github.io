@@ -6,7 +6,7 @@
   <link href="https://xuyang112358.github.io/atom.xml" rel="self"/>
   
   <link href="https://xuyang112358.github.io/"/>
-  <updated>2020-11-11T03:12:22.000Z</updated>
+  <updated>2020-12-03T07:15:00.000Z</updated>
   <id>https://xuyang112358.github.io/</id>
   
   <author>
@@ -15,6 +15,63 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Prediction of Vessel Trajectories From AIS Data via sequence-to-sequence Recurrent Neural Networks</title>
+    <link href="https://xuyang112358.github.io/archives/17417.html"/>
+    <id>https://xuyang112358.github.io/archives/17417.html</id>
+    <published>2020-12-01T19:21:26.000Z</published>
+    <updated>2020-12-03T07:15:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;本文的目标是在训练阶段学习使用历史数据的海上交通模式的预测分布，以便能够在提取的知识和可用的观测序列的基础上在线预测未来的目标轨迹样本。探索基于长期短期记忆(LSTM)编解码器体系结构的神经序列到序列模型，以有效地捕获序列AIS数据的长期时间依赖性，并提高整体预测能力。最后在一个真实的AIS数据集上的实验评估表明了序列到序列递归神经网络(RNNs)在船舶轨迹预测中的有效性，并显示了它们与基于模型的方法相比的潜在好处。&lt;/p&gt;
+&lt;h1 id=&quot;数据集&quot;&gt;&lt;a href=&quot;#数据集&quot; class=&quot;headerlink&quot; title=&quot;数据集&quot;&gt;&lt;/a&gt;数据集&lt;/h1&gt;&lt;p&gt;2018年6月至9月期间，来自意大利Piombino港到Portoferraio港的534艘不同的船只航行轨迹。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../../images/Prediction-of-Vessel-Trajectories-From-AIS-Data-via-sequence-to-sequence-Recurrent-Neural-Networks/image-20201202163020864.png&quot; alt=&quot;image-20201202163020864&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="舟山海洋项目" scheme="https://xuyang112358.github.io/categories/%E8%88%9F%E5%B1%B1%E6%B5%B7%E6%B4%8B%E9%A1%B9%E7%9B%AE/"/>
+    
+    <category term="论文" scheme="https://xuyang112358.github.io/categories/%E8%88%9F%E5%B1%B1%E6%B5%B7%E6%B4%8B%E9%A1%B9%E7%9B%AE/%E8%AE%BA%E6%96%87/"/>
+    
+    
+    <category term="LSTM" scheme="https://xuyang112358.github.io/tags/LSTM/"/>
+    
+    <category term="轨迹预测" scheme="https://xuyang112358.github.io/tags/%E8%BD%A8%E8%BF%B9%E9%A2%84%E6%B5%8B/"/>
+    
+    <category term="A类会议" scheme="https://xuyang112358.github.io/tags/A%E7%B1%BB%E4%BC%9A%E8%AE%AE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>A Ship Trajectory Prediction Framework Based on a Recurrent Neural Network</title>
+    <link href="https://xuyang112358.github.io/archives/14884.html"/>
+    <id>https://xuyang112358.github.io/archives/14884.html</id>
+    <published>2020-12-01T09:07:50.000Z</published>
+    <updated>2020-12-03T07:14:56.000Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;数据选取&quot;&gt;&lt;a href=&quot;#数据选取&quot; class=&quot;headerlink&quot; title=&quot;数据选取&quot;&gt;&lt;/a&gt;数据选取&lt;/h1&gt;&lt;p&gt;中国漳州港AIS原始数据：&lt;/p&gt;
+&lt;img src=&quot;../../../images/A-Ship-Trajectory-Prediction-Framework-Based-on-a-Recurrent-Neural-Network/image-20201203101248179.png&quot; alt=&quot;image-20201203101248179&quot; style=&quot;zoom:80%;&quot; /&gt;
+
+&lt;h1 id=&quot;预测模型总体框架&quot;&gt;&lt;a href=&quot;#预测模型总体框架&quot; class=&quot;headerlink&quot; title=&quot;预测模型总体框架&quot;&gt;&lt;/a&gt;预测模型总体框架&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;../../../images/A-Ship-Trajectory-Prediction-Framework-Based-on-a-Recurrent-Neural-Network/image-20201201093036763.png&quot; alt=&quot;image-20201201093036763&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="舟山海洋项目" scheme="https://xuyang112358.github.io/categories/%E8%88%9F%E5%B1%B1%E6%B5%B7%E6%B4%8B%E9%A1%B9%E7%9B%AE/"/>
+    
+    <category term="论文" scheme="https://xuyang112358.github.io/categories/%E8%88%9F%E5%B1%B1%E6%B5%B7%E6%B4%8B%E9%A1%B9%E7%9B%AE/%E8%AE%BA%E6%96%87/"/>
+    
+    
+    <category term="LSTM" scheme="https://xuyang112358.github.io/tags/LSTM/"/>
+    
+    <category term="轨迹预测" scheme="https://xuyang112358.github.io/tags/%E8%BD%A8%E8%BF%B9%E9%A2%84%E6%B5%8B/"/>
+    
+    <category term="GRU" scheme="https://xuyang112358.github.io/tags/GRU/"/>
+    
+    <category term="3区SCI" scheme="https://xuyang112358.github.io/tags/3%E5%8C%BASCI/"/>
+    
+  </entry>
   
   <entry>
     <title>numpy常用函数汇总</title>
@@ -216,7 +273,7 @@
     <link href="https://xuyang112358.github.io/archives/15340.html"/>
     <id>https://xuyang112358.github.io/archives/15340.html</id>
     <published>2020-10-20T17:03:59.000Z</published>
-    <updated>2020-10-24T06:32:54.000Z</updated>
+    <updated>2020-12-01T03:16:24.000Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;创新点：&lt;/strong&gt;&lt;/p&gt;
@@ -231,12 +288,14 @@
     
     <category term="舟山海洋项目" scheme="https://xuyang112358.github.io/categories/%E8%88%9F%E5%B1%B1%E6%B5%B7%E6%B4%8B%E9%A1%B9%E7%9B%AE/"/>
     
+    <category term="论文" scheme="https://xuyang112358.github.io/categories/%E8%88%9F%E5%B1%B1%E6%B5%B7%E6%B4%8B%E9%A1%B9%E7%9B%AE/%E8%AE%BA%E6%96%87/"/>
+    
     
     <category term="BP神经网络" scheme="https://xuyang112358.github.io/tags/BP%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
     
     <category term="遗传算法" scheme="https://xuyang112358.github.io/tags/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95/"/>
     
-    <category term="LSTM" scheme="https://xuyang112358.github.io/tags/LSTM/"/>
+    <category term="轨迹预测" scheme="https://xuyang112358.github.io/tags/%E8%BD%A8%E8%BF%B9%E9%A2%84%E6%B5%8B/"/>
     
   </entry>
   
@@ -292,7 +351,7 @@
     <link href="https://xuyang112358.github.io/archives/28714.html"/>
     <id>https://xuyang112358.github.io/archives/28714.html</id>
     <published>2020-10-18T19:20:25.000Z</published>
-    <updated>2020-10-19T01:46:52.000Z</updated>
+    <updated>2020-12-01T03:12:18.000Z</updated>
     
     
     <summary type="html">&lt;p&gt;Fei Yu,Yan Zeng,Z.Q. Guan,S.H. Lo. A robust Delaunay-AFT based parallel method for the generation of large-scale fully constrained meshes[J]. Computers and Structures,2020,228.&lt;/p&gt;
@@ -303,6 +362,8 @@
     
     
     <category term="并行与分布式计算" scheme="https://xuyang112358.github.io/categories/%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/"/>
+    
+    <category term="论文" scheme="https://xuyang112358.github.io/categories/%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/%E8%AE%BA%E6%96%87/"/>
     
     
     <category term="并行与分布式计算" scheme="https://xuyang112358.github.io/tags/%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/"/>
@@ -316,7 +377,7 @@
     <link href="https://xuyang112358.github.io/archives/9502.html"/>
     <id>https://xuyang112358.github.io/archives/9502.html</id>
     <published>2020-10-16T16:42:45.000Z</published>
-    <updated>2020-10-19T01:44:40.000Z</updated>
+    <updated>2020-12-01T03:13:08.000Z</updated>
     
     
       
@@ -330,6 +391,8 @@
     
     
     <category term="并行与分布式计算" scheme="https://xuyang112358.github.io/categories/%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/"/>
+    
+    <category term="论文" scheme="https://xuyang112358.github.io/categories/%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/%E8%AE%BA%E6%96%87/"/>
     
     
     <category term="并行与分布式计算" scheme="https://xuyang112358.github.io/tags/%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/"/>
