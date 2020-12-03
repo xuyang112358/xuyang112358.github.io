@@ -2,14 +2,15 @@
 title: >-
   Prediction of Vessel Trajectories From AIS Data via sequence-to-sequence
   Recurrent Neural Networks
-date: 2020-12-01 19:21:26
-tags: 
+tags:
   - 轨迹预测
   - LSTM
   - A类会议
 categories:
   - 舟山海洋项目
   - 论文
+abbrlink: 17417
+date: 2020-12-01 19:21:26
 ---
 
 # 摘要
@@ -21,6 +22,8 @@ categories:
 2018年6月至9月期间，来自意大利Piombino港到Portoferraio港的534艘不同的船只航行轨迹。
 
 ![image-20201202163020864](../../../images/Prediction-of-Vessel-Trajectories-From-AIS-Data-via-sequence-to-sequence-Recurrent-Neural-Networks/image-20201202163020864.png)
+
+<!--more-->
 
 # 问题描述
 
@@ -68,9 +71,9 @@ categories:
 
 使用了LSTM encoder-decoder架构，关键的思想是首先将输入序列编码成连续空间表示或者上下文$c$，以总结低维向量中观察到的信息，最后生成基于此上下文的预测序列，这个问题类似于机器翻译，输入语言中的一个单词序列被翻译成输出语言中的一个单词序列。
 
-该体系结构采用两个LSTM网络，即编码器和解码器，编码器读取输入序列$\mathbf{x}_{1}, \ldots, \mathbf{x}_{\ell}$，该序列通过加权连接到一堆递归连接的隐藏层，以获得固定维向量表示或输入$c$的上下文。经过多次递归更新后，最终的单元状态向量c从编码器传递到解码器，解码器递归地从该向量生成输出序列$\mathbf{y}_{1}, \ldots, \mathbf{y}_{h}$。从概率的角度看，LSTM编解码器模型的目标是通过首先获得LSTM最后一个隐藏状态给出的输入序列的固定维数表示来学习条件分布$p\left(\mathbf{y}_{1}, \ldots, \mathbf{y}_{h} \mid \mathbf{x}_{1}, \ldots, \mathbf{x}_{\ell}\right)$。然后，给定编码器单元状态$c$，条件分布可以近似为：
+该体系结构采用两个LSTM网络，即编码器和解码器，编码器读取输入序列$x_1, \ldots, x_{\ell}$，该序列通过加权连接到一堆递归连接的隐藏层，以获得固定维向量表示或输入$c$的上下文。经过多次递归更新后，最终的单元状态向量c从编码器传递到解码器，解码器递归地从该向量生成输出序列$y_{1}, \ldots, y_{h}$。从概率的角度看，LSTM编解码器模型的目标是通过首先获得LSTM最后一个隐藏状态给出的输入序列的固定维数表示来学习条件分布$p\left(y_{1}, \ldots, y_{h} \mid x_1, \ldots, x_{\ell}\right)$。然后，给定编码器单元状态$c$，条件分布可以近似为：
 $$
-p\left(\mathbf{y}_{1}, \ldots, \mathbf{y}_{h} \mid \mathbf{x}_{1}, \ldots, \mathbf{x}_{\ell}\right)=\prod_{k=1}^{h} p\left(\mathbf{y}_{k} \mid \mathbf{c}, \mathbf{y}_{k-1}, \ldots, \mathbf{y}_{1}\right)
+p\left(y_1, \ldots, y_h \mid x_1, \ldots, x_{\ell}\right)=\prod_{k=1}^{h} p\left(y_{k} \mid c, y_{k-1}, \ldots, y_{1}\right)
 $$
 
 # 实验
@@ -88,3 +91,11 @@ $$
 # 未来工作
 
 作者想结合OU模型和LSTM模型的优点
+
+<br>
+
+<br>
+
+<br>
+
+<img src="../../../images/地波雷达与自动识别系统（AIS）目标点迹最优关联算法/HDU_LOGO.png" alt="HDU_LOGO" style="zoom:50%;" />
