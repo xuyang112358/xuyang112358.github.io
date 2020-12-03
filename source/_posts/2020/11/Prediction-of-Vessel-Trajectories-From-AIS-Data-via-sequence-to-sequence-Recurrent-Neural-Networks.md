@@ -9,6 +9,7 @@ tags:
 categories:
   - 舟山海洋项目
   - 论文
+mathjax: true
 abbrlink: 17417
 date: 2020-12-01 19:21:26
 ---
