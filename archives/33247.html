@@ -29,24 +29,25 @@
 <meta property="og:site_name" content="江东大少爷">
 <meta property="og:description" content="简介LSTM 是 Long Short Term Memory Networks 的缩写，按字面翻译就是长的短时记忆网络。长时依赖是这样的一个问题，当预测点与依赖的相关信息距离比较远的时候，就难以学到该相关信息。例如在句子“我出生在法国，……   ，我会说法语”中，若要预测末尾“法语”，我们需要用到上下文“法国”。理论上，递归神经网络是可以处理这样的问题的，但是实际上，常规的递归神经网络并不能很好">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025110111681.png">
-<meta property="og:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025110208933.png">
+<meta property="og:image" content="https://xuyang112358.github.io/images/深入理解LSTM/image-20201025110111681.png">
+<meta property="og:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201208110137206.png">
 <meta property="og:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025110746083.png">
 <meta property="og:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025110942956.png">
 <meta property="og:image" content="https://xuyang112358.github.io/images/深入理解LSTM/image-20201025111131285.png">
 <meta property="og:image" content="https://xuyang112358.github.io/images/深入理解LSTM/image-20201025112003163.png">
+<meta property="og:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201208110651452.png">
 <meta property="og:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025134220629.png">
 <meta property="og:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025134953855.png">
 <meta property="og:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025174820058.png">
 <meta property="og:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025175048949.png">
 <meta property="og:image" content="https://xuyang112358.github.io/images/序列模型中的注意力机制/HDU_LOGO.png">
 <meta property="article:published_time" content="2020-10-24T14:28:50.000Z">
-<meta property="article:modified_time" content="2020-10-28T10:24:16.000Z">
+<meta property="article:modified_time" content="2020-12-08T03:58:00.000Z">
 <meta property="article:author" content="XuYang">
 <meta property="article:tag" content="深度学习">
 <meta property="article:tag" content="自然语言处理">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://xuyang112358.github.io/images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025110111681.png">
+<meta name="twitter:image" content="https://xuyang112358.github.io/images/深入理解LSTM/image-20201025110111681.png">
 
 <link rel="canonical" href="https://xuyang112358.github.io/archives/33247.html">
 
@@ -285,7 +286,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.2k</span>
+              <span>3.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -307,12 +308,25 @@
 <a id="more"></a>
 
 <p>Long Short Term Mermory network（LSTM）是一种特殊的RNNs，可以很好地解决长时依赖问题。那么它与常规神经网络有什么不同？<br>首先我们来看RNNs具体一点的结构：</p>
-<p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025110111681.png" alt="image-20201025110111681"></p>
+<img src="../../../images/深入理解LSTM/image-20201025110111681.png" alt="image-20201025110111681" style="zoom:67%;" />
+
 <p>所有的递归神经网络都是由重复神经网络模块构成的一条链，可以看到它的处理层非常简单，通常是一个单tanh层，通过当前输入及上一时刻的输出来得到当前输出。与神经网络相比，经过简单地改造，它已经可以利用上一时刻学习到的信息进行当前时刻的学习了。</p>
 <p>LSTM的结构与上面相似，不同的是它的重复模块会比较复杂一点，它有四层结构：</p>
-<p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025110208933.png" alt="image-20201025110208933"></p>
+<p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201208110137206.png" alt="image-20201208110137206"></p>
 <p>其中，处理层出现的符号及表示意思如下：</p>
 <p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025110746083.png" alt="image-20201025110746083"></p>
+<p>如果把LSTM当成黑盒子看待，可以分为以下关键变量：</p>
+<ul>
+<li>输入：$h_{t-1}$（t-1时刻的隐藏层）和$x_t$（t时刻的特征向量）</li>
+<li>输出：$h_t$（加softmax即可作为真正输出，否则作为隐藏层）</li>
+<li>主线/记忆：$c_{t-1}$和$c_t$</li>
+</ul>
+<p>依次分类的依据为：</p>
+<ul>
+<li>参考黄色部分，$h_{t-1}$和$x_t$联合起来控制了三个门，并且是输入的唯一来源，所以划分为输入部分。</li>
+<li>图中往上跑的$h_t$，它与真正的输出只隔了一层softmax（图中未画出），是输出的直接来源，所以划分为输出部分。当然它同时又是下一个LSTM cell的输入（图中往右跑的$h_t$），但是在当前cell，它仅与输出相关。</li>
+<li>如图黄色部分，$c_{t-1}$和$c_t$始终与外界隔离开来，显然是作为LSTM记忆或者主线的存在。主线进来后，首先受到遗忘门的衰减作用，接着输入门控制“补给大小”给主线补充能量生成全新的主线。这一衰一补的过程完成了主线的更新。接着在输出门的控制下生成新的输出$h_t$。</li>
+</ul>
 <h2 id="LSTMs的核心思想"><a href="#LSTMs的核心思想" class="headerlink" title="LSTMs的核心思想"></a><strong>LSTMs的核心思想</strong></h2><p>理解LSTMs的关键就是下面的矩形方框，被称为memory block（记忆块），主要包含了三个门（遗忘门、输入门、输出门）与一个记忆单元（cell）。方框内上方的那条水平线，被称为cell state（单元状态），它就像一个传送带，可以控制信息传递给下一时刻。</p>
 <p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025110942956.png" alt="image-20201025110942956"></p>
 <p>这个矩形方框还可以表示为：</p>
@@ -323,12 +337,9 @@
 <img src="../../../images/深入理解LSTM/image-20201025112003163.png" alt="image-20201025112003163" style="zoom:67%;" />
 
 <p>该层的输出是一个介于0到1的数，表示允许信息通过的多少，0 表示完全不允许通过，1表示允许完全通过。</p>
-<h1 id="逐步解析LSTM"><a href="#逐步解析LSTM" class="headerlink" title="逐步解析LSTM"></a><strong>逐步解析LSTM</strong></h1><p>标准的循环神经网络内部只有一个简单的层结构，而 LSTM 内部有 4 个层结构：</p>
-<p>第一步是忘记：决定状态中丢弃什么信息</p>
-<p>第二步用来产生更新值的候选项，说明状态在某些维度上需要加强，在某些维度上需要减弱</p>
-<p>第三步是输入，它的输出值要乘到tanh层的输出上，起到一个缩放的作用，极端情况下sigmoid输出0说明相应维度上的状态不需要更新</p>
-<p>第四步决定输出什么，输出值跟状态有关。候选项中的哪些部分最终会被输出由一个sigmoid来决定。</p>
-<p>pytorch 中使用 nn.LSTM 类来搭建基于序列的循环神经网络，他的参数基本与RNN类似。</p>
+<h1 id="逐步解析LSTM"><a href="#逐步解析LSTM" class="headerlink" title="逐步解析LSTM"></a><strong>逐步解析LSTM</strong></h1><p><strong>下面开始进一步介绍这四个状态在LSTM内部的使用（敲黑板）</strong></p>
+<p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201208110651452.png" alt="image-20201208110651452"></p>
+<p>$\bigodot$是Hadamard Product，也就是操作矩阵中对应的元素相乘，因此要求两个相乘矩阵是同型的。$\bigoplus$则代表进行矩阵加法。</p>
 <h2 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h2><p>LSTM第一步是用来决定什么信息可以通过cell state。这个决定由“forget gate”层通过sigmoid来控制，它会根据上一时刻的输出$h_{t-1}$和当前输入$x_t$来产生一个0到1的$f_t$值，来决定是否让上一时刻学到的信息$C_{t−1}$通过或部分通过。如下：</p>
 <p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025134220629.png" alt="image-20201025134220629"></p>
 <p>举个例子来说就是，我们在之前的句子中学到了很多东西，一些东西对当前来讲是没用的，可以对它进行选择性地过滤。</p>
@@ -341,7 +352,8 @@
 <h2 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a>第四步</h2><p>最后一步是决定模型的输出，首先是通过sigmoid层来得到一个初始输出，然后使用tanh将$C_t$值缩放到-1到1间，再与sigmoid得到的输出逐对相乘，从而得到模型的输出。</p>
 <p><img src="../../../images/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3LSTM/image-20201025175048949.png" alt="image-20201025175048949"></p>
 <p>这显然可以理解，首先sigmoid函数的输出是不考虑先前时刻学到的信息的输出，tanh函数是对先前学到信息的压缩处理，起到稳定数值的作用，两者的结合学习就是递归神经网络的学习思想。至于模型是如何学习的，那就是后向传播误差学习权重的一个过程了。</p>
-<h1 id="LSTM-IN-PyTorch"><a href="#LSTM-IN-PyTorch" class="headerlink" title="LSTM IN PyTorch"></a>LSTM IN PyTorch</h1><ul>
+<h1 id="LSTM-IN-PyTorch"><a href="#LSTM-IN-PyTorch" class="headerlink" title="LSTM IN PyTorch"></a>LSTM IN PyTorch</h1><p>pytorch 中使用 nn.LSTM 类来搭建基于序列的循环神经网络，他的参数基本与RNN类似。</p>
+<ul>
 <li><p>LSTM的输入总是一个3D数组.  (batch_size, time_steps, seq_len)</p>
 </li>
 <li><p>LSTM的输出根据return_sequences参数可以是2D或3D数组</p>
@@ -886,13 +898,13 @@ if(canvas.getContext){
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">39k</span>
+    <span title="站点总字数">40k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">35 分钟</span>
+    <span title="站点阅读时长">36 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
